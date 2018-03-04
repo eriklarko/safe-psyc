@@ -42,3 +42,5 @@ export function generateWordQuestion(emotion: Emotion, answerService: AnswerServ
         answers: answerService.getAnswersTo(emotion, 3),
     };
 }
+
+

@@ -48,7 +48,7 @@ export class UserBackendFacade {
                 log.debug('Created anonymous user %j', user);
                 return undefined;
             })
-            .catch(function(error) {
+            .catch(error => {
                 log.error('Failed creating anonymous user, %s', error);
                 throw error;
             });
@@ -86,7 +86,7 @@ export class UserBackendFacade {
                 log.debug('Created user');
                 return user;
             })
-            .catch(function(error) {
+            .catch(error => {
                 log.error('Failed creating user, %s', error);
                 throw error;
             });
@@ -100,10 +100,10 @@ export class UserBackendFacade {
 
         return this._auth
             .signInAndRetrieveDataWithEmailAndPassword(email, password)
-            .then(function() {
+            .then(() => {
                 log.debug('Login successful');
             })
-            .catch(function(error) {
+            .catch(error => {
                 log.error('Failed logging in, %s', error);
                 throw error;
             });

@@ -40,6 +40,11 @@ function baseBuilder(
 ) {
     return new EmotionBuilder()
         .withName(name)
+        .withImage('image-' + name)
+        .withCoordinates({
+            intensity: Math.floor(Math.random() * 10),
+            polar: Math.floor(Math.random() * 10),
+        })
         .withDescription(description);
 }
 
@@ -52,9 +57,11 @@ export function randomEmotionWithImage(name?: string) {
 }
 
 export function randomEmotionWithoutImage() {
-    return baseBuilder()
+    const e = baseBuilder()
         .withDescription(uuid.v4())
         .build();
+    e.image = null;
+    return e;
 }
 
 export function randomEmotionWithCoordinates(coordinates: ?Coordinates) {

@@ -97,7 +97,9 @@ export class AnswerBackendFacade {
         });
     }
 
-    getAllAnswers(): Promise<Map<string, { correct: boolean, when: moment$Moment }>> {
+    getLastTwoAnswersToAllQuestions(): Promise<Map<{ emotion: Emotion, questionType: QuestionType },
+        Array<{ correct: boolean, when: moment$Moment }>
+    >> {
 
         return new Promise((resolve, reject) => {
             const user = userBackendFacade.getUserOrThrow('getAnswersTo');
@@ -111,30 +113,41 @@ export class AnswerBackendFacade {
                 .once('value')
                 .then( emotionsSnap => {
                     emotionsSnap.forEach(emotionSnap => {
-                        const emotionName = emotionSnap.key;
                         const answersRef = emotionSnap.ref;
 
-                        if (!answers.has(emotionName)) {
-                            answers.set(emotionName, []);
+                        const emotionName = emotionSnap.key;
+                        const emotion = emotionLookupTable.get(emotionName);
+                        if (!emotion) {
+                            log.warn('Unable to resolve db answer to an emotion object: %s', emotionName);
+                            return;
                         }
 
                         answersRef
                             .once('value')
+                            .orderByChild('when')
+                            .limitToLast(2)
                             .then( answerSnap => {
                                 answerSnap.forEach(answerRef => {
                                     const answer = answerRef.val();
+
+                                    const { correct, questionType } = answer;
                                     const when = dbTimeToMoment(answer.when);
 
+                                    const mapKey = { emotion, questionType };
+                                    if (!answers.has(mapKey)) {
+                                        answers.set(mapKey, []);
+                                    }
+
                                     // $FlowFixMe: Guaranteed non-null by it being set above
-                                    answers.get(emotionName).push({
-                                        correct: answer.correct,
+                                    answers.get(mapKey).push({
+                                        correct,
                                         when,
                                     });
                                 })
                             });
                     });
 
-                    return answers;
+                    return answers.values();
                 })
                 .then(resolve)
                 .catch(reject);
@@ -155,7 +168,7 @@ function thenableToPromise(resolve, reject): (?Object) => void {
 }
 
 function createEmotionLookupTable(): Map<string, Emotion> {
-    // The incorrect answers in the database only contain the name of the emotion
+    // The answers in the database only contain the name of the emotion
     // the user answered, not the whole emotion object. This map resolves that reference.
     const emotionLookupTable = new Map();
     randomSessionService.getEmotionPool().forEach(e => emotionLookupTable.set(e.name, e));
