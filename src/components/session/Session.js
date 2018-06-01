@@ -92,8 +92,9 @@ export class Session extends React.Component<Props, State> {
                 {
                     text: 'Yes',
                     onPress: () => {
-                        // TODO: log how many questions were answered
-                        log.event('ABORT_SESSION');
+                        log.event('ABORT_SESSION', {
+                            questionsAnswered: this.state.currentQuestionIndex,
+                        });
                         resetToHome();
                     },
                 },
