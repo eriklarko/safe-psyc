@@ -115,7 +115,6 @@ function RegisterLink() {
         maxWidth: '70%',
     };
     return <View>
-        { /* TODO: This text should not be frightening the user... */ }
         <StandardText style={textStyle}>
             If you create an account your data can be saved across devices
         </StandardText>
