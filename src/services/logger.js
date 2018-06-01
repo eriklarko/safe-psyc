@@ -10,7 +10,7 @@ interface LocalLogger {
 interface RemoteLogger {
     log(string): void;
     recordError(Error): void;
-    logEvent(string): void,
+    logEvent(eventName: string, params?: Object): void,
 }
 export class Logger {
     local: LocalLogger;
@@ -53,12 +53,12 @@ export class Logger {
         });
     }
 
-    event(eventName: string) {
-        this.remote.logEvent(eventName);
+    event(eventName: string, params?: Object) {
+        this.remote.logEvent(eventName, params);
     }
 }
 
-class FirebaseLogger {
+class FirebaseLogger implements RemoteLogger {
 
     crashlytics: Object;
     analytics: Object;
@@ -78,9 +78,9 @@ class FirebaseLogger {
         this.crashlytics.recordError(1, error.message);
     }
 
-    logEvent(eventName) {
+    logEvent(eventName, params) {
         //console.log('keuk', this.analytics);
-        this.analytics.logEvent(eventName);
+        this.analytics.logEvent(eventName, params);
     }
 }
 

@@ -69,7 +69,17 @@ it('logs events remotely only', () => {
     log.event('foo');
 
     expect(localMock.log).not.toHaveBeenCalled();
-    expect(remoteMock.logEvent).toHaveBeenCalledWith('foo');
+    expect(remoteMock.logEvent).toHaveBeenCalledWith('foo', undefined);
+});
+
+it('logs event params', () => {
+    const { log, localMock, remoteMock } = createLog();
+    const params = { foo: 'bar' };
+
+    log.event('foo', params);
+
+    expect(localMock.log).not.toHaveBeenCalled();
+    expect(remoteMock.logEvent).toHaveBeenCalledWith('foo', params);
 });
 
 function createLog() {
