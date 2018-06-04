@@ -1,5 +1,5 @@
 import React from 'react';
-import { StackNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation';
 
 import { LoadingScreen } from './src/components/LoadingScreen.js';
 import { PitchScreen } from './src/components/PitchScreen.js';
@@ -26,7 +26,7 @@ const defaultScreenProps = {
     },
 };
 
-const App = StackNavigator({
+const RootNavigator = createStackNavigator({
     Loading: { screen: LoadingScreen },
     Pitch: { screen: PitchScreen },
     Login: { screen: LoginScreen },
@@ -44,11 +44,13 @@ const App = StackNavigator({
     // Since the "Home" screen gives the debug screen in dev mode but I want to be able to see the
     // real home screen in dev too I need a second screen for this :)
     AlwaysHome: { screen: HomeScreen },
+}, {
+    initialRouteName: 'Loading',
 });
 
 // The props available in navigationOptions is a little hard to find, so
 // the link is here https://reactnavigation.org/docs/navigators/stack#StackNavigatorConfig
 
-export default function AppPa(props) {
-    return <App ref={ r => setNavigation(r) } />
+export default function App(props) {
+    return <RootNavigator ref={ r => setNavigation(r) } />
 };

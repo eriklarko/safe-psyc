@@ -38,7 +38,7 @@
     "react-native-swiper": "^1.5.13",
     "react-native-testfairy": "^2.10.0",
     "react-native-textinput-effects": "^0.4.2",
-    "react-navigation": "^1.5.11",
+    "react-navigation": "^2.0.4",
     "sprintf-js": "^1.1.1"
   },
   "rnpm": {

@@ -3,7 +3,7 @@
 import { InteractionManager, Alert, AsyncStorage } from 'react-native';
 import moment from 'moment';
 // $FlowFixMe
-import { NavigationActions } from 'react-navigation';
+import { NavigationActions, StackActions } from 'react-navigation';
 import { randomSessionService } from '~/src/services/random-session-service.js';
 import { log } from '~/src/services/logger.js';
 
@@ -70,7 +70,7 @@ export function navigateToEmotionDetails(emotion: Emotion) {
 
 export function navigateToSessionReport(report: Report) {
     safeNavigation().dispatch(
-        NavigationActions.reset({
+        StackActions.reset({
             index: 1,
             actions: [
                 NavigationActions.navigate({ routeName: 'Home' }),
@@ -110,7 +110,7 @@ export function routeToCurrentFeelingOrHome(backend: CurrentEmotionBackendFacade
             const shouldAskHowTheUserIsFeeling = !haveAlreadyAnswered && !neverWantsToBeAsked;
 
             if (shouldAskHowTheUserIsFeeling) {
-                const resetAction = NavigationActions.reset({
+                const resetAction = StackActions.reset({
                     index: 1,
                     actions: [
                         NavigationActions.navigate({ routeName: 'Home' }),
@@ -172,7 +172,7 @@ export function onUserLoggedOut(storage: * = AsyncStorage): Promise<void> {
 
 export function resetTo(routeName: string) {
     safeNavigation().dispatch(
-        NavigationActions.reset({
+        StackActions.reset({
             index: 0,
             actions: [NavigationActions.navigate({ routeName: routeName })],
         })
