@@ -1,8 +1,8 @@
 // @flow
 
 import { NumberOfQuestionsService } from './number-of-questions-service.js';
-import { newConfigBackendMock } from '~/tests/MockConfigBackendFacade.js';
-import type { Config } from './number-of-questions-service.js';
+import { newRemoteConfigBackendMock } from '~/tests/MockRemoteConfigBackendFacade.js';
+import type { RemoteConfig } from './number-of-questions-service.js';
 
 it('handles evenly divisable factors', () => {
     const service = serviceWithConfig({
@@ -76,6 +76,6 @@ it('zeroes question types if the number of questions is less than the number of 
 })
 
 
-function serviceWithConfig(config: Config): NumberOfQuestionsService {
-    return new NumberOfQuestionsService(newConfigBackendMock(config));
+function serviceWithConfig(config: RemoteConfig): NumberOfQuestionsService {
+    return new NumberOfQuestionsService(newRemoteConfigBackendMock(config));
 }

@@ -5,7 +5,7 @@ import { View, Alert } from 'react-native';
 import { ImageBackground } from '~/src/components/lib/ImageBackground.js';
 import { ActivityIndicator } from '~/src/components/lib/ActivityIndicator.js';
 import { userBackendFacade } from '~/src/services/user-backend.js';
-import { configBackendFacade } from '~/src/services/config-backend.js';
+import { remoteConfigBackendFacade } from '~/src/services/remote-config-backend.js';
 import { log } from '~/src/services/logger.js';
 import { resetToHome, onUserLoggedOut } from '~/src/navigation-actions.js';
 
@@ -31,7 +31,7 @@ export class LoadingScreen extends React.Component<Props, {}> {
 
         registerLoginRedirecter(userBackendFacade);
 
-        await configBackendFacade.load();
+        await remoteConfigBackendFacade.load();
 
         this._redirect(isLoggedIn);
     }

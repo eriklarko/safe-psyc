@@ -3,7 +3,7 @@
 import { firebase } from '~/src/services/firebase.js';
 import { log } from '~/src/services/logger.js';
 
-export class ConfigBackendFacade {
+export class RemoteConfigBackendFacade {
     load(): Promise<void> {
         this._enableDevMode();
         this._setDefaults();
@@ -92,4 +92,4 @@ export class ConfigBackendFacade {
     }
 }
 
-export const configBackendFacade = new ConfigBackendFacade();
+export const remoteConfigBackendFacade = new RemoteConfigBackendFacade();

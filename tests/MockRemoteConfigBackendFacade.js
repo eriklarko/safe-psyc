@@ -1,20 +1,20 @@
 // @flow
 
-import type { ConfigBackendFacade } from '~/src/services/config-backend.js';
-import type { Config } from '~/src/services/number-of-questions-service.js';
+import type { RemoteConfigBackendFacade } from '~/src/services/remote-config-backend.js';
+import type { RemoteConfig } from '~/src/services/number-of-questions-service.js';
 
 
-const defaultConfig: Config =  {
+const defaultConfig: RemoteConfig =  {
     numberOfQuestionsPerSession: 10,
 
     eyeQuestionsFactor: 8,
     intensityQuestionsFactor: 1,
     wordQuestionsFactor: 1,
 };
-export function newConfigBackendMock(config?: $Shape<Config>) {
+export function newRemoteConfigBackendMock(config?: $Shape<RemoteConfig>) {
     const concreteConfig = Object.assign({}, defaultConfig, config);
 
-    const configMock: ConfigBackendFacade = ({
+    const configMock: RemoteConfigBackendFacade = ({
         getEyeQuestionsFactor: () => Promise.resolve(concreteConfig.eyeQuestionsFactor),
         getIntensityQuestionsFactor: () => Promise.resolve(concreteConfig.intensityQuestionsFactor),
         getWordQuestionsFactor: () => Promise.resolve(concreteConfig.wordQuestionsFactor),

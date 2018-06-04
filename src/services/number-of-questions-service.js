@@ -1,8 +1,8 @@
 // @flow
 
-import { configBackendFacade } from '~/src/services/config-backend.js';
+import { remoteConfigBackendFacade } from '~/src/services/remote-config-backend.js';
 
-import type { ConfigBackendFacade } from '~/src/services/config-backend.js';
+import type { RemoteConfigBackendFacade } from '~/src/services/remote-config-backend.js';
 
 type QuestionNumbers = {|
     eye: number,
@@ -10,7 +10,7 @@ type QuestionNumbers = {|
     word: number,
 |};
 
-export type Config = {
+export type RemoteConfig = {
     eyeQuestionsFactor: number,
     intensityQuestionsFactor: number,
     wordQuestionsFactor: number,
@@ -19,9 +19,9 @@ export type Config = {
 };
 export class NumberOfQuestionsService {
 
-    _configBackendFacade: ConfigBackendFacade
+    _configBackendFacade: RemoteConfigBackendFacade
 
-    constructor(configBackendFacade: ConfigBackendFacade) {
+    constructor(configBackendFacade: RemoteConfigBackendFacade) {
         this._configBackendFacade = configBackendFacade;
     }
 
@@ -46,7 +46,7 @@ export class NumberOfQuestionsService {
         });
     }
 
-    _getConfig(): Promise<Config> {
+    _getConfig(): Promise<RemoteConfig> {
         return Promise.all([
             this._configBackendFacade.getEyeQuestionsFactor(),
             this._configBackendFacade.getIntensityQuestionsFactor(),
@@ -70,7 +70,7 @@ export class NumberOfQuestionsService {
     }
 }
 
-function factorsToPercentages(factors: Config): QuestionNumbers {
+function factorsToPercentages(factors: RemoteConfig): QuestionNumbers {
     const {
         eyeQuestionsFactor,
         intensityQuestionsFactor,
@@ -111,4 +111,4 @@ function getKeyWithHighestValue(obj) {
     return highestKey;
 }
 
-export const numberOfQuestionsService = new NumberOfQuestionsService(configBackendFacade);
+export const numberOfQuestionsService = new NumberOfQuestionsService(remoteConfigBackendFacade);

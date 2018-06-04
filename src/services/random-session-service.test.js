@@ -8,10 +8,10 @@ import { randomSessionService, RandomSessionService } from './random-session-ser
 
 import { randomQuestion } from '~/tests/question-utils.js';
 import { randomEmotionWithCoordinates, randomEmotions, randomEmotionsWithAll } from '~/tests/emotion-utils.js';
-import { newConfigBackendMock } from '~/tests/MockConfigBackendFacade.js';
+import { newRemoteConfigBackendMock } from '~/tests/MockRemoteConfigBackendFacade.js';
 
 import type { WordQuestion } from '~/src/models/questions.js';
-import type { Config } from '~/src/services/number-of-questions-service.js';
+import type { RemoteConfig } from '~/src/services/number-of-questions-service.js';
 
 it('returns the correct number of random questions', () => {
     return Promise.all([
@@ -158,14 +158,14 @@ it('gives some answers to the word question', () => {
         });
 });
 
-function serviceWithConfig(config: $Shape<Config>) {
+function serviceWithConfig(config: $Shape<RemoteConfig>) {
 
     const pool = randomEmotionsWithAll(10);
     const answerService = new AnswerService(pool);
     const emotionService: EmotionService = ({
         getEmotionPool: () => pool,
     }: any);
-    const configBackend = newConfigBackendMock(config);
+    const configBackend = newRemoteConfigBackendMock(config);
     const numQuestionsService = new NumberOfQuestionsService(configBackend);
 
     return new RandomSessionService(answerService, emotionService, numQuestionsService);
@@ -177,7 +177,7 @@ function serviceWithEmotionPool(pool) {
     const emotionService: EmotionService = ({
         getEmotionPool: () => pool,
     }: any);
-    const configBackend = newConfigBackendMock();
+    const configBackend = newRemoteConfigBackendMock();
     const numQuestionsService = new NumberOfQuestionsService(configBackend);
 
     return new RandomSessionService(answerService, emotionService, numQuestionsService);
