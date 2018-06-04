@@ -29,11 +29,6 @@ type Props = {
 export function EyeQuestionComponent(props: Props) {
     const { question, onCorrectAnswer, onWrongAnswer } = props;
 
-    /* TODO: this height is to make sure that the elements below the
-     * image doesn't jump around so it needs to be at least as high as
-     * the highest image. This information is only available in the
-     * session though, so I need some way to push that data down here */
-
     return (
         <View style={containerStyle}>
             <View>

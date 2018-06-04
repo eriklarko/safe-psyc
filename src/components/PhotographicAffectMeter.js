@@ -1,7 +1,5 @@
 // @flow
 
-// TODO: Allow the user to change their mind even after submitting the emotion
-
 import React from 'react';
 import { View, ScrollView, Image, TouchableHighlight, TouchableOpacity, Alert } from 'react-native';
 import { StandardText } from '~/src/components/lib/Texts.js';

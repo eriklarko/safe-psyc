@@ -5,6 +5,7 @@ import { SectionList, View, Modal } from 'react-native';
 
 import { EyeQuestionRow } from './SessionReport.EyeRow.js';
 import { IntensityQuestionRow } from './SessionReport.IntensityRow.js';
+import { WordQuestionRow } from './SessionReport.WordRow.js';
 
 import { EmotionDetails } from '~/src/components/EmotionDetails.js';
 import { StandardText } from '~/src/components/lib/Texts.js';
@@ -94,20 +95,3 @@ function renderRow(item, onPress) {
     }
 }
 
-// TODO: Move to separate file
-function WordQuestionRow(props) {
-    return (
-        <View>
-            <StandardText>{props.question.correctAnswer.description}</StandardText>
-            <StandardText style={{
-                ...constants.smallText,
-
-                alignSelf: 'flex-end',
-                marginTop: constants.space(1),
-                maxWidth: '50%',
-            }}>
-                {props.question.correctAnswer.name}
-            </StandardText>
-        </View>
-    );
-}
