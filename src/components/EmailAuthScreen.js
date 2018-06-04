@@ -73,10 +73,11 @@ export class EmailAuthScreen extends React.Component<Props, State> {
             loading: 'register',
         });
 
-        const currentlyLoggedIn = userBackendFacade.getLoggedInUser() === null;
-        const action = currentlyLoggedIn
-            ? userBackendFacade.createNewUser
-            : userBackendFacade.promoteAnonymousToNamed;
+        const action = (
+            userBackendFacade.isLoggedIn
+                ? userBackendFacade.promoteAnonymousToNamed
+                : userBackendFacade.createNewUser
+        ).bind(userBackendFacade)
 
         action(email, password)
             .then(user => {

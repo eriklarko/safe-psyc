@@ -199,6 +199,10 @@ export class UserBackendFacade {
             resolve(user);
         });
     }
+
+    isLoggedIn(): bool {
+        return this.getLoggedInUser !== null;
+    }
 }
 
 export const userBackendFacade = new UserBackendFacade(firebase.auth());
