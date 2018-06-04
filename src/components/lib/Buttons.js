@@ -5,6 +5,10 @@ import PropTypes from 'prop-types';
 import { View, TouchableOpacity, Text, Button } from 'react-native';
 import { constants } from '~/src/styles/constants.js';
 
+type StyleContext = {
+    buttonContainerStyle?: Object,
+    buttonTextStyle?: Object,
+};
 ///////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////
 const standardButtonDefaultStyles = {
@@ -45,11 +49,7 @@ type StandardButtonProps = {
     containerStyle?: Object,
     textStyle?: Object,
 };
-type StandardButtonContext = {
-    buttonContainerStyle?: Object,
-    buttonTextStyle?: Object,
-};
-export function StandardButton(props: StandardButtonProps, context: StandardButtonContext) {
+export function StandardButton(props: StandardButtonProps, context: StyleContext) {
     const { title, containerStyle, textStyle, disabled, ...restProps } = props;
 
     const defaultStyles = disabled
@@ -100,30 +100,26 @@ const secondaryButtonStyles = {
         padding: constants.space(),
     },
 };
-type SecondaryButtonContext = {
-    buttonContainerStyle?: Object,
-    textStyle?: Object,
-};
 type SecondaryButtonProps = {
     onPress: () => *,
     title: string,
     containerStyle?: Object,
     textStyle?: Object,
 };
-export function SecondaryButton(props: SecondaryButtonProps, context: SecondaryButtonContext) {
+export function SecondaryButton(props: SecondaryButtonProps, context: StyleContext) {
     const { title, onPress, containerStyle, textStyle } = props;
     return <TouchableOpacity
         onPress={onPress}
         style={[ secondaryButtonStyles.container, context.buttonContainerStyle, containerStyle ]}
     >
-        <Text style={[ secondaryButtonStyles.text, context.textStyle, textStyle ]}>
+        <Text style={[ secondaryButtonStyles.text, context.buttonTextStyle, textStyle ]}>
             {title}
         </Text>
     </TouchableOpacity>
 }
 SecondaryButton.contextTypes = {
     buttonContainerStyle: PropTypes.object,
-    textStyle: PropTypes.object,
+    buttonTextStyle: PropTypes.object,
 };
 
 ///////////////////////////////////////////////////////
@@ -134,26 +130,29 @@ const largeTextButtonStyle = {
     alignSelf: 'center',
     textAlign: 'center',
 };
+const largeButtonContainerStyle = {
+    backgroundColor: constants.primaryColor,
+    paddingVertical: constants.space(),
+};
 
 type LargeButtonProps = {
     title: string,
     containerStyle?: ?Object | Array<mixed>,
     textStyle?: Object,
 };
-export function LargeButton(props: LargeButtonProps) {
+export function LargeButton(props: LargeButtonProps, context: StyleContext) {
     const { title, containerStyle, textStyle, ...restProps } = props;
 
-    const defaultStyle = {
-        backgroundColor: constants.primaryColor,
-        paddingVertical: constants.space(),
-        elevation: 2,
-    };
     return (
-        <TouchableOpacity style={[defaultStyle, containerStyle]} {...restProps}>
-            <Text style={[largeTextButtonStyle, textStyle]}>{title}</Text>
+        <TouchableOpacity style={[largeButtonContainerStyle, context.buttonContainerStyle, containerStyle]} {...restProps}>
+            <Text style={[largeTextButtonStyle, context.buttonTextStyle, textStyle]}>{title}</Text>
         </TouchableOpacity>
     );
 }
+LargeButton.contextTypes = {
+    buttonContainerStyle: PropTypes.object,
+    buttonTextStyle: PropTypes.object,
+};
 
 ///////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////
