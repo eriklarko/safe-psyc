@@ -3,6 +3,13 @@
 import { firebase } from '~/src/services/firebase.js';
 import { log } from '~/src/services/logger.js';
 
+const defaults = {
+    numQuestionsPerSession: 10,
+
+    eyeQuestionsFactor: 8,
+    intensityQuestionsFactor: 1,
+    wordQuestionsFactor: 1,
+};
 export class RemoteConfigBackendFacade {
     load(): Promise<void> {
         this._enableDevMode();
@@ -18,19 +25,9 @@ export class RemoteConfigBackendFacade {
     }
 
     _setDefaults() {
-        firebase.config().setDefaults(this._getDefaults());
+        firebase.config().setDefaults(defaults);
     }
 
-    _getDefaults() {
-        // TODO: cache this object :(
-        return {
-            numQuestionsPerSession: 10,
-
-            eyeQuestionsFactor: 8,
-            intensityQuestionsFactor: 1,
-            wordQuestionsFactor: 1,
-        };
-    }
 
     _fetch() {
         return firebase
@@ -75,7 +72,7 @@ export class RemoteConfigBackendFacade {
                         rawNumber,
                     );
 
-                    return this._getDefaults()[key];
+                    return defaults[key];
                 }
 
                 return n;
