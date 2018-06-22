@@ -8,7 +8,7 @@
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "babel-preset-react-native-stage-0": "^1.0.1",
     "eslint": "^4.19.1",
-    "flow-bin": "^0.73.0",
+    "flow-bin": "^0.75.0",
     "flow-typed": "^2.4.0",
     "jest": "^23.1.0",
     "react-element-to-jsx-string": "^14.0.0",
