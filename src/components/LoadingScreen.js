@@ -38,6 +38,7 @@ export class LoadingScreen extends React.Component<Props, {}> {
 
     _redirect(isLoggedIn) {
         if (isLoggedIn) {
+            console.log('ABOUT TO RESET TO HOME')
             resetToHome();
         } else {
             onUserLoggedOut();

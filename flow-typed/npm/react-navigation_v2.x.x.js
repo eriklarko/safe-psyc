@@ -1,5 +1,5 @@
-// flow-typed signature: f11177b9fec0950067d1c26bb2d3e44c
-// flow-typed version: cd88cfb433/react-navigation_v2.x.x/flow_>=v0.60.x
+// flow-typed signature: 13cb3ce8f07e4ec06cca66a918a0b3a1
+// flow-typed version: db07d03d9f/react-navigation_v2.x.x/flow_>=v0.60.x
 
 // @flow
 
@@ -1159,9 +1159,10 @@ declare module 'react-navigation' {
       }
     >
   >;
-  declare export function withNavigationFocus<Props: {}>(
-    Component: React$ComponentType<Props>
-  ): React$ComponentType<$Diff<Props, { isFocused: boolean | void }>>;
+  
+  declare export function withNavigationFocus<Props: {}, Comp: React$ComponentType<Props>>(
+    Component: Comp
+  ): React$ComponentType<$Diff<React$ElementConfig<Comp>, { isFocused: boolean | void }>>;
 
   declare export function getNavigation<State: NavigationState, Options: {}>(
     router: NavigationRouter<State, Options>,

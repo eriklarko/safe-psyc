@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { View, ScrollView, Image, TouchableOpacity, Text } from 'react-native';
+import { View, ScrollView, Image, TouchableOpacity, Text  } from 'react-native';
 import { ImageBackground } from '~/src/components/lib/ImageBackground.js';
 import { StandardButton } from '~/src/components/lib/Buttons.js';
 import { VerticalSpace } from '~/src/components/lib/VerticalSpace.js';
@@ -13,6 +13,8 @@ import { constants } from '~/src/styles/constants.js';
 import { navigateToEmotionDetails, UNSAFE_navigateTo } from '~/src/navigation-actions.js';
 import { randomSessionService } from '~/src/services/random-session-service.js';
 import { log } from '~/src/services/logger.js';
+
+import * as emotionNotifications from '~/src/services/current-emotion-notifications.js';
 
 const contentStyle = {
     paddingTop: statusBarHeight + constants.space(),
@@ -43,6 +45,12 @@ export class DebugScreen extends React.Component<Props, State> {
 
     _startSession() {
         startRandomSession();
+    }
+
+    _scheduleNotifications() {
+        console.log(emotionNotifications);
+        emotionNotifications.initialize();
+        emotionNotifications.scheduleNotification()
     }
 
     render() {
@@ -90,6 +98,12 @@ export class DebugScreen extends React.Component<Props, State> {
                         <StandardButton
                             title={'Start session'}
                             onPress={this._startSession.bind(this)}
+                        />
+                        <VerticalSpace />
+
+                        <StandardButton
+                            title={'Schedule notifications'}
+                            onPress={this._scheduleNotifications.bind(this)}
                         />
                         <VerticalSpace />
 

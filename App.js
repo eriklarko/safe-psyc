@@ -1,4 +1,5 @@
 import React from 'react';
+import { Platform } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 
 import { LoadingScreen } from './src/components/LoadingScreen.js';
@@ -39,7 +40,7 @@ const RootNavigator = createStackNavigator({
     Session: { screen: SessionScreen, ...defaultScreenProps },
     SessionReport: { screen: SessionReportScreen, ...defaultScreenProps },
     EmotionDetails: { screen: EmotionDetailsScreen, ...defaultScreenProps },
-    CurrentFeeling: { screen: CurrentFeelingScreen, ...defaultScreenProps },
+    CurrentFeeling: { screen: CurrentFeelingScreen, path: 'current-feeling', ...defaultScreenProps },
 
     // Since the "Home" screen gives the debug screen in dev mode but I want to be able to see the
     // real home screen in dev too I need a second screen for this :)
@@ -51,6 +52,10 @@ const RootNavigator = createStackNavigator({
 // The props available in navigationOptions is a little hard to find, so
 // the link is here https://reactnavigation.org/docs/navigators/stack#StackNavigatorConfig
 
+const deepLinkingPrefix = Platform.OS == 'android' ? 'safepsyc://safepsyc/' : 'safepsyc://';
 export default function App(props) {
-    return <RootNavigator ref={ r => setNavigation(r) } />
+    return <RootNavigator
+        ref={ r => setNavigation(r) }
+        uriPrefix={deepLinkingPrefix}
+        />
 };
