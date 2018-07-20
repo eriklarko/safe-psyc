@@ -47,7 +47,7 @@ const defaultProps = {
     backgroundColor: 'white'
 }
 
-export class ScatterChart extends React.PureComponent {
+class ScatterChart extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
