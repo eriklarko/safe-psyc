@@ -3,16 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "@babel/core": "^7.0.0-beta.53",
+    "@babel/core": "7.0.0-beta.47",
     "babel-plugin-root-import": "^6.1.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "babel-preset-react-native": "^5.0.1",
-    "eslint": "^5.1.0",
-    "flow-bin": "^0.76.0",
+    "eslint": "^5.3.0",
+    "flow-bin": "^0.78.0",
     "flow-typed": "^2.5.1",
-    "jest": "^23.4.0",
+    "jest": "^23.4.2",
     "react-element-to-jsx-string": "^14.0.0",
-    "react-test-renderer": "^16.4.0",
+    "react-test-renderer": "^16.4.2",
     "uuid": "^3.3.2"
   },
   "scripts": {
@@ -23,23 +23,26 @@
   },
   "jest": {
     "preset": "react-native",
-    "setupTestFrameworkScriptFile": "./tests/beforeAll.js"
+    "setupTestFrameworkScriptFile": "./tests/beforeAll.js",
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js"
+    }
   },
   "dependencies": {
     "babel-preset-es2015": "^6.24.1",
     "knuth-shuffle": "^1.0.8",
     "moment": "^2.22.1",
-    "react": "^16.4.1",
+    "react": "16.4.1",
     "react-native": "^0.56.0",
-    "react-native-firebase": "^4.3.6",
+    "react-native-firebase": "^4.3.8",
     "react-native-hyperlink": "^0.0.14",
     "react-native-linear-gradient": "^2.4.0",
     "react-native-progress": "^3.4.0",
-    "react-native-push-notification": "^3.0.2",
+    "react-native-push-notification": "^3.1.1",
     "react-native-swiper": "^1.5.13",
     "react-native-testfairy": "^2.13.1",
     "react-native-textinput-effects": "^0.4.2",
-    "react-navigation": "^2.6.2",
+    "react-navigation": "^2.11.2",
     "sprintf-js": "^1.1.1"
   },
   "rnpm": {
