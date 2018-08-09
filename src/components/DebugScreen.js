@@ -14,8 +14,6 @@ import { navigateToEmotionDetails, UNSAFE_navigateTo } from '~/src/navigation-ac
 import { randomSessionService } from '~/src/services/random-session-service.js';
 import { log } from '~/src/services/logger.js';
 
-import * as emotionNotifications from '~/src/services/current-emotion-notifications.js';
-
 const contentStyle = {
     paddingTop: statusBarHeight + constants.space(),
     ...constants.padflex,
@@ -45,12 +43,6 @@ export class DebugScreen extends React.Component<Props, State> {
 
     _startSession() {
         startRandomSession();
-    }
-
-    _scheduleNotifications() {
-        console.log(emotionNotifications);
-        emotionNotifications.initialize();
-        emotionNotifications.scheduleNotification()
     }
 
     render() {
@@ -98,12 +90,6 @@ export class DebugScreen extends React.Component<Props, State> {
                         <StandardButton
                             title={'Start session'}
                             onPress={this._startSession.bind(this)}
-                        />
-                        <VerticalSpace />
-
-                        <StandardButton
-                            title={'Schedule notifications'}
-                            onPress={this._scheduleNotifications.bind(this)}
                         />
                         <VerticalSpace />
 
