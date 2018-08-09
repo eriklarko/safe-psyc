@@ -1,22 +1,20 @@
---- jest.js	2018-07-20 11:48:41.241175280 -0400
-+++ node_modules/react-native/flow/jest.js	2018-07-04 11:01:15.000000000 -0400
+--- node_modules/react-native/flow/jest.js	2018-08-09 16:11:17.441763976 -0400
++++ ./jest.js	2018-08-09 16:10:22.004661995 -0400
 @@ -186,7 +186,7 @@
  };
  
  type JestExpectType = {
--  not: JestExpectType & EnzymeMatchersType & SafePsycExpectType,
-+  not: JestExpectType & EnzymeMatchersType,
+-  not: JestExpectType & EnzymeMatchersType,
++  not: JestExpectType & EnzymeMatchersType & SafePsycExpectType,
    /**
     * If you have a mock function, you can use .lastCalledWith to test what
     * arguments it was last called with.
-@@ -597,9 +597,8 @@
- 
+@@ -598,7 +598,7 @@
  /** The expect function is used every time you want to test a value */
  declare var expect: {
--
    /** The object that you want to make assertions against */
--  (value: any): JestExpectType & JestPromiseType & EnzymeMatchersType & SafePsycExpectType,
-+  (value: any): JestExpectType & JestPromiseType & EnzymeMatchersType,
+-  (value: any): JestExpectType & JestPromiseType & EnzymeMatchersType,
++  (value: any): JestExpectType & JestPromiseType & EnzymeMatchersType & SafePsycExpectType,
    /** Add additional Jasmine matchers to Jest's roster */
    extend(matchers: {[name: string]: JestMatcher}): void,
    /** Add a module that formats application-specific data structures. */
