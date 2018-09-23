@@ -3,6 +3,7 @@
 import React from 'react';
 import reactElementToJSXString from 'react-element-to-jsx-string';
 import prettyFormat from 'pretty-format';
+import type ReactTestRenderer from 'react-test-renderer';
 
 const {ReactElement, ReactTestComponent} = prettyFormat.plugins;
 
