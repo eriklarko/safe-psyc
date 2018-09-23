@@ -38,7 +38,6 @@ export class ReferencePointService {
 
             if (isCloseEnough) {
                 const group = intensityToGroup(otherCoords.intensity);
-                //console.log(emotion.polarity(), e.coordinates, distance, e.name);
                 if (!refPoints.has(group)) {
                     refPoints.set(group, e);
                     if (refPoints.size >= 5) break;

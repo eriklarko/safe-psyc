@@ -79,7 +79,6 @@ class FirebaseLogger implements RemoteLogger {
     }
 
     logEvent(eventName, params) {
-        //console.log('keuk', this.analytics);
         this.analytics.logEvent(eventName, params);
     }
 }
