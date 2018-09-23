@@ -120,7 +120,8 @@ type ConfusionListProps = {
 // Bitter and Despondent when shown the Angry image, this
 // component will show a list with Bitter and Despondent.
 function ConfusionList(props: ConfusionListProps) {
-    const { correct, incorrect } = props.dataPoints;
+    const { dataPoints, ...restProps } = props
+    const { correct, incorrect } = dataPoints;
 
     // $FlowFixMe
     const incorrectEmotions: Array<{
@@ -129,12 +130,12 @@ function ConfusionList(props: ConfusionListProps) {
     }> = filterOldAndEyeAnswers(incorrect);
 
     if (incorrectEmotions.length < 4) {
-        return <View {...props} />;
+        return <View {...restProps} />;
     }
 
     const data = toFlatListData(incorrectEmotions);
     return (
-        <View {...props}>
+        <View {...restProps}>
             <StandardText>You sometimes get this confused with</StandardText>
             <VerticalSpace />
             <FlatList data={Array.from(data.values())} renderItem={renderRow} />

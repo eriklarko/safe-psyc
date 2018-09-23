@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { View, Image, TouchableOpacity, Alert, BackHandler } from 'react-native';
+import { View, Image, TouchableOpacity, BackHandler } from 'react-native';
 import { VerticalSpace } from '~/src/components/lib/VerticalSpace.js';
 import { StandardButton } from '~/src/components/lib//Buttons.js';
 import { StandardText } from '~/src/components/lib//Texts.js';
@@ -25,6 +25,7 @@ type Props = {
     questions: Array<Question>,
     onSessionFinished: Report => void,
     navigation: Navigation<{}>,
+    alert: (string, string, Array<{ text: string, onPress?: Function, style?: string }>, { cancelable?: bool }) => void,
 };
 type State = {
     questions: QuestionCollection,
@@ -85,7 +86,7 @@ export class Session extends React.Component<Props, State> {
     // Needs to be an anonymous function for removeEventListener to
     // find the correct reference
     _askAbort = () => {
-        Alert.alert(
+        this.props.alert(
             'Abort session?',
             'Answers are saved, but the progress is lost',
             [

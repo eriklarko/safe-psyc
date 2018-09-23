@@ -52,6 +52,7 @@ export function SessionReport(props: Props) {
     });
 
     return (
+        // $FlowFixMe
         <SectionList
             sections={sectionsProp}
             renderItem={data => renderRow(data.item, onPressItem)}

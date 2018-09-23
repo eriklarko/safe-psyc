@@ -264,16 +264,15 @@ it('invokes the backend facade on wrong answers', () => {
 });
 
 it('has an abort button that asks to abort the session when tapped', () => {
-    Alert.alert = jest.fn();
-
-    const component = render(Session, {}, defaultProps);
+    const alert = jest.fn();
+    const component = render(Session, { alert: alert }, defaultProps);
     expect(component).toHaveChild(AbortSessionButton);
 
     const abortButton = findChildren(component, AbortSessionButton)[0];
     const touchable = findChildren(abortButton, TouchableOpacity)[0];
 
     touchable.props.onPress();
-    expect(Alert.alert).toHaveBeenCalledWith(
+    expect(alert).toHaveBeenCalledWith(
         'Abort session?',
         expect.anything(),
         expect.anything(),
@@ -282,13 +281,12 @@ it('has an abort button that asks to abort the session when tapped', () => {
 });
 
 it('ask to abort when the back button is pressed', () => {
-    Alert.alert = jest.fn();
-
-    const component = render(Session, {}, defaultProps);
+    const alert = jest.fn();
+    const component = render(Session, { alert: alert }, defaultProps);
 
     BackHandler.mockPressBack();
 
-    expect(Alert.alert).toHaveBeenCalledWith(
+    expect(alert).toHaveBeenCalledWith(
         'Abort session?',
         expect.anything(),
         expect.anything(),
@@ -298,12 +296,13 @@ it('ask to abort when the back button is pressed', () => {
 
 it('aborts the session when the abort confirm is tapped', () => {
     let abortYes = null;
-    Alert.alert = (_1, _2, buttons) => {
+    const alert = (_1, _2, buttons) => {
         abortYes = buttons.find(b => b.text === 'Yes');
     };
 
     const props = {
         navigation: mockNavigation(),
+        alert: alert,
     };
     const component = render(Session, props, defaultProps);
     const abortButton = findChildren(component, AbortSessionButton)[0];

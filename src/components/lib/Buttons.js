@@ -6,8 +6,8 @@ import { View, TouchableOpacity, Text, Button } from 'react-native';
 import { constants } from '~/src/styles/constants.js';
 
 type StyleContext = {
-    buttonContainerStyle?: Object,
-    buttonTextStyle?: Object,
+    buttonContainerStyle?: View.propTypes.style,
+    buttonTextStyle?: View.propTypes.style,
 };
 ///////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////
@@ -45,9 +45,9 @@ const standardButtonDefaultStyles = {
 type StandardButtonProps = {
     onPress: () => *,
     disabled?: boolean,
-    title: string | ({ textStyle: Array<?Object>}) => Object,
-    containerStyle?: Object,
-    textStyle?: Object,
+    title: string | ({ textStyle: View.propTypes.style}) => Object,
+    containerStyle?: View.propTypes.style,
+    textStyle?: View.propTypes.style,
 };
 export function StandardButton(props: StandardButtonProps, context: StyleContext) {
     const { title, containerStyle, textStyle, disabled, ...restProps } = props;
@@ -103,8 +103,8 @@ const secondaryButtonStyles = {
 type SecondaryButtonProps = {
     onPress: () => *,
     title: string,
-    containerStyle?: Object,
-    textStyle?: Object,
+    containerStyle?: View.propTypes.style,
+    textStyle?: View.propTypes.style,
 };
 export function SecondaryButton(props: SecondaryButtonProps, context: StyleContext) {
     const { title, onPress, containerStyle, textStyle } = props;
@@ -137,8 +137,8 @@ const largeButtonContainerStyle = {
 
 type LargeButtonProps = {
     title: string,
-    containerStyle?: ?Object | Array<mixed>,
-    textStyle?: Object,
+    containerStyle?: View.propTypes.style,
+    textStyle?: View.propTypes.style,
 };
 export function LargeButton(props: LargeButtonProps, context: StyleContext) {
     const { title, containerStyle, textStyle, ...restProps } = props;

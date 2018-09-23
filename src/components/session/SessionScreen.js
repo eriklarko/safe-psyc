@@ -5,7 +5,7 @@
 /// component
 
 import React from 'react';
-import { Text, StatusBar } from 'react-native';
+import { Text, StatusBar, Alert } from 'react-native';
 import { Session } from './Session.js';
 import { navigateToSessionReport } from '~/src/navigation-actions.js';
 import { answerBackendFacade } from '~/src/services/answer-backend.js';
@@ -44,6 +44,10 @@ export class SessionScreen extends React.Component<Props, {}> {
                         navigateToSessionReport(report)
                     }
                     navigation={((this.props.navigation: any): Navigation<{}>)}
+                    alert={(title, message, btns, options) => {
+                        // $FlowFixMe
+                        Alert.alert(title, message, btns, options);
+                    }}
                 />
             );
         } else {

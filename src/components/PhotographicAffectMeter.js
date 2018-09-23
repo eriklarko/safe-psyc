@@ -323,6 +323,7 @@ function PhotoGrid(props) {
                     containerStyles.push(submittedImageStyle);
                 }
 
+                // $FlowFixMe
                 return <TouchableHighlight
                     key={emotionImage.emotion}
                     testName={emotionImage.emotion}
