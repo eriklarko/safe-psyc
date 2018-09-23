@@ -1,7 +1,6 @@
 // @flow
 
-jest.unmock('./logger');
-import { Logger } from './logger';
+const { Logger } = jest.requireActual('./logger.js');
 
 it("logs to local logger if there isn't an error", () => {
     const { log, localMock } = createLog();
