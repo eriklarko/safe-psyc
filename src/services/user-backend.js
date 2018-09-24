@@ -134,45 +134,13 @@ export class UserBackendFacade {
             });
     }
 
+    onAuthStateChange(callback: (bool) => void) {
+        return this._auth.onAuthStateChanged(callback);
+    }
+
     onceAuthStateChange(callback: (bool) => void) {
         const unregister = this._auth.onAuthStateChanged( user => {
             callback(!!user);
-            unregister();
-        });
-    }
-
-    onUserLoggedIn(callback: () => void): () => void {
-        onLoggedInListeners.push(callback);
-        if (!listenersRegistered) {
-            registerAuthListeners(this._auth);
-        }
-
-        return () => {
-            removeFrom(onLoggedInListeners, callback);
-        };
-    }
-
-    onceUserLoggedIn(callback: () => void) {
-        const unregister = this.onUserLoggedIn(() => {
-            callback();
-            unregister();
-        });
-    }
-
-    onUserLoggedOut(callback: () => void) {
-        onLoggedOutListeners.push(callback);
-        if (!listenersRegistered) {
-            registerAuthListeners(this._auth);
-        }
-
-        return () => {
-            removeFrom(onLoggedOutListeners, callback);
-        };
-    }
-
-    onceUserLoggedOut(callback: () => void) {
-        const unregister = this.onUserLoggedOut(() => {
-            callback();
             unregister();
         });
     }

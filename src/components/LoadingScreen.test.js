@@ -26,13 +26,12 @@ it('redirects to start screen after timer fires', () => {
 });
 
 it('redirects to start screen if logged out', () => {
-    let signalLoggedOut = jest.fn();
+    let signalAuthChange = jest.fn();
     const loggedOut = jest.fn();
     const component = render(LoadingScreen, {
         userBackend: {
-            onUserLoggedIn: jest.fn(),
-            onUserLoggedOut: cb => {
-                signalLoggedOut = cb;
+            onAuthStateChange: cb => {
+                signalAuthChange = cb;
             },
         },
         navigationActions: {
@@ -41,7 +40,7 @@ it('redirects to start screen if logged out', () => {
     });
 
     return checkNextTick( () => {
-        signalLoggedOut();
+        signalAuthChange(null); // use null to indicate logged out
         expect(loggedOut).toHaveBeenCalledTimes(1);
     });
 });
@@ -49,18 +48,17 @@ it('redirects to start screen if logged out', () => {
 it('redirects to home screen if logged in', () => {
     const navigation = mockNavigation();
 
-    let signalLoggedIn = jest.fn();
+    let signalAuthChange = jest.fn();
     const component = render(LoadingScreen, {
         userBackend: {
-            onUserLoggedIn: cb => {
-                signalLoggedIn = cb;
+            onAuthStateChange: cb => {
+                signalAuthChange = cb;
             },
-            onUserLoggedOut: jest.fn(),
         },
     });
 
     return checkNextTick( () => {
-        signalLoggedIn();
+        signalAuthChange({}); // use {} to indicate logged in
         expect(navigation).toHaveResetTo('Home');
     });
 });

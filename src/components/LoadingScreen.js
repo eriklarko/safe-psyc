@@ -70,16 +70,16 @@ export class LoadingScreen extends React.Component<Props, {}> {
     }
 
     _registerLoginRedirecters(backend, resolve) {
-        backend.onUserLoggedIn(() => {
-            log.debug('User logged in');
+        backend.onAuthStateChange((user) => {
             resolve();
-            this._redirectToHomeIfOnLoadingScreen();
-        });
 
-        backend.onUserLoggedOut(() => {
-            log.debug('User logged out - redirecting to login screen');
-            resolve();
-            this.props.navigationActions.onUserLoggedOut();
+            if (user) {
+                log.debug('User logged in');
+                this._redirectToHomeIfOnLoadingScreen();
+            } else {
+                log.debug('User logged out - redirecting to login screen');
+                this.props.navigationActions.onUserLoggedOut();
+            }
         });
     }
 
