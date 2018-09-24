@@ -12,7 +12,7 @@ export async function startLoading(
     navigationActions: typeof navigationActions = navigationActions,
     userBackend: typeof userBackendFacade = userBackendFacade,
 ) {
-    console.log('loading....');
+    log.debug('Loading...');
     await remoteConfigBackendFacade.load();
     return checkIfLoggedIn(navigationActions, userBackend)
 }
@@ -25,13 +25,13 @@ async function checkIfLoggedIn(navigationActions, userBackend) {
         // if the listener fires first, we handle the redirection
         // in function registerLoginRedirecters
 
-        registerLoginRedirecters(userBackend, resolve);
-        startTimeout(resolve, state);
+        registerLoginRedirecters(navigationActions, userBackend, resolve);
+        startTimer(resolve, state);
     }).then( res => {
 
         // either the timer or the auth listener finished, we should
         // stop the timer regardless
-        clearTimeout(state);
+        stopTimer(state);
 
         // Determine if the timer or the auth listener finished first
         if (res === timeout) {
@@ -44,7 +44,7 @@ async function checkIfLoggedIn(navigationActions, userBackend) {
     });
 }
 
-function registerLoginRedirecters(backend, resolve) {
+function registerLoginRedirecters(navigationActions, backend, resolve) {
     backend.onAuthStateChange((user) => {
         resolve();
 
@@ -68,13 +68,13 @@ function redirectToHomeIfOnLoadingScreen() {
     }
 }
 
-function startTimeout(resolve, state) {
+function startTimer(resolve, state) {
     state.autologinTimeout = setTimeout(() => {
         resolve(timeout);
     }, 1000);
 }
 
-function clearTimeout(state) {
+function stopTimer(state) {
     if (state.autologinTimeout) {
         clearTimeout(state.autologinTimeout);
     }
