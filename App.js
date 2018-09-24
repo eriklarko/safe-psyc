@@ -1,5 +1,6 @@
 import React from 'react';
-import { createStackNavigator } from 'react-navigation';
+import { Platform, Alert } from 'react-native';
+import { createStackNavigator, NavigationActions } from 'react-navigation';
 
 import { LoadingScreen } from './src/components/LoadingScreen.js';
 import { PitchScreen } from './src/components/PitchScreen.js';
@@ -14,7 +15,9 @@ import { LoginScreen } from './src/components/LoginScreen.js';
 import { EmailAuthScreen } from './src/components/EmailAuthScreen.js';
 import { DebugScreen } from './src/components/DebugScreen.js';
 
-import { setNavigation } from './src/navigation-actions.js';
+import { startLoading } from '~/src/services/startup.js';
+import { log } from '~/src/services/logger.js';
+import { setNavigation, setCurrentScreen, resetTo } from './src/navigation-actions.js';
 import { constants } from './src/styles/constants.js';
 
 const defaultScreenProps = {
@@ -51,6 +54,64 @@ const RootNavigator = createStackNavigator({
 // The props available in navigationOptions is a little hard to find, so
 // the link is here https://reactnavigation.org/docs/navigators/stack#StackNavigatorConfig
 
-export default function App(props) {
-    return <RootNavigator ref={ r => setNavigation(r) } />
-};
+/////  DEEP LINKING
+// on Android, the URI prefix typically contains a host in addition to scheme
+// on Android, note the required / (slash) at the end of the host property
+const deepLinkingPrefix = Platform.OS == 'android' ? 'safepsyc://safepsyc/' : 'safepsyc://';
+const previousGetActionForPathAndParams = RootNavigator.router.getActionForPathAndParams;
+let redirectOnLoad = null;
+Object.assign(RootNavigator.router, {
+    getActionForPathAndParams(path, params) {
+        if (path.startsWith("open/")) {
+            const screen = path.substr("open/".length);
+            redirectOnLoad = screen;
+        }
+
+        return previousGetActionForPathAndParams(path, params);
+    },
+});
+
+///// SCREEN TRACKING
+function getActiveRouteName(navigationState) {
+    if (!navigationState) {
+        return null;
+    }
+
+    const route = navigationState.routes[navigationState.index];
+    // dive into nested navigators
+    if (route.routes) {
+        return getActiveRouteName(route);
+    }
+    return route.routeName;
+}
+
+export default class App extends React.Component<{}, {}> {
+
+    componentDidMount() {
+        startLoading()
+            .then( () => {
+                log.debug('Loading done');
+                if(redirectOnLoad) {
+                    log.debug('Loading done - resetting to %s', redirectOnLoad);
+                    resetTo(redirectOnLoad);
+                }
+            })
+            .catch(e => {
+                log.error('Failed loading the app, %s', e);
+                Alert.alert('Failed loading the app', e.message);
+            });
+    }
+
+    render() {
+        return <RootNavigator
+            ref={ r => setNavigation(r) }
+            uriPrefix={ deepLinkingPrefix }
+            onNavigationStateChange={ (prevState, currentState) => {
+                if (currentState.isTransitioning) return;
+
+                const currentScreen = getActiveRouteName(currentState);
+                setCurrentScreen(currentScreen);
+            }}
+        />
+    }
+}

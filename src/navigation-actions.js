@@ -34,6 +34,14 @@ export function setNavigation(nav: Navigation<mixed>) {
     navigation = nav;
 }
 
+let currentScreen: ?string = null;
+export function setCurrentScreen(name: string) {
+    currentScreen = name;
+}
+export function getCurrentScreen(): ?string {
+    return currentScreen;
+}
+
 export function paramsOr<T, S>(navigation: Navigation<T>, or: S): T | S {
     return navigation.state && navigation.state.params ? navigation.state.params : or;
 }
