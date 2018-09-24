@@ -13,16 +13,15 @@ import type { UserBackendFacade } from '~/src/services/user-backend.js';
 jest.useFakeTimers();
 
 it('calls onUserLoggedOut after timer fires', () => {
-    const loggedOut = jest.fn();
     const navActions = asNavActions({
-        onUserLoggedOut: loggedOut,
+        onUserLoggedOut: jest.fn(),
     });
     startLoading(navActions);
 
-    expect(loggedOut).not.toHaveBeenCalled();
+    expect(navActions.onUserLoggedOut).not.toHaveBeenCalled();
     jest.runAllTimers();
     return checkNextTick( () => {
-        expect(loggedOut).toHaveBeenCalledTimes(1);
+        expect(navActions.onUserLoggedOut).toHaveBeenCalledTimes(1);
     });
 });
 
@@ -34,16 +33,14 @@ it('calls onUserLoggedOut if logged out', () => {
         },
     });
 
-    const loggedOut = jest.fn();
     const navActions = asNavActions({
-        onUserLoggedOut: loggedOut,
+        onUserLoggedOut: jest.fn(),
     });
 
     startLoading(navActions, userBackend);
-
     return checkNextTick( () => {
         signalAuthChange(null); // use null to indicate logged out
-        expect(loggedOut).toHaveBeenCalledTimes(1);
+        expect(navActions.onUserLoggedOut).toHaveBeenCalledTimes(1);
     });
 });
 

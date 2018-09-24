@@ -18,7 +18,7 @@ export async function startLoading(
 }
 
 async function checkIfLoggedIn(navigationActions, userBackend) {
-    const state = {};
+    let timerId = null;
     return new Promise((resolve, reject) => {
         // fire off both the auth listener and a timer,
         // if the timer finishes first, the user isn't logged in
@@ -26,12 +26,12 @@ async function checkIfLoggedIn(navigationActions, userBackend) {
         // in function registerLoginRedirecters
 
         registerLoginRedirecters(navigationActions, userBackend, resolve);
-        startTimer(resolve, state);
+        timerId = startTimer(resolve);
     }).then( res => {
 
         // either the timer or the auth listener finished, we should
         // stop the timer regardless
-        stopTimer(state);
+        stopTimer(timerId);
 
         // Determine if the timer or the auth listener finished first
         if (res === timeout) {
@@ -61,7 +61,7 @@ function registerLoginRedirecters(navigationActions, backend, resolve) {
 function redirectToHomeIfOnLoadingScreen() {
     const currentScreen = navigationActions.getCurrentScreen();
     if (currentScreen === "Loading" || currentScreen === 'Login') {
-        log.debug('Was on the loading screen when logged in, redirecting to home');
+        log.debug('Was on the %s screen when logged in, redirecting to home', currentScreen);
         navigationActions.resetToHome();
     } else {
         log.debug('Current screen was %s, not redirecting anywhere', currentScreen);
@@ -69,13 +69,13 @@ function redirectToHomeIfOnLoadingScreen() {
 }
 
 function startTimer(resolve, state) {
-    state.autologinTimeout = setTimeout(() => {
+    return setTimeout(() => {
         resolve(timeout);
     }, 1000);
 }
 
-function stopTimer(state) {
-    if (state.autologinTimeout) {
-        clearTimeout(state.autologinTimeout);
+function stopTimer(timerId) {
+    if (timerId) {
+        clearTimeout(timerId);
     }
 }
