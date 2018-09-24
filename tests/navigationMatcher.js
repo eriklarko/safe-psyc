@@ -42,7 +42,7 @@ expect.extend({
     },
 
     toHaveResetTo: (received, route) => {
-        const { calls } = received.mock;
+        const { calls } = received.dispatch.mock;
         const numCalls = calls.length;
 
         if (numCalls !== 1) {

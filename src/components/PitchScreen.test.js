@@ -16,7 +16,7 @@ it('contains a skip button that navigates to the login screen', () => {
 
     clickSkipButton(component);
 
-    expect(navigation.dispatch).toHaveResetTo('Login');
+    expect(navigation).toHaveResetTo('Login');
 });
 
 function clickSkipButton(component) {

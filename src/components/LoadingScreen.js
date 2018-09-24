@@ -7,13 +7,24 @@ import { ActivityIndicator } from '~/src/components/lib/ActivityIndicator.js';
 import { userBackendFacade } from '~/src/services/user-backend.js';
 import { remoteConfigBackendFacade } from '~/src/services/remote-config-backend.js';
 import { log } from '~/src/services/logger.js';
-import { resetToHome, onUserLoggedOut } from '~/src/navigation-actions.js';
+import * as navigationActions from '~/src/navigation-actions.js';
+
+// used to indicate that the login timer timed out
+const timeout = "TIMEOUT";
 
 type Props = {
+    navigationActions: typeof navigationActions,
+    userBackend: typeof userBackendFacade,
 };
 export class LoadingScreen extends React.Component<Props, {}> {
     static navigationOptions = {
         header: null,
+    };
+
+    // only used for testing
+    static defaultProps = {
+        navigationActions: navigationActions,
+        userBackend: userBackendFacade,
     };
 
     autologinTimeout = null;
@@ -27,28 +38,72 @@ export class LoadingScreen extends React.Component<Props, {}> {
     }
 
     async _startLoading() {
-        const isLoggedIn = await checkIfLoggedIn(userBackendFacade, this);
-
-        registerLoginRedirecter(userBackendFacade);
-
         await remoteConfigBackendFacade.load();
-
-        this._redirect(isLoggedIn);
+        await this._checkIfLoggedIn()
     }
 
-    _redirect(isLoggedIn) {
-        if (isLoggedIn) {
-            console.log('ABOUT TO RESET TO HOME')
-            resetToHome();
-        } else {
-            onUserLoggedOut();
+    async _checkIfLoggedIn() {
+        return new Promise((resolve, reject) => {
+            // fire off both the auth listener and a timer,
+            // if the timer finishes first, the user isn't logged in
+            // if the listener fires first, we handle the redirection
+            // in _registerLoginRedirecters
+
+            this._registerLoginRedirecters(this.props.userBackend, resolve);
+            this._startTimeout(resolve);
+        }).then( res => {
+
+            // either the timer or the auth listener finished, we should
+            // stop the timer regardless
+            this._clearTimeout();
+
+            // Determine if the timer or the auth listener finished first
+            if (res === timeout) {
+
+                // It was the timer, the user is logged out
+                this.props.navigationActions.onUserLoggedOut();
+            }
+
+            // The other cases are handled by _registerLoginRedirecters
+        });
+
+    }
+
+    _registerLoginRedirecters(backend, resolve) {
+        backend.onUserLoggedIn(() => {
+            log.debug('User logged in');
+            resolve();
+            this._redirectToHomeIfOnLoadingScreen();
+        });
+
+        backend.onUserLoggedOut(() => {
+            log.debug('User logged out - redirecting to login screen');
+            resolve();
+            this.props.navigationActions.onUserLoggedOut();
+        });
+    }
+
+    _redirectToHomeIfOnLoadingScreen() {
+        const currentScreen = "Loading";
+        if (currentScreen === "Loading") {
+            this.props.navigationActions.resetToHome();
+        }
+    }
+
+    _startTimeout(resolve) {
+        this.autologinTimeout = setTimeout(() => {
+            resolve(timeout);
+        }, 1000);
+    }
+
+    _clearTimeout() {
+        if (this.autologinTimeout) {
+            clearTimeout(this.autologinTimeout);
         }
     }
 
     componentWillUnmount() {
-        if (this.autologinTimeout) {
-            clearTimeout(this.autologinTimeout);
-        }
+        this._clearTimeout();
     }
 
     render() {
@@ -60,49 +115,4 @@ export class LoadingScreen extends React.Component<Props, {}> {
             </ImageBackground>
         );
     }
-}
-
-function checkIfLoggedIn(backend, state): Promise<boolean> {
-    const autologinTimeoutMs = 1000;
-    return new Promise((resolve, reject) => {
-        listenForLoginEvent(resolve);
-        startTimeout(resolve);
-    });
-
-    function listenForLoginEvent(resolve) {
-        backend.onceAuthStateChange( userLoggedIn => {
-            clearTimer();
-            if (userLoggedIn) {
-                log.debug('Got logged in event, redirecting to home');
-            } else {
-                log.debug('Got logged out event, redirecting to login screen');
-            }
-            resolve(userLoggedIn);
-        });
-    }
-
-    function startTimeout(resolve) {
-        state.autologinTimeout = setTimeout(() => {
-            log.debug('Timed out waiting for autologin, redirecting to login screen');
-            resolve(false);
-        }, autologinTimeoutMs);
-    }
-
-    function clearTimer() {
-        if (state.autologinTimeout) {
-            clearTimeout(state.autologinTimeout);
-        }
-    }
-}
-
-function registerLoginRedirecter(backend) {
-    backend.onUserLoggedIn(() => {
-        log.debug('User logged in - resetting to home');
-        resetToHome();
-    });
-
-    backend.onUserLoggedOut(() => {
-        log.debug('User logged out - redirection to login screen');
-        onUserLoggedOut();
-    });
 }

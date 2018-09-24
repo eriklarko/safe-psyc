@@ -11,6 +11,10 @@ jest.mock('react-native-firebase', () => ({
             setAnalyticsCollectionEnabled: () => {},
         }),
         config: () => ({
+            enableDeveloperMode: () => {},
+            setDefaults: () => {},
+            fetch: () => Promise.resolve(),
+            activateFetched: () => {},
             getValue: () => Promise.resolve({
                 val: () => {},
             }),

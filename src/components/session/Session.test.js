@@ -312,7 +312,7 @@ it('aborts the session when the abort confirm is tapped', () => {
     expect(abortYes).not.toBeNull();
     abortYes && abortYes.onPress();
 
-    expect(props.navigation.dispatch).toHaveResetTo('Home');
+    expect(props.navigation).toHaveResetTo('Home');
 });
 
 function promiseMock() {

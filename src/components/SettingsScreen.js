@@ -56,6 +56,7 @@ function LogoutButton(props) {
             onPress={() =>
                 userBackendFacade
                     .logOut()
+                    // this .then might not be necessary...
                     .then(() => onUserLoggedOut())
             }
             title={title}
