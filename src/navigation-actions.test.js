@@ -136,7 +136,8 @@ describe('onUserLoggedOut', () => {
 
     function doNav(conf: Conf) {
         const storage = {
-            getItem: () => conf.hasSeenThePitch,
+            getValue: () => conf.hasSeenThePitch,
+            setValue: jest.fn(),
         };
         const navigation = mockNavigation();
         const { dispatch } = navigation;

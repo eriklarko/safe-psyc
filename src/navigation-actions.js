@@ -1,10 +1,11 @@
 // @flow
 
-import { InteractionManager, Alert, AsyncStorage } from 'react-native';
+import { InteractionManager, Alert } from 'react-native';
 import moment from 'moment';
 // $FlowFixMe
 import { NavigationActions, StackActions } from 'react-navigation';
 import { randomSessionService } from '~/src/services/random-session-service.js';
+import { deviceStorage } from '~/src/services/storage.js';
 import { log } from '~/src/services/logger.js';
 
 import type { Emotion } from '~/src/models/emotion.js';
@@ -159,9 +160,9 @@ export function onUserLoggedIn() {
     resetToHome();
 }
 
-export function onUserLoggedOut(storage: * = AsyncStorage): Promise<void> {
+export function onUserLoggedOut(storage: * = deviceStorage): Promise<void> {
     return storage
-        .getItem('hasSeenThePitch')
+        .getValue('hasSeenThePitch')
         .then(hasSeenThePitch => {
             if (hasSeenThePitch === 'true') {
                 return 'Login';

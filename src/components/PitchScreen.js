@@ -5,18 +5,20 @@ import PropTypes from 'prop-types';
 import Swiper from 'react-native-swiper';
 import LinearGradient from 'react-native-linear-gradient';
 import Hyperlink from 'react-native-hyperlink';
-import { View, Image, AsyncStorage } from 'react-native';
+import { View, Image } from 'react-native';
 
 import { StandardText, LargeText } from '~/src/components/lib/Texts.js';
 import { StandardButton, HeroButton } from '~/src/components/lib/Buttons.js';
 import { ZoomAndRiseButton } from '~/src/components/lib/ZoomAndRiseButton.js';
 import { VerticalSpace } from '~/src/components/lib/VerticalSpace.js';
 import { resetToLogin } from '~/src/navigation-actions.js';
+import { deviceStorage } from '~/src/services/storage.js';
 import { paramsOr } from '~/src/navigation-actions.js';
 import { log } from '~/src/services/logger.js';
 import { constants } from '~/src/styles/constants.js';
 
 import type { Navigation } from '~/src/navigation-actions.js';
+import type { Storage } from '~/src/services/storage.js';
 
 const linkStyle = {
     color: constants.hilightColor2,
@@ -26,7 +28,7 @@ const linkStyle = {
 
 type Props = {
     navigation: Navigation<{
-        storage?: AsyncStorage,
+        storage?: Storage,
     }>,
 };
 type State = {
@@ -56,11 +58,11 @@ export class PitchScreen extends React.Component<Props, State> {
 
     _skip() {
         const storage = paramsOr(this.props.navigation, {
-            storage: AsyncStorage,
+            storage: deviceStorage,
         }).storage;
         // $FlowFixMe
         storage
-            .setItem('hasSeenThePitch', 'true')
+            .setValue('hasSeenThePitch', 'true')
             .then(() => {
                 log.debug('Successfully persisted to skip the pitch');
             })

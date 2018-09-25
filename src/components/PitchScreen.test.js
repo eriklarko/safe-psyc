@@ -30,7 +30,7 @@ function clickSkipButton(component) {
 
 it('persists the fact that the pitch was skipped', () => {
     const storageMock = {
-        setItem: jest.fn().mockReturnValue(Promise.resolve()),
+        setValue: jest.fn().mockReturnValue(Promise.resolve()),
     };
 
     const navigation = setupMockStorage(storageMock);
@@ -38,12 +38,12 @@ it('persists the fact that the pitch was skipped', () => {
 
     clickSkipButton(component);
 
-    expect(storageMock.setItem).toHaveBeenCalledWith('hasSeenThePitch', 'true');
+    expect(storageMock.setValue).toHaveBeenCalledWith('hasSeenThePitch', 'true');
 });
 
 it('redirects even if the storing fails', () => {
     const storageMock = {
-        setItem: jest.fn().mockReturnValue(Promise.reject(new Error('foo'))),
+        setValue: jest.fn().mockReturnValue(Promise.reject(new Error('foo'))),
     };
 
     const navigation = setupMockStorage(storageMock);
