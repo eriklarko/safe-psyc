@@ -1047,6 +1047,7 @@ type JestPrettyFormatPlugins = Array<JestPrettyFormatPlugin>;
 interface SafePsycExpectType {
   not: any,
   toHaveChild(Function): void,
+  toHaveExactlyOneChild(Function): void,
   toHaveChildWithProps(Function, Object): void,
   toHaveChildMatching(Object => boolean): void,
   toContainElementsOtherThan(mixed): void,

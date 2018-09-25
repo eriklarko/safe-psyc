@@ -4,6 +4,23 @@ import { Component } from 'react';
 import { getChildrenAndParent, findChildren, stringifyComponent } from './component-tree-utils.js';
 
 expect.extend({
+    toHaveExactlyOneChild: function (received, childConstructor) {
+
+        const matchingChildren = findChildren(received, childConstructor);
+
+        let message;
+        if (matchingChildren.length === 0) {
+            message = () => 'Could not find ' + childConstructor.name + ' in ' + stringifyComponent(received);
+        } else if (matchingChildren.length > 1) {
+            message = () => 'Expected exactly one ' + childConstructor.name + ', found ' + matchingChildren.length;
+        }
+
+        return {
+            pass: matchingChildren.length === 1,
+            message: message,
+        };
+    },
+
     toHaveChild: function (received, childConstructor) {
 
         const matchingChildren = findChildren(received, childConstructor);

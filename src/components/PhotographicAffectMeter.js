@@ -131,8 +131,6 @@ export class PhotographicAffectMeter extends React.Component<Props, State> {
         const doNotChangeButton = this._createDoNotChangeButton();
         const submitButton = this._createSubmitButton();
 
-        const apa = <StandardText>
-                    </StandardText>
         return (
             <ScrollView>
                 <View style={styles.container}>
