@@ -43,6 +43,7 @@ export function getCurrentScreen(): ?string {
     return currentScreen;
 }
 
+// TODO: can be replaced by navigation.getParam('name', default);
 export function paramsOr<T, S>(navigation: Navigation<T>, or: S): T | S {
     return navigation.state && navigation.state.params ? navigation.state.params : or;
 }
@@ -108,7 +109,7 @@ export function routeToCurrentFeelingOrHome(backend: CurrentEmotionBackendFacade
             }
         })
         .then(haveAlreadyAnswered => {
-            const neverWantsToBeAsked = false; // TODO: implement this
+            const neverWantsToBeAsked = false; // TODO: implement this, setting in SettingsScreen - account wide setting
             return {
                 haveAlreadyAnswered,
                 neverWantsToBeAsked,
