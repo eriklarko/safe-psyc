@@ -8,17 +8,16 @@ import { VerticalSpace } from '~/src/components/lib/VerticalSpace.js';
 import { ActivityIndicator } from '~/src/components/lib/ActivityIndicator.js';
 import { constants } from '~/src/styles/constants.js';
 import { userBackendFacade } from '~/src/services/user-backend.js';
-import { deviceStorage } from '~/src/services/storage.js';
+import { deviceStorage } from '~/src/services/device-storage.js';
 import { onUserLoggedOut, navigateToRegister } from '~/src/navigation-actions.js';
 import * as currentEmotionNotification from '~/src/services/current-emotion-notification.js';
 import { log } from '~/src/services/logger.js';
 
 import type { User } from '~/src/services/user-backend.js';
-import type { Storage } from '~/src/services/storage.js';
 
 type Props = {
     userBackend: typeof userBackendFacade,
-    storage: Storage,
+    storage: typeof deviceStorage,
 };
 export class SettingsScreen extends React.Component<Props, {}> {
     static navigationOptions = {

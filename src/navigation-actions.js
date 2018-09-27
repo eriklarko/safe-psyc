@@ -5,11 +5,14 @@ import moment from 'moment';
 // $FlowFixMe
 import { NavigationActions, StackActions } from 'react-navigation';
 import { randomSessionService } from '~/src/services/random-session-service.js';
-import { deviceStorage } from '~/src/services/storage.js';
+import { deviceStorage } from '~/src/services/device-storage.js';
+import { accountStorage } from '~/src/services/account-storage.js';
+import { SettingsKeys } from '~/src/utils/settings.js';
 import { log } from '~/src/services/logger.js';
 
 import type { Emotion } from '~/src/models/emotion.js';
 import type { CurrentEmotionBackendFacade } from '~/src/services/current-emotion-backend.js';
+import type { AccountStorage } from '~/src/services/account-storage.js';
 import type { Report } from '~/src/components/session/report/SessionReport.js';
 
 export type Navigation<P> = {
@@ -95,8 +98,12 @@ export function navigateToSessionReport(report: Report) {
     );
 }
 
-export function routeToCurrentFeelingOrHome(backend: CurrentEmotionBackendFacade): Promise<*> {
-    return backend
+export function routeToCurrentFeelingOrHome(
+    emotionBackend: CurrentEmotionBackendFacade,
+    settingsBackend: AccountStorage,
+
+): Promise<*> {
+    return emotionBackend
         .getLastEmotionAnswer()
         .then(answer => {
             if (answer) {
@@ -109,15 +116,17 @@ export function routeToCurrentFeelingOrHome(backend: CurrentEmotionBackendFacade
             }
         })
         .then(haveAlreadyAnswered => {
-            const neverWantsToBeAsked = false; // TODO: implement this, setting in SettingsScreen - account wide setting
-            return {
-                haveAlreadyAnswered,
-                neverWantsToBeAsked,
-            };
+            return settingsBackend.getValue(SettingsKeys.ASK_CURR_EM_Q)
+                .then (wantsToBeAsked => {
+                    return {
+                        haveAlreadyAnswered,
+                        wantsToBeAsked,
+                    };
+                });
         })
         .then(context => {
-            const { haveAlreadyAnswered, neverWantsToBeAsked } = context;
-            const shouldAskHowTheUserIsFeeling = !haveAlreadyAnswered && !neverWantsToBeAsked;
+            const { haveAlreadyAnswered, wantsToBeAsked } = context;
+            const shouldAskHowTheUserIsFeeling = !haveAlreadyAnswered && wantsToBeAsked;
 
             if (shouldAskHowTheUserIsFeeling) {
                 const resetAction = StackActions.reset({

@@ -12,13 +12,12 @@ import { StandardButton, HeroButton } from '~/src/components/lib/Buttons.js';
 import { ZoomAndRiseButton } from '~/src/components/lib/ZoomAndRiseButton.js';
 import { VerticalSpace } from '~/src/components/lib/VerticalSpace.js';
 import { resetToLogin } from '~/src/navigation-actions.js';
-import { deviceStorage } from '~/src/services/storage.js';
+import { deviceStorage } from '~/src/services/device-storage.js';
 import { paramsOr } from '~/src/navigation-actions.js';
 import { log } from '~/src/services/logger.js';
 import { constants } from '~/src/styles/constants.js';
 
 import type { Navigation } from '~/src/navigation-actions.js';
-import type { Storage } from '~/src/services/storage.js';
 
 const linkStyle = {
     color: constants.hilightColor2,
@@ -28,7 +27,7 @@ const linkStyle = {
 
 type Props = {
     navigation: Navigation<{
-        storage?: Storage,
+        storage?: typeof deviceStorage,
     }>,
 };
 type State = {

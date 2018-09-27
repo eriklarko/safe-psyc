@@ -9,6 +9,7 @@ import { SessionReport } from './SessionReport.js';
 
 import { paramsOr, routeToCurrentFeelingOrHome } from '~/src/navigation-actions.js';
 import { currentEmotionBackendFacade } from '~/src/services/current-emotion-backend.js';
+import { accountStorage } from '~/src/services/account-storage.js';
 import { constants } from '~/src/styles/constants.js';
 
 import type { Navigation } from '~/src/navigation-actions.js';
@@ -34,7 +35,7 @@ export class SessionReportScreen extends React.Component<Props, {}> {
     };
 
     _onDismiss() {
-        routeToCurrentFeelingOrHome(currentEmotionBackendFacade);
+        routeToCurrentFeelingOrHome(currentEmotionBackendFacade, accountStorage);
     }
 
     render() {

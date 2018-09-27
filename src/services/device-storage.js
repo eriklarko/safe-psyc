@@ -1,11 +1,7 @@
 // @flow
 
 import {  AsyncStorage } from 'react-native';
-
-export interface Storage {
-    getValue(string): Promise<string>;
-    setValue(string, string): Promise<void>;
-}
+import type { Storage } from '~/src/services/storage.flow.js';
 
 export class DeviceStorage {
 
