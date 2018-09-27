@@ -28,7 +28,8 @@ export class SettingsScreen extends React.Component<Props, {}> {
 
     static defaultProps = {
         userBackend: userBackendFacade,
-        storage: deviceStorage,
+        deviceStorage: deviceStorage,
+        accountStorage: accountStorage,
     }
 
     render() {
@@ -44,13 +45,13 @@ export class SettingsScreen extends React.Component<Props, {}> {
             <VerticalSpace />
 
             <Toggle
-                title="Ask current emotion questions"
-                testID="ask-current-emotion-questions-toggle"
-                storageKey={'current-emotion-notification'}
+                title='Ask current emotion question'
+                testID='ask-current-emotion-question-toggle'
+                storageKey={'ask-current-emotion-question'}
                 storage={this.props.accountStorage} />
             <Toggle
-                title="Current emotion notifications"
-                testID="current-emotion-notification-toggle"
+                title='Current emotion notifications'
+                testID='current-emotion-notification-toggle'
                 onChange={on => {
                     if (on) {
                         currentEmotionNotification.scheduleNotification();

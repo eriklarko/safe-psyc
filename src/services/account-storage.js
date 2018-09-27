@@ -3,7 +3,7 @@
 import { firebase } from '~/src/services/firebase.js';
 import { userBackendFacade } from '~/src/services/user-backend.js';
 import { log } from '~/src/services/logger.js';
-import { settings } from '~/src/utils/settings.js';
+import { getDefault } from '~/src/utils/settings.js';
 
 import type { Storage } from '~/src/services/storage.flow.js';
 
@@ -11,17 +11,16 @@ import type { Storage } from '~/src/services/storage.flow.js';
 // across devices if the user is logged in
 export class AccountStorage {
 
-    getValue(name: string): Promise<string> {
+    getValue(name: string): Promise<?string> {
         return userBackendFacade.getUserOrReject('get-value')
             .then( user => {
-                console.log("user", user);
                 const path = 'user-data/' + user.uid + '/storage/' + name;
                 return firebase
                     .database()
                     .ref(path)
                     .once('value')
                     .then( snap => {
-                        return snap.val() || settings[name].default;
+                        return snap.val() || getDefault(name)
                     });
             });
     }
