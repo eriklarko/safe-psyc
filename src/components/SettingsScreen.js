@@ -9,6 +9,7 @@ import { ActivityIndicator } from '~/src/components/lib/ActivityIndicator.js';
 import { constants } from '~/src/styles/constants.js';
 import { userBackendFacade } from '~/src/services/user-backend.js';
 import { deviceStorage } from '~/src/services/device-storage.js';
+import { accountStorage } from '~/src/services/account-storage.js';
 import { onUserLoggedOut, navigateToRegister } from '~/src/navigation-actions.js';
 import * as currentEmotionNotification from '~/src/services/current-emotion-notification.js';
 import { log } from '~/src/services/logger.js';
@@ -17,7 +18,8 @@ import type { User } from '~/src/services/user-backend.js';
 
 type Props = {
     userBackend: typeof userBackendFacade,
-    storage: typeof deviceStorage,
+    deviceStorage: typeof deviceStorage,
+    accountStorage: typeof deviceStorage,
 };
 export class SettingsScreen extends React.Component<Props, {}> {
     static navigationOptions = {
@@ -40,6 +42,12 @@ export class SettingsScreen extends React.Component<Props, {}> {
             <StandardText>Hi { user.email }</StandardText>
 
             <VerticalSpace />
+
+            <Toggle
+                title="Ask current emotion questions"
+                testID="ask-current-emotion-questions-toggle"
+                storageKey={'current-emotion-notification'}
+                storage={this.props.accountStorage} />
             <Toggle
                 title="Current emotion notifications"
                 testID="current-emotion-notification-toggle"
@@ -51,7 +59,7 @@ export class SettingsScreen extends React.Component<Props, {}> {
                     }
                 }}
                 storageKey={'current-emotion-notification'}
-                storage={this.props.storage} />
+                storage={this.props.deviceStorage} />
 
             <VerticalSpace />
             { logout }
@@ -125,18 +133,21 @@ class Toggle extends React.Component<*, { value: 'loading' | boolean | Error }> 
             return <StandardText>{ this.state.value.message }</StandardText>
         }
 
+        const { storage, storageKey, onChange } = this.props;
+
         return <View>
             <StandardText>{ this.props.title }</StandardText>
             <Switch
                 value={this.state.value}
                 onValueChange={ on => {
                     this.setState({ value: on });
-                    this.props.storage.setValue(this.props.storageKey, on.toString())
+
+                    storage.setValue(storageKey, on.toString())
                         .catch(e => {
-                            log.error('Failed storing current-emotion-notification value: %s', e);
+                            log.error('Failed storing %s: %s', storageKey, e);
                         });
 
-                    this.props.onChange(on);
+                    onChange && onChange(on);
                 }} />
         </View>
     }

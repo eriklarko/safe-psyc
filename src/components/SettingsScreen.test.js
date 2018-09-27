@@ -14,8 +14,12 @@ it('saves the current-emotion-notification toggle value', () => {
         userBackend: { 
             getLoggedInUser: () => ({}),
         },
-        storage: {
+        deviceStorage: {
             setValue: setValue,
+            getValue: jest.fn().mockResolvedValue(),
+        },
+        accountStorage: {
+            setValue: jest.fn().mockResolvedValue(),
             getValue: jest.fn().mockResolvedValue(),
         },
     });
