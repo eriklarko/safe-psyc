@@ -16,7 +16,7 @@
   },
   "scripts": {
     "start": "react-native start",
-    "android": "react-native run-android",
+    "android": "react-native run-android --variant=devDebug",
     "ios": "react-native run-ios",
     "test": "NODE_ENV=development node node_modules/jest/bin/jest.js --watch"
   },

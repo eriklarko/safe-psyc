@@ -21,7 +21,7 @@ chdir_to_script_dir()
 gradle_properties  = os.path.abspath("./android/gradle.properties")
 key_store = os.path.abspath("./android/app/safe-psyc-release-privkey.keystore")
 
-rel_apk_path = rel_to_call_path("./android/app/build/outputs/apk/release/app-release.apk")
+rel_apk_path = rel_to_call_path("./android/app/build/outputs/apk/beta/release/app-beta-release.apk")
 abs_apk_path = os.path.abspath(rel_apk_path)
 
 

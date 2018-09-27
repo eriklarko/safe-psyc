@@ -147,6 +147,20 @@ android {
             signingConfig signingConfigs.release
         }
     }
+
+    flavorDimensions "version"
+    productFlavors {
+        beta {
+            dimension "version"
+            applicationIdSuffix ".beta"
+        }
+        dev {
+            dimension "version"
+            applicationIdSuffix ".dev"
+            versionNameSuffix "-dev"
+        }
+    }
+
     // applicationVariants are e.g. debug, release
     applicationVariants.all { variant ->
         variant.outputs.each { output ->

@@ -36,6 +36,68 @@
           "status": 2
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1023992322811:android:13430128e6a683c4",
+        "android_client_info": {
+          "package_name": "se.larko.safepsyc.beta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1023992322811-b5ar80usdfko5hiru5an2ig4h15cpii9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAumzsjCW3vSk9dQSQLqtS07iMOi8aDkJw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1023992322811:android:bc4daa188bdcff84",
+        "android_client_info": {
+          "package_name": "se.larko.safepsyc.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1023992322811-b5ar80usdfko5hiru5an2ig4h15cpii9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAumzsjCW3vSk9dQSQLqtS07iMOi8aDkJw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
     }
   ],
   "configuration_version": "1"
