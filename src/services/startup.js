@@ -9,15 +9,15 @@ import { log } from '~/src/services/logger.js';
 const timeout = "TIMEOUT";
 
 export async function startLoading(
-    navigationActions: typeof navigationActions = navigationActions,
+    navActions: typeof navigationActions = navigationActions,
     userBackend: typeof userBackendFacade = userBackendFacade,
 ) {
     log.debug('Loading...');
     await remoteConfigBackendFacade.load();
-    return checkIfLoggedIn(navigationActions, userBackend)
+    return checkIfLoggedIn(navActions, userBackend)
 }
 
-async function checkIfLoggedIn(navigationActions, userBackend) {
+async function checkIfLoggedIn(navActions, userBackend) {
     let timerId = null;
     return new Promise((resolve, reject) => {
         // fire off both the auth listener and a timer,
@@ -25,7 +25,7 @@ async function checkIfLoggedIn(navigationActions, userBackend) {
         // if the listener fires first, we handle the redirection
         // in function registerLoginRedirecters
 
-        registerLoginRedirecters(navigationActions, userBackend, resolve);
+        registerLoginRedirecters(navActions, userBackend, resolve);
         timerId = startTimer(resolve);
     }).then( res => {
 
@@ -37,32 +37,36 @@ async function checkIfLoggedIn(navigationActions, userBackend) {
         if (res === timeout) {
 
             // It was the timer, the user is logged out
-            navigationActions.onUserLoggedOut();
+            navActions.onUserLoggedOut();
         }
 
         // The other cases are handled by function registerLoginRedirecters
     });
 }
 
-function registerLoginRedirecters(navigationActions, backend, resolve) {
+function registerLoginRedirecters(navActions, backend, resolve) {
     backend.onAuthStateChange((user) => {
         resolve();
 
-        if (user) {
-            log.debug('User logged in');
-            redirectToHomeIfOnLoadingScreen();
-        } else {
-            log.debug('User logged out - redirecting to login screen');
-            navigationActions.onUserLoggedOut();
+        try {
+            if (user) {
+                log.debug('User logged in');
+                redirectToHomeIfOnLoadingScreen(navActions);
+            } else {
+                log.debug('User logged out - redirecting to login screen');
+                navActions.onUserLoggedOut();
+            }
+        } catch (e) {
+            log.error("Failed starting up: %s", e);
         }
     });
 }
 
-function redirectToHomeIfOnLoadingScreen() {
-    const currentScreen = navigationActions.getCurrentScreen();
+function redirectToHomeIfOnLoadingScreen(navActions) {
+    const currentScreen = navActions.getCurrentScreen();
     if (currentScreen === "Loading" || currentScreen === 'Login') {
         log.debug('Was on the %s screen when logged in, redirecting to home', currentScreen);
-        navigationActions.resetToHome();
+        navActions.resetToHome();
     } else {
         log.debug('Current screen was %s, not redirecting anywhere', currentScreen);
     }
