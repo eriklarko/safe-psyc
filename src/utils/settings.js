@@ -19,8 +19,9 @@ export const SettingsKeys: { [$Keys<typeof settings>]: string } =
 
 export function getDefault(name: string): ?string {
     for (const key of Object.keys(settings)) {
-        if (key === name) {
-            return settings[key].default;
+        const setting = settings[key];
+        if (setting.key === name) {
+            return setting.default;
         }
     }
 
