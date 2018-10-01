@@ -74,7 +74,9 @@ export class HomeScreen extends React.Component<Props, State> {
                             />
                             <VerticalSpace /> */ }
 
-                            <RegisterLink />
+                            <RegisterLink
+                                user={ userBackendFacade.getLoggedInUser() }
+                                userBackend={ userBackendFacade } />
                             <VerticalSpace />
 
                             <HeroButton
@@ -103,25 +105,54 @@ function SettingsButton(props) {
     </TouchableOpacity>
 }
 
-function RegisterLink() {
-    const user = userBackendFacade.getLoggedInUser();
-    if (!user || !user.isAnonymous) {
-        return null;
+// There was a bug where this component didn't update if the user object
+// changed. I believe that was caused by this component depending on the
+// user object from the userBackendFacade, but not putting the object in
+// state or props. So when the user object changes, this component wont
+// rerender.
+class RegisterLink extends React.Component<*, *> {
+
+    constructor(props: *) {
+        super(props);
+        this.state = {
+            user: props.user,
+        };
     }
 
-    const textStyle = {
-        textAlign: 'right',
-        alignSelf: 'flex-end',
-        maxWidth: '70%',
-    };
-    return <View>
-        <StandardText style={textStyle}>
-            If you create an account your data can be saved across devices
-        </StandardText>
-        <SecondaryButton
-            title={'Register'}
-            onPress={navigateToRegister}
-            textStyle={textStyle}
-        />
-    </View>
+    componentDidMount() {
+        this._unregister = this.props.userBackend.addPromoteUserListener( u => {
+            this.setState({
+                user: u,
+            });
+        });
+    }
+
+    componentWillUnmount() {
+        if (this._unregister) {
+            this._unregister();
+        }
+    }
+
+    render() {
+        const { user } = this.state;
+        if (!user || !user.isAnonymous) {
+            return null;
+        }
+
+        const textStyle = {
+            textAlign: 'right',
+            alignSelf: 'flex-end',
+            maxWidth: '70%',
+        };
+        return <View>
+            <StandardText style={textStyle}>
+                If you create an account your data can be saved across devices
+            </StandardText>
+            <SecondaryButton
+                title={'Register'}
+                onPress={navigateToRegister}
+                textStyle={textStyle}
+            />
+        </View>
+    }
 }

@@ -4,30 +4,6 @@ import { firebase } from '~/src/services/firebase.js';
 import { log } from '~/src/services/logger.js';
 import { removeFrom } from '~/src/utils/array-utils.js';
 
-//////////////////////////////////////////////////////////
-//////////////////// AUTH LISTENERS //////////////////////
-//////////////////////////////////////////////////////////
-const onLoggedInListeners = [];
-const onLoggedOutListeners = [];
-
-
-let listenersRegistered = false;
-function registerAuthListeners(auth) {
-    auth.onAuthStateChanged((user) => {
-        if (user) {
-            log.debug('onAuthStateChange - user logged in');
-            onLoggedInListeners.forEach(l => l());
-        } else {
-            log.debug('onAuthStateChange - user logged out');
-            onLoggedOutListeners.forEach(l => l());
-        }
-    });
-
-    listenersRegistered = true;
-}
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
-
 export type User = {
     uid: string,
     email: ?string,
@@ -36,6 +12,7 @@ export type User = {
 export class UserBackendFacade {
 
     _auth: Object;
+    _onPromoteUserListener = [];
 
     constructor(auth: Object) {
         this._auth = auth;
@@ -72,10 +49,18 @@ export class UserBackendFacade {
             .linkAndRetrieveDataWithCredential(credential)
             .then( user => {
                 log.debug("Anonymous account successfully upgraded, %j", user);
+                this._onPromoteUserListener.forEach(l => l(user));
             })
             .catch( error => {
                 log.error("Error upgrading anonymous account %s", error);
             });
+    }
+
+    addPromoteUserListener(cb: (User) => void): () => void {
+        this._onPromoteUserListener.push(cb);
+        return () => {
+            removeFrom(this._onPromoteUserListener, cb);
+        };
     }
 
     createNewUser(email: string, password: string): Promise<User> {
@@ -134,19 +119,19 @@ export class UserBackendFacade {
             });
     }
 
-    onAuthStateChange(callback: (bool) => void) {
+    onAuthStateChange(callback: (User) => void) {
         return this._auth.onAuthStateChanged(callback);
     }
 
-    onceAuthStateChange(callback: (bool) => void) {
+    onceAuthStateChange(callback: (User) => void) {
         const unregister = this._auth.onAuthStateChanged( user => {
-            callback(!!user);
+            callback(user);
             unregister();
         });
     }
 
     getLoggedInUser(): ?User {
-        return this._auth.currentUser;;
+        return this._auth.currentUser;
     }
 
     getUserOrThrow(component: string): User {
