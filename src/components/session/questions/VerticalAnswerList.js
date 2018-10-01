@@ -35,9 +35,9 @@ export function VerticalAnswerList(props: Props) {
 type AnswerButtonProps = {
     emotion: Emotion,
     onPress: (Emotion) => void,
-    onHelp: (Emotion) => void,
+    onHelp?: (Emotion) => void,
 };
-function AnswerButton(props: AnswerButton) {
+function AnswerButton(props: AnswerButtonProps) {
     const { emotion, onPress, onHelp } = props;
 
     return (
@@ -60,7 +60,7 @@ function AnswerButton(props: AnswerButton) {
 
 type AnswerButtonContainerHoCProps = {
     emotion: Emotion,
-    onHelp: (Emotion) => void,
+    onHelp?: (Emotion) => void,
 };
 function AnswerButtonContainerHoC(props: AnswerButtonContainerHoCProps) {
 

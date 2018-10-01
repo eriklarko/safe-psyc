@@ -112,6 +112,8 @@ function SettingsButton(props) {
 // rerender.
 class RegisterLink extends React.Component<*, *> {
 
+    _unregister: Function;
+
     constructor(props: *) {
         super(props);
         this.state = {
