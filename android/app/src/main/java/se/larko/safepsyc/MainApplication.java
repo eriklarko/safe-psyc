@@ -3,7 +3,6 @@ package se.larko.safepsyc;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.testfairy.react.TestFairyPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.facebook.react.ReactNativeHost;
@@ -49,8 +48,7 @@ public class MainApplication extends Application implements ReactApplication {
           new RNFirebaseCrashlyticsPackage(),
 
           new TestFairyPackage(),
-          new LinearGradientPackage(),
-          new ReactNativePushNotificationPackage()
+          new LinearGradientPackage()
       );
     }
 
