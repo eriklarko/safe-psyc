@@ -154,7 +154,7 @@ export class UserBackendFacade {
     }
 
     isLoggedIn(): bool {
-        return this.getLoggedInUser !== null;
+        return this.getLoggedInUser() !== null;
     }
 }
 
