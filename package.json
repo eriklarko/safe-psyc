@@ -33,7 +33,7 @@
     "moment": "^2.22.1",
     "react": "16.5.0",
     "react-native": "^0.57.1",
-    "react-native-firebase": "^4.3.8",
+    "react-native-firebase": "^5.0.0",
     "react-native-hyperlink": "^0.0.14",
     "react-native-linear-gradient": "^2.4.2",
     "react-native-progress": "^3.4.0",

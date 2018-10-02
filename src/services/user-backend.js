@@ -20,7 +20,7 @@ export class UserBackendFacade {
 
     createNewAnonymousUser(): Promise<void> {
         return this._auth
-            .signInAnonymouslyAndRetrieveData()
+            .signInAnonymously()
             .then(user => {
                 log.debug('Created anonymous user %j', user);
                 return undefined;
@@ -46,7 +46,7 @@ export class UserBackendFacade {
 
         return this._auth
             .currentUser
-            .linkAndRetrieveDataWithCredential(credential)
+            .linkWithCredential(credential)
             .then( user => {
                 log.debug("Anonymous account successfully upgraded, %j", user);
                 this._onPromoteUserListener.forEach(l => l(user));
@@ -66,7 +66,7 @@ export class UserBackendFacade {
     createNewUser(email: string, password: string): Promise<User> {
         email = email.trim();
         return this._auth
-            .createUserAndRetrieveDataWithEmailAndPassword(email, password)
+            .createUserWithEmailAndPassword(email, password)
             .then(user => {
                 log.debug('Created user');
                 return user;
@@ -84,7 +84,7 @@ export class UserBackendFacade {
         if (password.length === 0) return Promise.reject(new Error("Empty password"));
 
         return this._auth
-            .signInAndRetrieveDataWithEmailAndPassword(email, password)
+            .signInWithEmailAndPassword(email, password)
             .then(function() {
                 log.debug('Login successful');
             })
