@@ -1,6 +1,7 @@
 // @flow
 
 import { firebase } from '~/src/services/firebase.js';
+import { userBackendFacade } from '~/src/services/user-backend.js';
 import { vsprintf } from 'sprintf-js';
 
 interface LocalLogger {
@@ -60,14 +61,24 @@ export class Logger {
 
 class FirebaseLogger implements RemoteLogger {
 
+    userBackend: typeof userBackendFacade;
     crashlytics: Object;
     analytics: Object;
 
     constructor() {
         this.crashlytics = firebase.crashlytics();
         this.analytics = firebase.analytics();
+        this.userBackend = userBackendFacade;
 
         this.analytics.setAnalyticsCollectionEnabled(true);
+
+        this.userBackend.onAuthStateChange( user => {
+            const userIdentifier = user
+                ? user.uid
+                : "";
+
+            this.crashlytics.setUserIdentifier(userIdentifier);
+        });
     }
 
     log(message: string) {
