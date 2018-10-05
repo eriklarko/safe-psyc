@@ -1,6 +1,6 @@
 // @flow
 
-import { firebase } from '~/src/services/firebase.js';
+import { firebaseApp } from '~/src/services/firebase.js';
 import { log } from '~/src/services/logger.js';
 
 const defaults = {
@@ -20,21 +20,21 @@ export class RemoteConfigBackendFacade {
     _enableDevMode() {
         if (__DEV__) {
             log.debug('Enabling firebase remote config developer mode');
-            firebase.config().enableDeveloperMode();
+            firebaseApp.config().enableDeveloperMode();
         }
     }
 
     _setDefaults() {
-        firebase.config().setDefaults(defaults);
+        firebaseApp.config().setDefaults(defaults);
     }
 
 
     _fetch() {
-        return firebase
+        return firebaseApp
             .config()
             .fetch()
             .then(() => {
-                return firebase.config().activateFetched();
+                return firebaseApp.config().activateFetched();
             })
             .then(activated => {
                 if (activated) {
@@ -80,7 +80,7 @@ export class RemoteConfigBackendFacade {
     }
 
     _getValue(key: string): Promise<string> {
-        return firebase
+        return firebaseApp
             .config()
             .getValue(key)
             .then(snapshot => {

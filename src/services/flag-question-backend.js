@@ -2,7 +2,7 @@
 
 import moment from 'moment';
 
-import { firebase } from '~/src/services/firebase.js';
+import { firebaseApp } from '~/src/services/firebase.js';
 import { userBackendFacade } from '~/src/services/user-backend.js';
 
 import type { Question } from '~/src/models/questions.js';
@@ -23,7 +23,7 @@ export class FlagQuestionBackendFacade {
                     when: moment().format('x'),
                 };
 
-                const ref = firebase
+                const ref = firebaseApp
                     .database()
                     .ref(path)
                     .push();
@@ -49,7 +49,7 @@ export class FlagQuestionBackendFacade {
                     + '/'
                     + id;
 
-                return firebase
+                return firebaseApp
                     .database()
                     .ref(path)
                     .remove();

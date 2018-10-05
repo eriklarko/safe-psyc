@@ -1,7 +1,7 @@
 // @flow
 
 import moment from 'moment';
-import { firebase } from '~/src/services/firebase.js';
+import { firebaseApp } from '~/src/services/firebase.js';
 import { log } from '~/src/services/logger.js';
 import { userBackendFacade } from '~/src/services/user-backend.js';
 import { randomSessionService } from '~/src/services/random-session-service.js';
@@ -9,7 +9,7 @@ import { randomSessionService } from '~/src/services/random-session-service.js';
 import type { Question, AnswerType, IncorrectAnswer } from '~/src/models/questions.js';
 import type { Emotion } from '~/src/models/emotion.js';
 
-const db = firebase.database();
+const db = firebaseApp.database();
 
 export class AnswerBackendFacade {
 
@@ -71,7 +71,7 @@ export class AnswerBackendFacade {
             const correct = [];
             const incorrect = [];
 
-            return firebase
+            return firebaseApp
                 .database()
                 .ref('user-data/' + user.uid + '/answers/' + emotion.name)
                 .once('value')
@@ -105,7 +105,7 @@ export class AnswerBackendFacade {
             const emotionLookupTable = createEmotionLookupTable();
             const answers = new Map();
 
-            return firebase
+            return firebaseApp
                 .database()
                 .ref('user-data/' + user.uid + '/answers')
                 .once('value')

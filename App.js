@@ -15,9 +15,9 @@ import { LoginScreen } from './src/components/LoginScreen.js';
 import { EmailAuthScreen } from './src/components/EmailAuthScreen.js';
 import { DebugScreen } from './src/components/DebugScreen.js';
 
-import { startLoading } from '~/src/services/startup.js';
 import { log } from '~/src/services/logger.js';
-import { setNavigation, setCurrentScreen, resetTo } from './src/navigation-actions.js';
+import { setNavigation, setCurrentScreen, setRouteToDirectToOnLoad, navigate } from './src/navigation-actions.js';
+import { addNotificationListener } from '~/src/services/notifcation-listener.js';
 import { constants } from './src/styles/constants.js';
 
 const defaultScreenProps = {
@@ -59,12 +59,11 @@ const RootNavigator = createStackNavigator({
 // on Android, note the required / (slash) at the end of the host property
 const deepLinkingPrefix = Platform.OS == 'android' ? 'safepsyc://safepsyc/' : 'safepsyc://';
 const previousGetActionForPathAndParams = RootNavigator.router.getActionForPathAndParams;
-let redirectOnLoad = null;
 Object.assign(RootNavigator.router, {
     getActionForPathAndParams(path, params) {
         if (path.startsWith("open/")) {
             const screen = path.substr("open/".length);
-            redirectOnLoad = screen;
+            setRouteToDirectToOnLoad(screen);
         }
 
         return previousGetActionForPathAndParams(path, params);
@@ -85,22 +84,18 @@ function getActiveRouteName(navigationState) {
     return route.routeName;
 }
 
-export default class App extends React.Component<{}, {}> {
-
-    componentDidMount() {
-        startLoading()
-            .then( () => {
-                log.debug('Loading done');
-                if(redirectOnLoad) {
-                    log.debug('Loading done - resetting to %s', redirectOnLoad);
-                    resetTo(redirectOnLoad);
-                }
-            })
-            .catch(e => {
-                log.error('Failed loading the app, %s', e);
-                Alert.alert('Failed loading the app', e.message);
-            });
+///// Notifications
+addNotificationListener( (notifcation: Notification) => {
+    console.log('woop', notifcation);
+    const { route, params } = notifcation._data;
+    if (notifcation.startedApp) {
+        setRouteToDirectToOnLoad(route);
+    } else {
+        navigate(route, params);
     }
+});
+
+export default class App extends React.Component<{}, {}> {
 
     render() {
         return <RootNavigator

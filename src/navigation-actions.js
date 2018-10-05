@@ -38,6 +38,14 @@ export function setNavigation(nav: Navigation<mixed>) {
     navigation = nav;
 }
 
+let routeToDirectToOnLoad: ?string = null;
+export function setRouteToDirectToOnLoad(name: string) {
+    routeToDirectToOnLoad = name;
+}
+export function getRouteToDirectToOnLoad(): ?string {
+    return routeToDirectToOnLoad;
+}
+
 let currentScreen: ?string = null;
 export function setCurrentScreen(name: string) {
     currentScreen = name;
@@ -69,7 +77,7 @@ export function startRandomSession(onDataLoaded?: () => void): Promise<{}> {
     });
 }
 
-function navigate(routeName: string, params?: Object) {
+export function navigate(routeName: string, params?: Object) {
     safeNavigation().dispatch(
         NavigationActions.navigate({ routeName, params }),
     );

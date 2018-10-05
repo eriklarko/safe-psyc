@@ -3,7 +3,7 @@
 import { Platform, Alert, PushNotificationIOS } from 'react-native';
 import { log } from '~/src/services/logger.js';
 import { resetTo } from '~/src/navigation-actions.js';
-import PushNotification from 'react-native-push-notification';
+import firebase from 'react-native-firebase';
 import moment from 'moment';
 
 // Having all PAM notifications have the same ID makes sure only one is active
@@ -11,74 +11,74 @@ import moment from 'moment';
 // ONLY WORKS ON ANDROID. No idea how to do the same on iOS :(
 const pamNotificationId = "1337";
 
-let isInitialized = false;
-export function initialize() {
-    if (isInitialized) {
-        return;
-    }
+type Channel = { channelId: string };
 
-    isInitialized = true;
-    PushNotification.configure({
-        onNotification: onNotification,
-        onRegister: function(token) {
-            console.log( 'TOKEN:', token );
-        },
+let _channel = null;
+function initialize(): Promise<Channel> {
+    return new Promise( (resolve, reject) => {
+        if (_channel) {
+            resolve(_channel);
+        }
 
-        // ANDROID ONLY: GCM Sender ID (optional - not required for local
-        // notifications, but is need to receive remote push notifications)
-        senderID: "YOUR GCM SENDER ID",
+        return getPermissions()
+            .then( () => createChannel() )
+            .then( channel => {
+                _channel = channel;
+                resolve(channel);
+            })
+            .catch( e => reject(e) );
     });
 }
 
-function onNotification(notification) {
-
-    if (notification.id !== pamNotificationId) {
-        log.warning("got unknown notification id %s - %s", notification.id, notification.message);
-        return;
-    }
-
-    log.debug('processing current emotion notification');
-    navigateToPAM();
-
-    if (Platform.OS === 'ios') {
-        // required on iOS only (see fetchCompletionHandler docs: 
-        // https://facebook.github.io/react-native/docs/pushnotificationios.html)
-        notification.finish(PushNotificationIOS.FetchResult.NoData);
-    }
+function getPermissions() {
+    return firebase.messaging().hasPermission()
+        .then(enabled => {
+            if (enabled) {
+                // user has permissions
+                return true;
+            } else {
+                // user doesn't have permission
+                return firebase.messaging().requestPermission();
+            }
+        });
 }
 
-function navigateToPAM() {
-    console.log('navigating');
-    Alert.alert('whoo', 'booo');
-    try {
-        resetTo('CurrentFeeling');
-        console.log('whoo');
-        Alert.alert('whoo', 'navigated')
-    } catch (e) {
-        console.log('boo', e);
-        Alert.alert('boo', e.message)
-    }
+function createChannel(): Promise<Channel> {
+    const channel = new firebase
+        .notifications
+        .Android
+        .Channel('test-channel', 'Test Channel', 5) // TODO: document importance shit
+        .setDescription('My apps test channel');
+
+    // Create the channel
+    return firebase.notifications().android.createChannel(channel)
+        .then( () => channel);
 }
 
-export function scheduleNotification() {
-    if (!isInitialized) {
-        initialize();
-    }
+export function scheduleNotification(): Promise<mixed> {
+    return initialize()
+        .then( channel => {
 
-    cancelNotification();
+            return cancelNotification()
+                .then( () => channel );
+        })
+        .then( channel => {
 
-    // react-native-push-notification doesn't support scheduling notifications
-    // say every hour during daytime, so I need to emulate that by scheduling
-    // many notifications instead. They will all use the same notification id
-    // so they can be treated as one notification by the app
-    const now = moment();
-    generateOneDatetimePerWakingHour(truncateToDateOnly(now))
-        .forEach(datetime => scheduleDailyRepeatingNotificationAt(datetime));
+            // the notification lib doesn't support scheduling notifications
+            // say every hour during daytime, so I need to emulate that by scheduling
+            // many notifications instead. They will all use the same notification id
+            // so they can be treated as one notification by the app
+
+            const now = moment();
+            const promises = generateOneDatetimePerWakingHour(truncateToDateOnly(now))
+                    .map(datetime => scheduleDailyRepeatingNotificationAt(channel, datetime));
+            return Promise.all(promises);
+        });
 }
 
-export function cancelNotification() {
+export function cancelNotification(): Promise<void> {
     log.debug('Cancelling current emotion notification');
-    PushNotification.cancelLocalNotifications({ id: pamNotificationId });
+    return firebase.notifications().cancelNotification(pamNotificationId);
 }
 
 function truncateToDateOnly(date) {
@@ -104,16 +104,41 @@ function generateOneDatetimePerWakingHour(date: moment$Moment): Array<moment$Mom
     return datetimes;
 }
 
-function scheduleDailyRepeatingNotificationAt(datetime: moment$Moment) {
+function scheduleDailyRepeatingNotificationAt(channel: Channel, datetime: moment$Moment): Promise<void> {
     log.debug('Scheduling local notification for %j', datetime);
-    PushNotification.localNotificationSchedule({
-        id: pamNotificationId,
 
-        title: "My Notification Title", // (optional)
-        message: "My Notification Message", // (required)
-        bigText: "debug " + datetime.format(), // (optional) default: none
+    const notification = new firebase.notifications.Notification()
+        .setNotificationId(pamNotificationId)
+        .setTitle('My notification title')
+        .setBody('My notification body')
+        .setData({
+            // Value from App.js
+            route: 'CurrentFeeling',
+        })
+        .android.setChannelId(channel.channelId)
+        .android.setAutoCancel(true);
 
-        date: datetime.toDate(), // TODO: Is this in the phone's tz?
-        repeatType: 'day', // (Android only) Repeating interval. Could be one of `week`, `day`, `hour`, `minute, `time`. If specified as time, it should be accompanied by one more parameter 'repeatTime` which should the number of milliseconds between each interval
+    return firebase.notifications().scheduleNotification(notification, {
+        fireDate: datetime.valueOf(),
+        repeatInterval: 'day',
     });
+}
+
+export function TEST_fire_notification_now(): Promise<void> {
+
+    return initialize()
+        .then( channel => {
+            console.log('adter init', channel);
+            const notification = new firebase.notifications.Notification()
+                .setNotificationId(pamNotificationId)
+                .setTitle('My notification title')
+                .setBody('My notification body')
+                .android.setAutoCancel(true)
+                .android.setChannelId(channel.channelId)
+                .setData({
+                    route: 'CurrentFeeling',
+                });
+
+            firebase.notifications().displayNotification(notification)
+        });
 }

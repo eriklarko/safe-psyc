@@ -54,9 +54,17 @@ export class SettingsScreen extends React.Component<Props, {}> {
                 testID='current-emotion-notification-toggle'
                 onChange={on => {
                     if (on) {
-                        currentEmotionNotification.scheduleNotification();
+                        return currentEmotionNotification.scheduleNotification()
+                            .catch( e => {
+                                log.error('scheduleNotification error', e);
+                                throw e;
+                            });
                     } else {
-                        currentEmotionNotification.cancelNotification();
+                        return currentEmotionNotification.cancelNotification()
+                            .catch( e => {
+                                log.error('cancelNotification error', e);
+                                throw e;
+                            });
                     }
                 }}
                 storageKey={'current-emotion-notification'}
@@ -141,15 +149,27 @@ class Toggle extends React.Component<*, { value: 'loading' | boolean | Error }> 
             <Switch
                 value={this.state.value}
                 onValueChange={ on => {
-                    this.setState({ value: on });
+                    if (onChange) {
+                        const v = onChange(on);
+                        if (v instanceof Promise) {
+                            v.then( set => this._setValue(on));
+                             .catch(e => log.error("Failed changing setting %s to %s: %s", storageKey, on, e));
+                        } else {
+                            this._setValue(on);
+                        }
+                    }
 
-                    storage.setValue(storageKey, on.toString())
-                        .catch(e => {
-                            log.error('Failed storing %s: %s', storageKey, e);
-                        });
-
-                    onChange && onChange(on);
                 }} />
         </View>
+    }
+
+    _setValue(on: bool) {
+        storage.setValue(storageKey, on.toString())
+            .then( () => {
+                this.setState({ value: on });
+            })
+            .catch(e => {
+                log.error('Failed storing %s: %s', storageKey, e);
+            });
     }
 }

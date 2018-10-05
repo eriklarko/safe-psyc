@@ -1,6 +1,6 @@
 // @flow
 
-import { firebase } from '~/src/services/firebase.js';
+import { firebaseApp } from '~/src/services/firebase.js';
 import { userBackendFacade } from '~/src/services/user-backend.js';
 import { vsprintf } from 'sprintf-js';
 
@@ -66,8 +66,8 @@ class FirebaseLogger implements RemoteLogger {
     analytics: Object;
 
     constructor() {
-        this.crashlytics = firebase.crashlytics();
-        this.analytics = firebase.analytics();
+        this.crashlytics = firebaseApp.crashlytics();
+        this.analytics = firebaseApp.analytics();
         this.userBackend = userBackendFacade;
 
         this.analytics.setAnalyticsCollectionEnabled(true);

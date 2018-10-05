@@ -1,42 +1,71 @@
-const authListeners = [];
-const user = { email: 'a@b.c' };
+export const rnfbmock = function() {
+    return {
+        messaging: () => {
+            return {
+                hasPermission: () => Promise.resolve(),
+                requestPermission: () => Promise.resolve(),
+            }
+        },
 
-const mockObj = {
-    initializeApp: () => {},
-    auth: () => {
-        return {
-            onAuthStateChanged: (cb) => {
-                authListeners.push(cb);
-            },
-            signInWithEmailAndPassword: () => {
-                return new Promise(resolve => {
-                    resolve();
-                    authListeners.forEach(l => l(user));
-                });
-            },
-            signOut: () => {
-                return new Promise(resolve => {
-                    resolve();
-                    authListeners.forEach(l => l(undefined));
-                });
-            },
+        notifications: notifications,
 
-        };
-    },
-    database: () => {
-        return {
-            ref: () => {
-                return {
-                    push: (_, cb) => {
-                        cb();
-                    },
-                };
-            },
-        };
-    },
-    config: () => ({
-        getValue: () => {},
-    }),
+        app: () => {
+            return {
+                auth: () => ({
+                    onAuthStateChanged: () => {},
+                }),
+                database: () => {},
+                crashlytics: () => {},
+                analytics: () => ({
+                    setAnalyticsCollectionEnabled: () => {},
+                }),
+                config: () => ({
+                    enableDeveloperMode: () => {},
+                    setDefaults: () => {},
+                    fetch: () => Promise.resolve(),
+                    activateFetched: () => {},
+                    getValue: () => Promise.resolve({
+                        val: () => {},
+                    }),
+                }),
+            }
+        },
+    }
 };
+function notifications() {
+    return {
+        cancelNotification: () => Promise.resolve(),
+    };
+}
+notifications.Android = {
+    Channel: () => ({
+        setDescription: () => ({}),
+    }),
+    createChannel: () => Promise.resolve(),
+};
+notifications.Notification = rnfbnotif;
 
-export default mockObj;
+class rnfbnotif {
+
+    setNotificationId() {
+        return this;
+    }
+    setTitle() {
+        return this;
+    }
+    setBody() {
+        return this;
+    }
+    setData() {
+        return this;
+    }
+
+    android = {
+        setAutoCancel: () => {
+            return this;
+        },
+        setChannelId:  () => {
+            return this;
+        },
+    }
+}

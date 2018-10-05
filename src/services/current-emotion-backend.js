@@ -1,7 +1,7 @@
 // @flow
 
 import moment from 'moment';
-import { firebase } from '~/src/services/firebase.js';
+import { firebaseApp } from '~/src/services/firebase.js';
 import { log } from '~/src/services/logger.js';
 import { userBackendFacade } from '~/src/services/user-backend.js';
 
@@ -23,14 +23,14 @@ export class CurrentEmotionBackendFacade {
 
         const basePath = 'user-data/' + user.uid + '/current-emotions';
         if (id) {
-            const ref = firebase
+            const ref = firebaseApp
                 .database()
                 .ref(basePath + '/' + id);
 
             ref.set(toWrite, onComplete);
             return ref.key;
         } else {
-            return firebase
+            return firebaseApp
                 .database()
                 .ref(basePath)
                 .push(toWrite, onComplete)
@@ -44,7 +44,7 @@ export class CurrentEmotionBackendFacade {
         return new Promise(resolve => {
             const user = userBackendFacade.getUserOrThrow('getLastEmotionAnswer');
 
-            firebase
+            firebaseApp
                 .database()
                 .ref('user-data/' + user.uid + '/current-emotions')
                 .orderByChild('when')

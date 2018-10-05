@@ -1,6 +1,6 @@
 // @flow
 
-import { firebase } from '~/src/services/firebase.js';
+import { firebaseApp } from '~/src/services/firebase.js';
 import { log } from '~/src/services/logger.js';
 import { removeFrom } from '~/src/utils/array-utils.js';
 
@@ -158,4 +158,4 @@ export class UserBackendFacade {
     }
 }
 
-export const userBackendFacade = new UserBackendFacade(firebase.auth());
+export const userBackendFacade = new UserBackendFacade(firebaseApp.auth());

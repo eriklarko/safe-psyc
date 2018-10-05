@@ -1,26 +1,10 @@
 // @flow
 
-jest.mock('react-native-firebase', () => ({
-    app: () => ({
-        auth: () => ({
-            onAuthStateChanged: () => {},
-        }),
-        database: () => {},
-        crashlytics: () => {},
-        analytics: () => ({
-            setAnalyticsCollectionEnabled: () => {},
-        }),
-        config: () => ({
-            enableDeveloperMode: () => {},
-            setDefaults: () => {},
-            fetch: () => Promise.resolve(),
-            activateFetched: () => {},
-            getValue: () => Promise.resolve({
-                val: () => {},
-            }),
-        }),
-    }),
-}));
+import { rnfbmock } from './firebase-mock.js';
+
+jest.mock('react-native-firebase', () => {
+    return new rnfbmock();
+});
 
 jest.mock('react-navigation', () => ({
     NavigationActions: {

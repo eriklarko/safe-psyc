@@ -1,6 +1,6 @@
 // @flow
 
-import { firebase } from '~/src/services/firebase.js';
+import { firebaseApp } from '~/src/services/firebase.js';
 import { userBackendFacade } from '~/src/services/user-backend.js';
 import { log } from '~/src/services/logger.js';
 import { getDefault } from '~/src/utils/settings.js';
@@ -15,7 +15,7 @@ export class AccountStorage {
         return userBackendFacade.getUserOrReject('get-value')
             .then( user => {
                 const path = 'user-data/' + user.uid + '/storage/' + name;
-                return firebase
+                return firebaseApp
                     .database()
                     .ref(path)
                     .once('value')
@@ -37,7 +37,7 @@ export class AccountStorage {
                 };
 
                 const path = 'user-data/' + user.uid + '/storage/' + name;
-                const ref = firebase.database().ref(path)
+                const ref = firebaseApp.database().ref(path)
 
                 return new Promise((resolve, reject) => {
                     ref.set(value,
