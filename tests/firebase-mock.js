@@ -35,15 +35,17 @@ export const rnfbmock = function() {
 function notifications() {
     return {
         cancelNotification: () => Promise.resolve(),
+        android: {
+            createChannel: () => Promise.resolve(),
+        },
+        scheduleNotification: () => Promise.resolve(),
     };
 }
 notifications.Android = {
     Channel: () => ({
         setDescription: () => ({}),
     }),
-    createChannel: () => Promise.resolve(),
 };
-notifications.Notification = rnfbnotif;
 
 class rnfbnotif {
 
@@ -69,3 +71,5 @@ class rnfbnotif {
         },
     }
 }
+notifications.Notification = rnfbnotif;
+

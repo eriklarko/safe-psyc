@@ -142,7 +142,7 @@ class Toggle extends React.Component<*, { value: 'loading' | boolean | Error }> 
             return <StandardText>{ this.state.value.message }</StandardText>
         }
 
-        const { storage, storageKey, onChange } = this.props;
+        const { storageKey, onChange } = this.props;
 
         return <View>
             <StandardText>{ this.props.title }</StandardText>
@@ -152,8 +152,7 @@ class Toggle extends React.Component<*, { value: 'loading' | boolean | Error }> 
                     if (onChange) {
                         const v = onChange(on);
                         if (v instanceof Promise) {
-                            v.then( set => this._setValue(on));
-                             .catch(e => log.error("Failed changing setting %s to %s: %s", storageKey, on, e));
+                            return v.then( set => this._setValue(on));
                         } else {
                             this._setValue(on);
                         }
@@ -164,7 +163,8 @@ class Toggle extends React.Component<*, { value: 'loading' | boolean | Error }> 
     }
 
     _setValue(on: bool) {
-        storage.setValue(storageKey, on.toString())
+        const { storage, storageKey } = this.props;
+        return storage.setValue(storageKey, on.toString())
             .then( () => {
                 this.setState({ value: on });
             })

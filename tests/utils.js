@@ -9,8 +9,14 @@ export function checkNextTick(check: Check): Promise<void> {
     return new Promise((resolve, reject) => {
         InteractionManager.runAfterInteractions(() => {
             try {
-                check();
-                resolve();
+                const v = check();
+                if (v instanceof Promise) {
+                    return v
+                        .then(resolve)
+                        .catch(reject);
+                } else {
+                    resolve();
+                }
             } catch (e) {
                 // $FlowFixMe
                 reject(e);

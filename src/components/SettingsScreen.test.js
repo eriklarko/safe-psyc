@@ -33,10 +33,13 @@ it('saves the current-emotion-notification toggle value', () => {
         const s = findFirstChild(toggle, Switch);
         expect(s).toBeDefined();
         
-        s.props.onValueChange(true);
-        expect(setValue).toHaveBeenLastCalledWith('current-emotion-notification', "true");
-
-        s.props.onValueChange(false);
-        expect(setValue).toHaveBeenLastCalledWith('current-emotion-notification', "false");
+        return s.props.onValueChange(true)
+            .then( () => {
+                expect(setValue).toHaveBeenLastCalledWith('current-emotion-notification', "true");
+                return s.props.onValueChange(false);
+            })
+            .then( () => {
+                expect(setValue).toHaveBeenLastCalledWith('current-emotion-notification', "false");
+            });
     });
 });
