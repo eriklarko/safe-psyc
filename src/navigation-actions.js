@@ -216,13 +216,13 @@ export function resetToLogin() {
 
 export function navigateToEmailLogIn() {
     navigate('EmailAuth', {
-        primaryAction: 'login',
+        action: 'login',
     });
 }
 
 export function navigateToRegister() {
     navigate('EmailAuth', {
-        primaryAction: 'register',
+        action: 'register',
     });
 }
 

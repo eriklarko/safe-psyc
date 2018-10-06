@@ -7,7 +7,6 @@ import {
     TextInput,
     Alert,
     Keyboard,
-    TouchableHighlight,
 } from 'react-native';
 import { StandardText } from '~/src/components/lib/Texts.js';
 import { SquarePrimaryButton, SquareSecondaryButton, SecondaryButton } from '~/src/components/lib/Buttons.js';
@@ -24,11 +23,11 @@ import type { Navigation } from '~/src/navigation-actions.js';
 
 type Props = {
     navigation: Navigation<{
-        primaryAction: 'login' | 'register',
+        action: 'login' | 'register',
     }>,
 };
 type State = {
-    loading: 'no' | 'login' | 'register',
+    loading: 'no' | 'yes',
     email: string,
     password: string,
 };
@@ -50,7 +49,7 @@ export class EmailAuthScreen extends React.Component<Props, State> {
         const { email, password } = this.state;
         this.setState({
             password: '',
-            loading: 'login',
+            loading: 'yes',
         });
 
         userBackendFacade
@@ -66,11 +65,12 @@ export class EmailAuthScreen extends React.Component<Props, State> {
                 Alert.alert('Login failed', e.message);
             });
     }
+
     _register() {
         const { email, password } = this.state;
         this.setState({
             password: '',
-            loading: 'register',
+            loading: 'yes',
         });
 
         const action = (
@@ -97,8 +97,8 @@ export class EmailAuthScreen extends React.Component<Props, State> {
     }
 
     render() {
-        const params = paramsOr(this.props.navigation, { primaryAction: 'register' });
-        const buttons = this._renderButtons(params);
+        const params = paramsOr(this.props.navigation, { action: 'register' });
+        const button = this._renderActionButton(params.action);
 
         return (
             <ImageBackground>
@@ -122,68 +122,40 @@ export class EmailAuthScreen extends React.Component<Props, State> {
                     />
 
                     <VerticalSpace multiplier={2} />
-                    <View style={styles.buttonContainer}>
-                        { buttons.primary }
-                        { buttons.secondary }
-                    </View>
-
-                    <VerticalSpace />
-                    <SecondaryButton
-                        title="forgot password"
-                        onPress={this._resetPassword.bind(this)}
-                        textStyle={{
-                            color: constants.notReallyWhite,
-                            textAlign: params.primaryAction === 'login' ? 'left' : 'right',
-                        }}
-                    />
+                    { button }
                 </View>
             </ImageBackground>
         );
     }
 
-    _renderButtons(params) {
-        const { primaryAction } = params;
-        if (primaryAction === 'login') {
-            return {
-                primary: this._renderLoginButton(SquarePrimaryButton, styles.primary),
-                secondary: this._renderRegisterButton(SquareSecondaryButton, styles.secondary),
-            };
+    _renderActionButton(action) {
+        if (this.state.loading === 'yes') {
+            return <ActivityIndicator />
+
+        } else if (action === 'register') {
+                return <SquarePrimaryButton
+                    onPress={this._register.bind(this)}
+                    disabled={this.state.loading !== 'no'}
+                    title={'Register'}
+                />
 
         } else {
-            return {
-                primary: this._renderRegisterButton(SquarePrimaryButton, styles.primary),
-                secondary: this._renderLoginButton(SquareSecondaryButton, styles.secondary),
-            };
-        }
-    }
-
-    _renderLoginButton(Component, containerStyle) {
-        if (this.state.loading === 'login') {
-            return <ActivityIndicator style={constants.flex1} />
-
-        } else {
-            return <Component
-                containerStyle={containerStyle}
-                onPress={this._login.bind(this)}
-                disabled={this.state.loading !== 'no'}
-                title={'Login'}
-            />
-        }
-
-    }
-
-    _renderRegisterButton(Component, containerStyle) {
-        if (this.state.loading === 'register') {
-            return <ActivityIndicator style={constants.flex1} />
-
-        } else {
-            return <Component
-                containerStyle={containerStyle}
-                textStyle={constants.textShadow}
-                onPress={this._register.bind(this)}
-                disabled={this.state.loading !== 'no'}
-                title={'Register'}
-            />
+            return <View>
+                <SquarePrimaryButton
+                    onPress={this._login.bind(this)}
+                    disabled={this.state.loading !== 'no'}
+                    title={'Log in'}
+                />
+                <VerticalSpace />
+                <SecondaryButton
+                    title="forgot password"
+                    onPress={this._resetPassword.bind(this)}
+                    textStyle={{
+                        color: constants.notReallyWhite,
+                        textAlign: 'left',
+                    }}
+                />
+            </View>
         }
     }
 }
@@ -192,7 +164,7 @@ function AnonymousLinkDescription() {
     const user = userBackendFacade.getLoggedInUser();
     if (user && user.isAnonymous) {
         return <StandardText>
-            You can register and make sure all you data is accessible when you want.
+            You can register and make sure all you data is accessible whenever you want.
         </StandardText>
     } else {
         return null;
@@ -203,18 +175,6 @@ const styles = {
     container: {
         ...constants.padflex,
         justifyContent: 'center',
-    },
-    buttonContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-    },
-    primary: {
-        flex: 1,
-        marginRight: constants.space(0.5),
-    },
-    secondary: {
-        flex: 1,
-        marginLeft: constants.space(0.5),
     },
 };
 
