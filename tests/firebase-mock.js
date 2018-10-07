@@ -45,6 +45,9 @@ notifications.Android = {
     Channel: () => ({
         setDescription: () => ({}),
     }),
+    Importance: {
+        Max: 5,
+    },
 };
 
 class rnfbnotif {
@@ -53,6 +56,9 @@ class rnfbnotif {
         return this;
     }
     setTitle() {
+        return this;
+    }
+    setSubtitle() {
         return this;
     }
     setBody() {
