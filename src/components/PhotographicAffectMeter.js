@@ -25,6 +25,7 @@ type State = {
     submittedEmotion: ?string,
     selectedImages: Array<{ emotion: string, image: string}>,
     dbId: ?string,
+    successDismissed: boolean,
 };
 
 const emotionOrder = [
@@ -55,6 +56,7 @@ export class PhotographicAffectMeter extends React.Component<Props, State> {
             submittedEmotion: null,
             selectedImages: this._selectImages(),
             dbId: null,
+            successDismissed: false,
         };
     }
 
@@ -97,6 +99,7 @@ export class PhotographicAffectMeter extends React.Component<Props, State> {
         this.setState(
             {
                 submissionState: 'submitting',
+                successDismissed: false,
             },
             () => {
                 const dbId = this.props.backendFacade
@@ -123,69 +126,98 @@ export class PhotographicAffectMeter extends React.Component<Props, State> {
     }
 
     _showHelp() {
-        Alert.alert(null, 'An important part of emotional intelligence is learning to identify your feelings. This is a Photographic Affect Meter and can help you put words to what you\'re feeling.');
+        Alert.alert(null, 'An important part of emotional intelligence is learning to identify your own emotions. This is a Photographic Affect Meter and it can help you put words to what you\'re feeling.');
     }
 
     render() {
+        return <View style={styles.container}>
+                    {
+                        this.state.submissionState === 'successful' && !this.state.successDismissed
+                            ? this._renderSuccessScreen()
+                            : this._renderContent()
+                    }
+                </View>
+    }
+
+    _renderSuccessScreen() {
+        // TODO: implement this. And the auto-close app func
+        const startedFromNotification = false;
+
+        const extra = startedFromNotification 
+            ? <StandardText>The app will close momentarily</StandardText>
+            : null;
+        return <View style={ constants.colCentered }>
+            <View>
+                <StandardText>Thank you. Registered that you're feeling { this.state.submittedEmotion }</StandardText>
+                {extra}
+
+                <VerticalSpace multiplier={ 2 } />
+                <StandardButton 
+                    testName='dismissButton'
+                    onPress={ () => this.setState({ successDismissed: true }) }>
+                    Eh, that wasn't what I meant!
+                </StandardButton>
+                <VerticalSpace />
+                <StandardButton onPress={ () => this.props.onAnswered()}>Done</StandardButton>
+            </View>
+        </View>
+    }
+
+    _renderContent() {
         const skipButton = this._createSkipButton();
         const doNotChangeButton = this._createDoNotChangeButton();
         const submitButton = this._createSubmitButton();
 
-        return (
-            <ScrollView>
-                <View style={styles.container}>
-                    <View>
-                        <View style={{ flexDirection: 'row' }}>
-                            <StandardText style={{ maxWidth: '90%' }}>
-                                Please choose the image that best illustrates how you are feeling right now.
-                            </StandardText>
+        return <ScrollView>
+            <View style={{ flexDirection: 'row' }}>
+                <StandardText style={{ maxWidth: '90%' }}>
+                    Please choose the image that best illustrates how you are feeling right now.
+                </StandardText>
 
-                            <TouchableOpacity onPress={ () => this._showHelp() }>
-                                <Image
-                                    // $FlowFixMe
-                                    source={require('../../images/help.png')}
-                                    style={{
-                                        tintColor: constants.defaultTextColor,
-                                        width: 30,
-                                        height: 30,
-                                    }} />
-                            </TouchableOpacity>
-                        </View>
-                        <VerticalSpace multiplier={3} />
+                <TouchableOpacity onPress={ () => this._showHelp() }>
+                    <Image
+                        // $FlowFixMe
+                        source={require('../../images/help.png')}
+                        style={{
+                            tintColor: constants.defaultTextColor,
+                            width: 30,
+                            height: 30,
+                        }} />
+                </TouchableOpacity>
+            </View>
 
-                        <PhotoGrid
-                            emotionImages={this.state.selectedImages}
-                            onSelect={emotion => this.setState( s => ({
-                                selectedEmotion: emotion,
-                                submissionState: 'not-started',
-                            }))}
-                            selectedEmotion={this.state.selectedEmotion}
-                            submittedEmotion={this.state.submittedEmotion}
-                            disabled={this.state.submissionState === 'submitting'}
-                        />
-                        <SecondaryButton
-                            testName='newImages'
-                            title="shuffle images"
-                            textStyle={{ textAlign: 'right' }}
-                            onPress={ () => this.setState({
-                                selectedImages: this._selectImages(),
-                            })}
-                        />
-                    </View>
+            <VerticalSpace multiplier={3} />
 
-                    <View>
-                        { this._createConfirmationText() }
-                        <View style={styles.buttonRowStyle}>
-                            {skipButton}
-                            <View style={{ flexDirection: 'row' }}>
-                                {doNotChangeButton}
-                                {submitButton}
-                            </View>
-                        </View>
+            <PhotoGrid
+                emotionImages={this.state.selectedImages}
+                onSelect={emotion => this.setState( s => ({
+                    selectedEmotion: emotion,
+                    submissionState: 'not-started',
+                }))}
+                selectedEmotion={this.state.selectedEmotion}
+                submittedEmotion={this.state.submittedEmotion}
+                disabled={this.state.submissionState === 'submitting'}
+            />
+            <SecondaryButton
+                testName='newImages'
+                title="shuffle images"
+                textStyle={{ textAlign: 'right' }}
+                onPress={ () => this.setState({
+                    selectedImages: this._selectImages(),
+                })}
+            />
+
+            <View>
+                { this._createConfirmationText() }
+                <View style={styles.buttonRowStyle}>
+                    {skipButton}
+                    <View style={{ flexDirection: 'row' }}>
+                        {doNotChangeButton}
+                        {submitButton}
                     </View>
                 </View>
+            </View>
         </ScrollView>
-        );
     }
 
     _createSubmitButton() {

@@ -67,6 +67,11 @@ export const constants = {
         flexDirection: 'column',
         justifyContent: 'space-between',
     },
+    colCentered: { 
+        flex:1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+    },
 
     mediumRadius: space(3),
 };

@@ -45,17 +45,20 @@ const standardButtonDefaultStyles = {
 type StandardButtonProps = {
     onPress: () => *,
     disabled?: boolean,
-    title: string | ({ textStyle: View.propTypes.style}) => Object,
+    title?: string | ({ textStyle: View.propTypes.style}) => Object,
     containerStyle?: View.propTypes.style,
     textStyle?: View.propTypes.style,
+    children?: string | () => Object,
 };
 export function StandardButton(props: StandardButtonProps, context: StyleContext) {
-    const { title, containerStyle, textStyle, disabled, ...restProps } = props;
+    const { title, containerStyle, textStyle, disabled, children, ...restProps } = props;
+    const titleContents = title || children;
 
     const defaultStyles = disabled
         ? standardButtonDefaultStyles.disabled
         : standardButtonDefaultStyles.enabled;
 
+    const titleComponent = contents(titleContents);
     return (
         <TouchableOpacity
             style={[
@@ -66,14 +69,18 @@ export function StandardButton(props: StandardButtonProps, context: StyleContext
             disabled={disabled}
             {...restProps}
         >
-            {contents()}
+            {titleComponent}
         </TouchableOpacity>
     );
 
-    function contents() {
+    function contents(title) {
         if (typeof title === 'string') {
             return <Text style={[defaultStyles.text, context.buttonTextStyle, textStyle]}>
                 {title}
+            </Text>
+        } else if (title === undefined) {
+            return <Text style={[defaultStyles.text, context.buttonTextStyle, textStyle]}>
+                NO TITLE
             </Text>
         } else {
             // react-native requires components to be capitalized

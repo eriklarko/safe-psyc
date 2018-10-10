@@ -3,9 +3,9 @@
 import { InteractionManager } from 'react-native';
 
 type Done = (?Error) => void;
-type Check = () => void;
+type Check = () => *;
 
-export function checkNextTick(check: Check): Promise<void> {
+export function checkNextTick(check: Check): Promise<*> {
     return new Promise((resolve, reject) => {
         InteractionManager.runAfterInteractions(() => {
             try {
@@ -15,7 +15,7 @@ export function checkNextTick(check: Check): Promise<void> {
                         .then(resolve)
                         .catch(reject);
                 } else {
-                    resolve();
+                    resolve(v);
                 }
             } catch (e) {
                 // $FlowFixMe

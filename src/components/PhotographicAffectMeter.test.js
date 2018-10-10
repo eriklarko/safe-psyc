@@ -129,7 +129,6 @@ it('disables the images while submitting', () => {
         },
     };
     const { component } = renderAndSubmit(props);
-
     const touchables = findChildren(component, TouchableHighlight);
     touchables.forEach(t => expect(t.props.disabled).toBe(true));
 });
@@ -215,15 +214,15 @@ it('allows the emotion to be changed after submitting', () => {
         },
     };
 
-    const { component, emotion: firstEmotion } = renderAndSubmit(props);
-
-    return checkNextTick(() => {
+    return renderSubmitAndDismiss(props)
+        .then( ({ component, emotion: firstEmotion }) => {
             const btn = findSubmitButton(component);
 
             expect(btn.props.disabled).toBeFalsy();
             selectAnotherEmotion(component, firstEmotion);
+            return component;
         }).
-        then( () => {
+        then( component => {
             findSubmitButton(component).props.onPress();
         })
         .then( () => {
@@ -274,14 +273,14 @@ it('disables the skip button while submitting', () => {
 });
 
 it('removes the skip button when submitted', () => {
-    const { component } = renderAndSubmit({
-        onSkip: jest.fn(),
-    });
+    return renderSubmitAndDismiss({ onSkip: jest.fn() })
+        .then( ({ component }) => {
 
-    const buttons = findChildren(component, StandardButton);
-    const skipButton = buttons.find(b => b.props.title === 'Skip');
+            const buttons = findChildren(component, StandardButton);
+            const skipButton = buttons.find(b => b.props.title === 'Skip');
 
-    expect(skipButton).toBeUndefined();
+            expect(skipButton).toBeUndefined();
+        });
 });
 
 it('invokes the onAnswered prop to finish everything off', () => {
@@ -292,12 +291,11 @@ it('invokes the onAnswered prop to finish everything off', () => {
             registerCurrentEmotion: registerCurrentEmotionMock,
         },
     };
-    const { component } = renderAndSubmit(props);
-
-    return checkNextTick(() => {
-        findSubmitButton(component).props.onPress();
-        expect(props.onAnswered).toHaveBeenCalledTimes(1);
-    });
+    return renderSubmitAndDismiss(props)
+        .then( ({ component }) => {
+            findSubmitButton(component).props.onPress();
+            expect(props.onAnswered).toHaveBeenCalledTimes(1);
+        });
 });
 
 it('renders the emotion images in the correct order', () => {
@@ -335,48 +333,55 @@ it('renders the emotion images in the correct order', () => {
 });
 
 it('ask "did you mean x?" when changing emotion after submission', () => {
-    const { component, emotion } = renderAndSubmit();
-    const otherEmotion = selectAnotherEmotion(component, emotion);
+    return renderSubmitAndDismiss()
+        .then( ({ component, emotion }) => {
+            const otherEmotion = selectAnotherEmotion(component, emotion);
 
-    const strings = getAllRenderedStrings(component);
-    expect(strings).toEqual(expect.arrayContaining([
-        expect.stringMatching(new RegExp("did you mean " + otherEmotion + "?", "i"))
-    ]));
+            const strings = getAllRenderedStrings(component);
+            expect(strings).toEqual(expect.arrayContaining([
+                expect.stringMatching(new RegExp("did you mean " + otherEmotion + "?", "i"))
+            ]));
+        });
 });
 
 it('changes the submit button text to "change" when changing emotion after submission', () => {
-    const { component, emotion } = renderAndSubmit();
-    selectAnotherEmotion(component, emotion);
-
-    expect(findSubmitButton(component).props.title.toLowerCase()).toBe('change');
+    return renderSubmitAndDismiss()
+        .then( ({ component, emotion }) => {
+            selectAnotherEmotion(component, emotion);
+            expect(findSubmitButton(component).props.title.toLowerCase()).toBe('change');
+        });
 });
 
 it('shows a nah-it-was-correct button when changing emotion after submission which invokes the onAnswered prop when pressed', () => {
     const onAnswered = jest.fn();
-    const { component, emotion } = renderAndSubmit({ onAnswered });
-    selectAnotherEmotion(component, emotion);
+    return renderSubmitAndDismiss({ onAnswered })
+        .then( ({ component, emotion }) => {
+            selectAnotherEmotion(component, emotion);
 
-    const btn = findChildren(component, StandardButton).find(b => b.props.testName === 'nah-correct');
-    if (!btn) throw new Error('Found no nah-correct button');
-    btn.props.onPress();
+            const btn = findChildren(component, StandardButton).find(b => b.props.testName === 'nah-correct');
+            if (!btn) throw new Error('Found no nah-correct button');
+            btn.props.onPress();
 
-    expect(onAnswered).toHaveBeenCalledTimes(1);
+            expect(onAnswered).toHaveBeenCalledTimes(1);
+        });
 });
 
 it('highlights the first emotion when changing emotion after submission', () => {
-    const { component, emotion: submittedEmotion } = renderAndSubmit();
-    selectAnotherEmotion(component, submittedEmotion);
+    return renderSubmitAndDismiss()
+        .then ( ({ component, emotion: submittedEmotion }) => {
+            selectAnotherEmotion(component, submittedEmotion);
 
-    const touchables = findChildren(component, TouchableHighlight);
-    const submitted = touchables.find(t => t.props.testName === submittedEmotion);
-    const others = touchables.filter(t => t.props.testName !== submittedEmotion);
+            const touchables = findChildren(component, TouchableHighlight);
+            const submitted = touchables.find(t => t.props.testName === submittedEmotion);
+            const others = touchables.filter(t => t.props.testName !== submittedEmotion);
 
-    if (!submitted) throw new Error('Unable to find the touchable for the submitted emotion');
+            if (!submitted) throw new Error('Unable to find the touchable for the submitted emotion');
 
-    expect(others.length).toBeGreaterThan(1);
-    for (const other of others) {
-        expect(other.props.style).not.toEqual(submitted.props.style);
-    }
+            expect(others.length).toBeGreaterThan(1);
+            for (const other of others) {
+                expect(other.props.style).not.toEqual(submitted.props.style);
+            }
+        });
 });
 
 function renderAndSubmit(props = {}): {
@@ -387,8 +392,20 @@ function renderAndSubmit(props = {}): {
     const emotion = selectEmotion(component);
 
     findSubmitButton(component).props.onPress();
-
     return { component, emotion };
+}
+
+function renderSubmitAndDismiss(props = {}): Promise<{
+    component: React.Component<*, *>,
+    emotion: string,
+}>{
+    const { component, emotion } = renderAndSubmit(props);
+
+    return checkNextTick( () => {
+        findDismissButton(component).props.onPress();
+
+        return { component, emotion };
+    });
 }
 
 function selectEmotion(component): string {
@@ -431,3 +448,14 @@ function findSubmitButton(component: React.Component<*, *>) {
     }
 }
 
+
+function findDismissButton(component: React.Component<*, *>) {
+    const btn = findChildren(component, StandardButton)
+        .find(t => t.props.testName === 'dismissButton');
+
+    if (btn) {
+        return btn;
+    } else {
+        throw new Error("Unable to find the dismiss button");
+    }
+}
