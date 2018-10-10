@@ -2,6 +2,7 @@
 
 import firebase from 'react-native-firebase';
 import { log } from '~/src/services/logger.js';
+import cronParser from 'cron-parser';
 import type { rnfNotification, NotificationOpen } from 'react-native-firebase';
 
 type Notification = {
@@ -12,16 +13,29 @@ export function addNotificationListener(cb: (Notification) => void) {
 
     let notificationListener: ?Function = null;
     let notificationOpenedListener: ?Function = null;
+    let notificationDisplayedListener: ?Function = null;
 
-    //notificationDisplayedListener: Function;
-    /*this.notificationDisplayedListener = firebase
+    notificationDisplayedListener = firebase
         .notifications()
         .onNotificationDisplayed( (notification: Notification) => {
             // Process your notification as required
             // ANDROID: Remote notifications do not contain the channel ID. You will have to specify this manually if you'd like to re-display the notification.
 
-            this._trace('onNotificationDisplayed', notification);
-        });*/
+            const { data } = notification;
+            if (data.schedule) {
+                const nextFireDate = getNextFireDate(data.schedule);
+                log.debug('rescheduling notifcation %s at %s', notification.notificationId, nextFireDate);
+                notification = notification
+                                .android
+                                .setChannelId(data.channelId);
+                return firebase.notifications().scheduleNotification(notification, {
+                    fireDate: nextFireDate.getTime(),
+                })
+                .catch( e => {
+                    log.error('failed rescheduling notification: %s', e);
+                });
+            }
+        });
 
     notificationListener = firebase
         .notifications()
@@ -64,8 +78,13 @@ export function addNotificationListener(cb: (Notification) => void) {
         });
 
     return () => {
-        //notificationDisplayedListener && this.notificationDisplayedListener();
+        notificationDisplayedListener && this.notificationDisplayedListener();
         notificationListener && this.notificationListener();
         notificationOpenedListener && this.notificationOpenedListener();
     };
+}
+
+function getNextFireDate(cronExpr: string): Date {
+    const interval = cronParser.parseExpression(cronExpr);
+    return interval.next().toDate();
 }

@@ -64,7 +64,8 @@ class rnfbnotif {
     setBody() {
         return this;
     }
-    setData() {
+    setData(d) {
+        this.data = d;
         return this;
     }
 

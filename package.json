@@ -29,6 +29,7 @@
     }
   },
   "dependencies": {
+    "cron-parser": "^2.6.0",
     "knuth-shuffle": "^1.0.8",
     "moment": "^2.22.1",
     "react": "16.5.0",
