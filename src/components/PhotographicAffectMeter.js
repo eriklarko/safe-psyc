@@ -130,13 +130,9 @@ export class PhotographicAffectMeter extends React.Component<Props, State> {
     }
 
     render() {
-        return <View style={styles.container}>
-                    {
-                        this.state.submissionState === 'successful' && !this.state.successDismissed
-                            ? this._renderSuccessScreen()
-                            : this._renderContent()
-                    }
-                </View>
+        return this.state.submissionState === 'successful' && !this.state.successDismissed
+            ? this._renderSuccessScreen()
+            : this._renderContent();
     }
 
     _renderSuccessScreen() {
@@ -146,19 +142,21 @@ export class PhotographicAffectMeter extends React.Component<Props, State> {
         const extra = startedFromNotification 
             ? <StandardText>The app will close momentarily</StandardText>
             : null;
-        return <View style={ constants.colCentered }>
-            <View>
-                <StandardText>Thank you. Registered that you're feeling { this.state.submittedEmotion }</StandardText>
-                {extra}
+        return <View style={styles.container}>
+            <View style={ constants.colCentered }>
+                <View>
+                    <StandardText>Thank you. Registered that you're feeling { this.state.submittedEmotion }</StandardText>
+                    {extra}
 
-                <VerticalSpace multiplier={ 2 } />
-                <StandardButton 
-                    testName='dismissButton'
-                    onPress={ () => this.setState({ successDismissed: true }) }>
-                    Eh, that wasn't what I meant!
-                </StandardButton>
-                <VerticalSpace />
-                <StandardButton onPress={ () => this.props.onAnswered()}>Done</StandardButton>
+                    <VerticalSpace multiplier={ 2 } />
+                    <StandardButton 
+                        testName='dismissButton'
+                        onPress={ () => this.setState({ successDismissed: true }) }>
+                        Eh, that wasn't what I meant!
+                    </StandardButton>
+                    <VerticalSpace />
+                    <StandardButton onPress={ () => this.props.onAnswered()}>Done</StandardButton>
+                </View>
             </View>
         </View>
     }
@@ -169,51 +167,53 @@ export class PhotographicAffectMeter extends React.Component<Props, State> {
         const submitButton = this._createSubmitButton();
 
         return <ScrollView>
-            <View style={{ flexDirection: 'row' }}>
-                <StandardText style={{ maxWidth: '90%' }}>
-                    Please choose the image that best illustrates how you are feeling right now.
-                </StandardText>
+            <View style={styles.container}>
+                <View style={{ flexDirection: 'row' }}>
+                    <StandardText style={{ maxWidth: '90%' }}>
+                        Please choose the image that best illustrates how you are feeling right now.
+                    </StandardText>
 
-                <TouchableOpacity onPress={ () => this._showHelp() }>
-                    <Image
-                        // $FlowFixMe
-                        source={require('../../images/help.png')}
-                        style={{
-                            tintColor: constants.defaultTextColor,
-                            width: 30,
-                            height: 30,
-                        }} />
-                </TouchableOpacity>
-            </View>
+                    <TouchableOpacity onPress={ () => this._showHelp() }>
+                        <Image
+                            // $FlowFixMe
+                            source={require('../../images/help.png')}
+                            style={{
+                                tintColor: constants.defaultTextColor,
+                                width: 30,
+                                height: 30,
+                            }} />
+                    </TouchableOpacity>
+                </View>
 
-            <VerticalSpace multiplier={3} />
+                <VerticalSpace multiplier={3} />
 
-            <PhotoGrid
-                emotionImages={this.state.selectedImages}
-                onSelect={emotion => this.setState( s => ({
-                    selectedEmotion: emotion,
-                    submissionState: 'not-started',
-                }))}
-                selectedEmotion={this.state.selectedEmotion}
-                submittedEmotion={this.state.submittedEmotion}
-                disabled={this.state.submissionState === 'submitting'}
-            />
-            <SecondaryButton
-                testName='newImages'
-                title="shuffle images"
-                textStyle={{ textAlign: 'right' }}
-                onPress={ () => this.setState({
-                    selectedImages: this._selectImages(),
-                })}
-            />
+                <PhotoGrid
+                    emotionImages={this.state.selectedImages}
+                    onSelect={emotion => this.setState( s => ({
+                        selectedEmotion: emotion,
+                        submissionState: 'not-started',
+                    }))}
+                    selectedEmotion={this.state.selectedEmotion}
+                    submittedEmotion={this.state.submittedEmotion}
+                    disabled={this.state.submissionState === 'submitting'}
+                />
+                <SecondaryButton
+                    testName='newImages'
+                    title="shuffle images"
+                    textStyle={{ textAlign: 'right' }}
+                    onPress={ () => this.setState({
+                        selectedImages: this._selectImages(),
+                    })}
+                />
 
-            <View>
-                { this._createConfirmationText() }
-                <View style={styles.buttonRowStyle}>
-                    {skipButton}
-                    <View style={{ flexDirection: 'row' }}>
-                        {doNotChangeButton}
-                        {submitButton}
+                <View>
+                    { this._createConfirmationText() }
+                    <View style={styles.buttonRowStyle}>
+                        {skipButton}
+                        <View style={{ flexDirection: 'row' }}>
+                            {doNotChangeButton}
+                            {submitButton}
+                        </View>
                     </View>
                 </View>
             </View>
