@@ -59,8 +59,8 @@ const AppNavigationContainer = createAppContainer(rootNavigator);
 // on Android, the URI prefix typically contains a host in addition to scheme
 // on Android, note the required / (slash) at the end of the host property
 const deepLinkingPrefix = Platform.OS == 'android' ? 'safepsyc://safepsyc/' : 'safepsyc://';
-const previousGetActionForPathAndParams = RootNavigator.router.getActionForPathAndParams;
-Object.assign(RootNavigator.router, {
+const previousGetActionForPathAndParams = rootNavigator.router.getActionForPathAndParams;
+Object.assign(rootNavigator.router, {
     getActionForPathAndParams(path, params) {
         if (path.startsWith("open/")) {
             const screen = path.substr("open/".length);

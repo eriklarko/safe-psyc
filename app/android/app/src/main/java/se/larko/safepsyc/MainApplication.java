@@ -3,6 +3,7 @@ package se.larko.safepsyc;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.testfairy.react.TestFairyPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.facebook.react.ReactNativeHost;
@@ -28,45 +29,46 @@ import io.fabric.sdk.android.Fabric;
 
 public class MainApplication extends Application implements ReactApplication {
 
-  private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
+    private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
+        @Override
+        public boolean getUseDeveloperSupport() {
+            return BuildConfig.DEBUG;
+        }
+
+        @Override
+        protected List<ReactPackage> getPackages() {
+            return Arrays.<ReactPackage>asList(
+                new MainReactPackage(),
+                new RNGestureHandlerPackage(),
+                new RNFirebasePackage(),
+                new RNFirebaseAnalyticsPackage(),
+
+                new RNFirebaseAuthPackage(),
+                new RNFirebaseDatabasePackage(),
+                new RNFirebasePerformancePackage(),
+                new RNFirebaseRemoteConfigPackage(),
+                new RNFirebaseCrashlyticsPackage(),
+
+                new TestFairyPackage(),
+                new LinearGradientPackage()
+            );
+        }
+
+        @Override
+        protected String getJSMainModuleName() {
+            return "index";
+        }
+    };
+
     @Override
-    public boolean getUseDeveloperSupport() {
-      return BuildConfig.DEBUG;
+    public ReactNativeHost getReactNativeHost() {
+        return mReactNativeHost;
     }
 
     @Override
-    protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(
-          new MainReactPackage(),
-          new RNFirebasePackage(),
-          new RNFirebaseAnalyticsPackage(),
-
-          new RNFirebaseAuthPackage(),
-          new RNFirebaseDatabasePackage(),
-          new RNFirebasePerformancePackage(),
-          new RNFirebaseRemoteConfigPackage(),
-          new RNFirebaseCrashlyticsPackage(),
-
-          new TestFairyPackage(),
-          new LinearGradientPackage()
-      );
+    public void onCreate() {
+        super.onCreate();
+        Fabric.with(this, new Crashlytics());
+        SoLoader.init(this, /* native exopackage */ false);
     }
-
-    @Override
-    protected String getJSMainModuleName() {
-      return "index";
-    }
-  };
-
-  @Override
-  public ReactNativeHost getReactNativeHost() {
-    return mReactNativeHost;
-  }
-
-  @Override
-  public void onCreate() {
-    super.onCreate();
-    Fabric.with(this, new Crashlytics());
-    SoLoader.init(this, /* native exopackage */ false);
-  }
 }

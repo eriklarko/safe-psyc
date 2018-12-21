@@ -23,6 +23,8 @@ target 'safepsyc' do
   # Pods for safepsyc
 
 
+  pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
+
   target 'safepsycTests' do
     inherit! :search_paths
     # Pods for testing
