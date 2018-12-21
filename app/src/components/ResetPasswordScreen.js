@@ -106,7 +106,7 @@ export class ResetPasswordScreen extends React.Component<Props, State> {
     }
 }
 
-function SpaceBetween(props) {
+function SpaceBetween(props: *) {
     return <View style={{
                 flex: 1,
                 flexDirection: 'column',

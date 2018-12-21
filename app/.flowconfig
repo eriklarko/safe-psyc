@@ -20,6 +20,8 @@
 .*/node_modules/metro/.*
 
 .*/node_modules/react-native-firebase/.*
+.*/node_modules/react-native/.*
+.*/node_modules/react-native-swiper/.*
 
 [include]
 
@@ -68,6 +70,3 @@ suppress_comment=\\(.\\|\n\\)*\\$FlowFixMe\\($\\|[^(]\\|(\\(<VERSION>\\)? *\\(si
 suppress_comment=\\(.\\|\n\\)*\\$FlowIssue\\((\\(<VERSION>\\)? *\\(site=[a-z,_]*react_native[a-z,_]*\\)?)\\)?:? #[0-9]+
 suppress_comment=\\(.\\|\n\\)*\\$FlowFixedInNextDeploy
 suppress_comment=\\(.\\|\n\\)*\\$FlowExpectedError
-
-[version]
-^0.81.0

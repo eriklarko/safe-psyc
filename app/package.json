@@ -6,13 +6,13 @@
     "@babel/core": "^7.1.2",
     "@babel/runtime": "^7.1.2",
     "babel-plugin-root-import": "^6.1.0",
-    "eslint": "^5.7.0",
-    "flow-bin": "^0.81.0",
+    "eslint": "^5.10.0",
+    "flow-bin": "^0.89.0",
     "flow-typed": "^2.5.1",
     "jest": "^23.6.0",
     "metro-react-native-babel-preset": "^0.48.1",
     "react-element-to-jsx-string": "^14.0.2",
-    "react-test-renderer": "^16.5.2",
+    "react-test-renderer": "^16.7.0",
     "uuid": "^3.3.2"
   },
   "scripts": {
@@ -31,18 +31,18 @@
   "dependencies": {
     "cron-parser": "^2.6.0",
     "knuth-shuffle": "^1.0.8",
-    "moment": "^2.22.1",
-    "react": "16.6.0-alpha.8af6728",
-    "react-native": "^0.57.3",
-    "react-native-firebase": "^5.0.0",
+    "moment": "^2.23.0",
+    "react": "16.6.3",
+    "react-native": "^0.57.8",
+    "react-native-firebase": "^5.1.1",
     "react-native-hyperlink": "^0.0.14",
-    "react-native-linear-gradient": "^2.4.2",
+    "react-native-linear-gradient": "^2.5.3",
     "react-native-progress": "^3.4.0",
-    "react-native-swiper": "^1.5.13",
-    "react-native-testfairy": "^2.15.1",
+    "react-native-swiper": "^1.5.14",
+    "react-native-testfairy": "^2.16.1",
     "react-native-textinput-effects": "^0.4.2",
-    "react-navigation": "^2.18.0",
-    "sprintf-js": "^1.1.1"
+    "react-navigation": "^3.0.9",
+    "sprintf-js": "^1.1.2"
   },
   "rnpm": {
     "assets": [
