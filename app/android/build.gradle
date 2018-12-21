@@ -24,7 +24,7 @@ buildscript {
         // added when setting up firebase
         classpath 'com.google.gms:google-services:4.0.1'
         classpath 'io.fabric.tools:gradle:1.25.4'
-        classpath 'com.google.firebase:firebase-plugins:1.1.1' // for firebase performance
+        classpath 'com.google.firebase:firebase-plugins:1.1.5' // for firebase performance
     }
 }
 

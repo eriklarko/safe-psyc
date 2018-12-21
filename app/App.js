@@ -1,6 +1,6 @@
 import React from 'react';
 import { Platform, Alert } from 'react-native';
-import { createStackNavigator, NavigationActions } from 'react-navigation';
+import { createAppContainer, createStackNavigator, NavigationActions } from 'react-navigation';
 
 import { LoadingScreen } from './src/components/LoadingScreen.js';
 import { PitchScreen } from './src/components/PitchScreen.js';
@@ -17,7 +17,6 @@ import { DebugScreen } from './src/components/DebugScreen.js';
 
 import { log } from '~/src/services/logger.js';
 import { setNavigation, setCurrentScreen, setRouteToDirectToOnLoad, navigate } from './src/navigation-actions.js';
-import { addNotificationListener } from '~/src/services/notifcation-listener.js';
 import { constants } from './src/styles/constants.js';
 
 const defaultScreenProps = {
@@ -29,7 +28,7 @@ const defaultScreenProps = {
     },
 };
 
-const RootNavigator = createStackNavigator({
+const rootNavigator = createStackNavigator({
     Loading: { screen: LoadingScreen },
     Pitch: { screen: PitchScreen },
     Login: { screen: LoginScreen },
@@ -50,6 +49,8 @@ const RootNavigator = createStackNavigator({
 }, {
     initialRouteName: 'Loading',
 });
+
+const AppNavigationContainer = createAppContainer(rootNavigator);
 
 // The props available in navigationOptions is a little hard to find, so
 // the link is here https://reactnavigation.org/docs/navigators/stack#StackNavigatorConfig
@@ -84,21 +85,10 @@ function getActiveRouteName(navigationState) {
     return route.routeName;
 }
 
-///// Notifications
-addNotificationListener( (notifcation: Notification) => {
-    console.log('woop', notifcation);
-    const { route, params } = notifcation._data;
-    if (notifcation.startedApp) {
-        setRouteToDirectToOnLoad(route);
-    } else {
-        navigate(route, params);
-    }
-});
-
 export default class App extends React.Component<{}, {}> {
 
     render() {
-        return <RootNavigator
+        return <AppNavigationContainer
             ref={ r => setNavigation(r) }
             uriPrefix={ deepLinkingPrefix }
             onNavigationStateChange={ (prevState, currentState) => {

@@ -185,15 +185,14 @@ dependencies {
     implementation(project(":react-native-firebase"))
 
     // RNFirebase required dependencies
-    implementation "com.google.android.gms:play-services-base:15.0.1"
-    implementation "com.google.firebase:firebase-core:16.0.3"
+    implementation "com.google.android.gms:play-services-base:16.0.1"
+    implementation "com.google.firebase:firebase-core:16.0.4"
 
     // RNFirebase optional dependencies
-    implementation "com.google.firebase:firebase-auth:16.0.3"
-    implementation "com.google.firebase:firebase-config:16.0.0"
-    implementation "com.google.firebase:firebase-database:16.0.2"
-    implementation "com.google.firebase:firebase-perf:16.1.0"
-    implementation "com.google.firebase:firebase-messaging:17.3.2"
+    implementation "com.google.firebase:firebase-auth:16.0.5"
+    implementation "com.google.firebase:firebase-config:16.1.0"
+    implementation "com.google.firebase:firebase-database:16.0.4"
+    implementation "com.google.firebase:firebase-perf:16.2.0"
     implementation('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {
         transitive = true
     }

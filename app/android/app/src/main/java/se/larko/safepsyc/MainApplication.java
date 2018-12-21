@@ -21,8 +21,6 @@ import io.invertase.firebase.database.RNFirebaseDatabasePackage; // Firebase Rea
 import io.invertase.firebase.perf.RNFirebasePerformancePackage; // Firebase Performance
 import io.invertase.firebase.config.RNFirebaseRemoteConfigPackage;
 import io.invertase.firebase.fabric.crashlytics.RNFirebaseCrashlyticsPackage;
-import io.invertase.firebase.messaging.RNFirebaseMessagingPackage; // Notifications
-import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage; // Notifications
 
 import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
@@ -48,8 +46,6 @@ public class MainApplication extends Application implements ReactApplication {
           new RNFirebasePerformancePackage(),
           new RNFirebaseRemoteConfigPackage(),
           new RNFirebaseCrashlyticsPackage(),
-          new RNFirebaseMessagingPackage(),
-          new RNFirebaseNotificationsPackage(),
 
           new TestFairyPackage(),
           new LinearGradientPackage()
