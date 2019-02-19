@@ -45,6 +45,10 @@ export class DebugScreen extends React.Component<Props, State> {
         startRandomSession();
     }
 
+    _lessonSelector() {
+        UNSAFE_navigateTo('LessonSelector');
+    }
+
     render() {
         // $FlowFixMe
         const cogwheel = require('../../images/settings.png');
@@ -90,6 +94,12 @@ export class DebugScreen extends React.Component<Props, State> {
                         <StandardButton
                             title={'Start session'}
                             onPress={this._startSession.bind(this)}
+                        />
+                        <VerticalSpace />
+
+                        <StandardButton
+                            title={'Lesson Selector'}
+                            onPress={this._lessonSelector.bind(this)}
                         />
                         <VerticalSpace />
 

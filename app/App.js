@@ -14,6 +14,7 @@ import { CurrentFeelingScreen } from './src/components/CurrentFeelingScreen.js';
 import { LoginScreen } from './src/components/LoginScreen.js';
 import { EmailAuthScreen } from './src/components/EmailAuthScreen.js';
 import { DebugScreen } from './src/components/DebugScreen.js';
+import { LessonSelectorScreen } from './src/components/LessonSelectorScreen.js';
 
 import { log } from '~/src/services/logger.js';
 import { setNavigation, setCurrentScreen, setRouteToDirectToOnLoad, navigate } from './src/navigation-actions.js';
@@ -42,6 +43,8 @@ const rootNavigator = createStackNavigator({
     SessionReport: { screen: SessionReportScreen, ...defaultScreenProps },
     EmotionDetails: { screen: EmotionDetailsScreen, ...defaultScreenProps },
     CurrentFeeling: { screen: CurrentFeelingScreen, ...defaultScreenProps },
+
+    LessonSelector: { screen: LessonSelectorScreen, ...defaultScreenProps },
 
     // Since the "Home" screen gives the debug screen in dev mode but I want to be able to see the
     // real home screen in dev too I need a second screen for this :)
