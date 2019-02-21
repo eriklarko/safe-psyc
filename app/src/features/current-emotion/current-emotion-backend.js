@@ -1,9 +1,10 @@
 // @flow
 
 import moment from 'moment';
+
 import { firebaseApp } from '~/src/services/firebase.js';
-import { log } from '~/src/services/logger.js';
 import { userBackendFacade } from '~/src/services/user-backend.js';
+import { log } from '~/src/services/logger.js';
 
 type LastEmotionAnswer = {
     emotion: string,
@@ -69,12 +70,3 @@ export class CurrentEmotionBackendFacade {
 
 export const currentEmotionBackendFacade = new CurrentEmotionBackendFacade();
 
-function thenableToPromise(resolve, reject): (?Object) => void {
-    return err => {
-        if (err) {
-            reject(err);
-        } else {
-            resolve();
-        }
-    };
-}

@@ -1,7 +1,7 @@
 // @flow
 
 import { TouchableOpacity } from 'react-native';
-import { Link } from '~/src/shared/components/Link.js';
+import { Link } from '~/src/shared/components';
 import { render } from '~/tests/cool-test-lib/render-utils.js';
 import { getAllRenderedStrings, getChildrenAndParent } from '~/tests/cool-test-lib/component-tree-utils.js';
 

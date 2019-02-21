@@ -4,9 +4,7 @@ import React from 'react';
 import { View, Image, Alert } from 'react-native';
 
 import { VerticalAnswerList } from '../VerticalAnswerList.js';
-import { VerticalSpace } from '~/src/shared/components/VerticalSpace.js';
-import { StandardText } from '~/src/shared/components/Texts.js';
-import { Link } from '~/src/shared/components/Link.js';
+import { VerticalSpace, StandardText, Link } from '~/src/shared/components';
 import { constants } from '~/src/styles/constants.js';
 import { navigateToEmotionDetails } from '~/src/navigation-actions.js';
 import { capitalize } from '~/src/utils/text-utils.js';

@@ -2,9 +2,7 @@
 
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { StandardText } from '~/src/shared/components/Texts.js';
-import { SnapSlider } from '~/src/shared/components/SnapSlider.js';
-import { VerticalSpace } from '~/src/shared/components/VerticalSpace.js';
+import { StandardText, SnapSlider, VerticalSpace } from '~/src/shared/components';
 import { constants } from '~/src/styles/constants.js';
 import { intensityToGroup } from '~/src/utils/intensity-utils.js';
 import { log } from '~/src/services/logger.js';

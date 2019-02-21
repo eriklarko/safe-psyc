@@ -1,7 +1,7 @@
 // @flow
 
 import { PitchScreen } from './PitchScreen.js';
-import { StandardButton } from '~/src/shared/components/Buttons.js';
+import { StandardButton } from '~/src/shared/components';
 import { render } from '~/tests/cool-test-lib/render-utils.js';
 import { mockNavigation } from '~/tests/mocks/navigation-mock.js';
 import { getChildrenAndParent } from '~/tests/cool-test-lib/component-tree-utils.js';

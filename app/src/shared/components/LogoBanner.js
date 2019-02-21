@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { View } from 'react-native';
-import { Title } from '~/src/shared/components/Texts.js';
+import { Title } from '~/src/shared/components';
 import { constants } from '~/src/styles/constants.js';
 
 export function LogoBanner() {

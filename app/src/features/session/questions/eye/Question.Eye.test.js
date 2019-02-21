@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Image, TouchableOpacity } from 'react-native';
-import { Link } from '~/src/shared/components/Link.js';
+import { Link } from '~/src/shared/components';
 import { answerService } from '../../answer-service.js';
 
 import { EyeQuestionComponent, EyeQuestionOverlay } from './Question.Eye.js';

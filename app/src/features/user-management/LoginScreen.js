@@ -2,12 +2,7 @@
 
 import React from 'react';
 import { View, Alert } from 'react-native';
-import { ImageBackground } from '~/src/shared/components/ImageBackground.js';
-import { SquarePrimaryButton, SquareSecondaryButton } from '~/src/shared/components/Buttons.js';
-import { VerticalSpace } from '~/src/shared/components/VerticalSpace.js';
-import { StandardText } from '~/src/shared/components/Texts.js';
-import { ActivityIndicator } from '~/src/shared/components/ActivityIndicator.js';
-import { LogoBanner } from '~/src/shared/components/LogoBanner.js';
+import { ImageBackground, SquarePrimaryButton, SquareSecondaryButton, VerticalSpace, StandardText, ActivityIndicator, LogoBanner } from '~/src/shared/components';
 
 import { constants } from '~/src/styles/constants.js';
 import { navigateToEmailLogIn } from '~/src/navigation-actions.js';

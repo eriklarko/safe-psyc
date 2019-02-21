@@ -2,15 +2,16 @@
 
 import React from 'react';
 import { View, TextInput, FlatList } from 'react-native';
-import { StandardText } from '~/src/shared/components/Texts.js';
-import { VerticalSpace } from '~/src/shared/components/VerticalSpace.js';
-import { PhotographicAffectMeter } from './PhotographicAffectMeter.js';
+
+import { StandardText, VerticalSpace } from '~/src/shared/components';
+
 import { emotionService } from '~/src/services/emotion-service.js';
-import { currentEmotionBackendFacade } from './current-emotion-backend.js';
 import { resetToHome } from '~/src/navigation-actions.js';
 import { log } from '~/src/services/logger.js';
-
 import type { Navigation } from '~/src/navigation-actions.js';
+
+import { PhotographicAffectMeter } from './PhotographicAffectMeter.js';
+import { currentEmotionBackendFacade } from './current-emotion-backend.js';
 
 type Props = {
     navigation: Navigation<{

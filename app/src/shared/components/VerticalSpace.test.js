@@ -3,7 +3,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import { VerticalSpace } from '~/src/shared/components/VerticalSpace.js';
+import { VerticalSpace } from '~/src/shared/components';
 
 it('defaults to multiplier 1', () => {
     const rendered = renderer.create(<VerticalSpace />);

@@ -7,10 +7,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import Hyperlink from 'react-native-hyperlink';
 import { View, Image } from 'react-native';
 
-import { StandardText, LargeText } from '~/src/shared/components/Texts.js';
-import { StandardButton, HeroButton } from '~/src/shared/components/Buttons.js';
-import { ZoomAndRiseButton } from '~/src/shared/components/ZoomAndRiseButton.js';
-import { VerticalSpace } from '~/src/shared/components/VerticalSpace.js';
+import { StandardText, LargeText, StandardButton, HeroButton, ZoomAndRiseButton, VerticalSpace } from '~/src/shared/components';
+
 import { resetToLogin } from '~/src/navigation-actions.js';
 import { deviceStorage } from '~/src/features/settings/device-storage.js';
 import { paramsOr } from '~/src/navigation-actions.js';

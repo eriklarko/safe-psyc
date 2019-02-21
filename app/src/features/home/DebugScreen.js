@@ -2,10 +2,7 @@
 
 import React from 'react';
 import { View, ScrollView, Image, TouchableOpacity, Text  } from 'react-native';
-import { ImageBackground } from '~/src/shared/components/ImageBackground.js';
-import { StandardButton } from '~/src/shared/components/Buttons.js';
-import { VerticalSpace } from '~/src/shared/components/VerticalSpace.js';
-import { ActivityIndicator } from '~/src/shared/components/ActivityIndicator.js';
+import { ImageBackground, StandardButton, VerticalSpace, ActivityIndicator } from '~/src/shared/components';
 import { startRandomSession, openSettings } from '~/src/navigation-actions.js';
 import { statusBarHeight } from '~/src/styles/status-bar-height.js';
 import { constants } from '~/src/styles/constants.js';

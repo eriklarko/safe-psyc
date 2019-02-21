@@ -8,8 +8,7 @@ import { IntensityQuestionRow } from './SessionReport.IntensityRow.js';
 import { WordQuestionRow } from './SessionReport.WordRow.js';
 
 import { EmotionDetails } from '~/src/features/emotion-details/EmotionDetails.js';
-import { StandardText } from '~/src/shared/components/Texts.js';
-import { VerticalSpace } from '~/src/shared/components/VerticalSpace.js';
+import { StandardText,VerticalSpace } from '~/src/shared/components';
 import { navigateToEmotionDetails } from '~/src/navigation-actions.js';
 import { constants } from '~/src/styles/constants.js';
 

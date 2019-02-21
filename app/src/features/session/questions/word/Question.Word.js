@@ -2,8 +2,8 @@
 
 import React from 'react';
 import { View, Image } from 'react-native';
-import { StandardText } from '~/src/shared/components/Texts.js';
-import { VerticalSpace } from '~/src/shared/components/VerticalSpace.js';
+import { StandardText, VerticalSpace } from '~/src/shared/components';
+
 import { VerticalAnswerList } from '../VerticalAnswerList.js';
 import { constants } from '~/src/styles/constants.js';
 import { navigateToEmotionDetails } from '~/src/navigation-actions.js';

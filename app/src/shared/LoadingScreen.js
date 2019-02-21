@@ -2,8 +2,7 @@
 
 import React from 'react';
 import { View, Alert } from 'react-native';
-import { ImageBackground } from '~/src/shared/components/ImageBackground.js';
-import { ActivityIndicator } from '~/src/shared/components/ActivityIndicator.js';
+import { ImageBackground, ActivityIndicator } from '~/src/shared/components';
 import { setCurrentScreen, getRouteToDirectToOnLoad, resetTo } from '~/src/navigation-actions.js';
 import { startLoading } from '~/src/services/startup.js';
 import { log } from '~/src/services/logger.js';

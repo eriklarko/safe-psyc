@@ -2,10 +2,7 @@
 
 import React from 'react';
 import { View, Switch } from 'react-native';
-import { StandardText } from '~/src/shared/components/Texts';
-import { StandardButton } from '~/src/shared/components/Buttons.js';
-import { VerticalSpace } from '~/src/shared/components/VerticalSpace.js';
-import { ActivityIndicator } from '~/src/shared/components/ActivityIndicator.js';
+import { StandardText, StandardButton, VerticalSpace, ActivityIndicator } from '~/src/shared/components';
 import { constants } from '~/src/styles/constants.js';
 import { userBackendFacade } from '~/src/services/user-backend.js';
 import { onUserLoggedOut, navigateToRegister } from '~/src/navigation-actions.js';

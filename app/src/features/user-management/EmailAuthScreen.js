@@ -8,12 +8,7 @@ import {
     Alert,
     Keyboard,
 } from 'react-native';
-import { StandardText } from '~/src/shared/components/Texts.js';
-import { SquarePrimaryButton, SquareSecondaryButton, SecondaryButton } from '~/src/shared/components/Buttons.js';
-import { VerticalSpace } from '~/src/shared/components/VerticalSpace.js';
-import { ImageBackground } from '~/src/shared/components/ImageBackground.js';
-import { FancyInput } from '~/src/shared/components/Inputs.js';
-import { ActivityIndicator } from '~/src/shared/components/ActivityIndicator.js';
+import { StandardText, SquarePrimaryButton, SquareSecondaryButton, SecondaryButton, VerticalSpace, ImageBackground, FancyInput, ActivityIndicator } from '~/src/shared/components';
 import { constants } from '~/src/styles/constants.js';
 import { userBackendFacade } from '~/src/services/user-backend.js';
 import { paramsOr, onUserLoggedIn, onUserRegistered, toResetPassword } from '~/src/navigation-actions.js';

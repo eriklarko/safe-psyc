@@ -2,12 +2,8 @@
 
 import React from 'react';
 import { View, Image, TouchableOpacity } from 'react-native';
-import { ImageBackground } from '~/src/shared/components/ImageBackground.js';
-import { HeroButton, SecondaryButton } from '~/src/shared/components/Buttons.js';
-import { Title, StandardText } from '~/src/shared/components/Texts.js';
-import { VerticalSpace } from '~/src/shared/components/VerticalSpace.js';
-import { ActivityIndicator } from '~/src/shared/components/ActivityIndicator.js';
-import { LogoBanner } from '~/src/shared/components/LogoBanner.js';
+
+import { ImageBackground, HeroButton, SecondaryButton, Title, StandardText, VerticalSpace, ActivityIndicator, LogoBanner } from '~/src/shared/components'; 
 import { cogwheel } from '~/src/utils/images.js';
 
 import { startRandomSession, openSettings, navigateToRegister } from '~/src/navigation-actions.js';

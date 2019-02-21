@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { View } from 'react-native';
-import { StandardText } from '~/src/shared/components/Texts.js';
+import { StandardText } from '~/src/shared/components';
 import { constants } from '~/src/styles/constants.js';
 import type { Question } from '~/src/models/questions.js';
 

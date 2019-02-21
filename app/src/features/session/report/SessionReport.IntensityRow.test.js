@@ -2,7 +2,7 @@
 
 import { TouchableOpacity } from 'react-native';
 import { IntensityQuestionRow } from './SessionReport.IntensityRow.js';
-import { SnapSlider } from '~/src/shared/components/SnapSlider.js';
+import { SnapSlider } from '~/src/shared/components';
 import { render } from '~/tests/cool-test-lib/render-utils.js';
 import { randomIntensityQuestion } from '~/tests/question-utils.js';
 

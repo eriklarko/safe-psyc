@@ -2,9 +2,7 @@
 
 import React from 'react';
 import { View, Image, FlatList } from 'react-native';
-import { StandardText } from '~/src/shared/components/Texts';
-import { VerticalSpace } from '~/src/shared/components/VerticalSpace.js';
-import { Link } from '~/src/shared/components/Link.js';
+import { StandardText, VerticalSpace, Link } from '~/src/shared/components';
 import { constants } from '~/src/styles/constants.js';
 import { navigateToEmotionDetails } from '~/src/navigation-actions.js';
 import { capitalize, formatParagraph } from '~/src/utils/text-utils.js';

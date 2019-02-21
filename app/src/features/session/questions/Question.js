@@ -3,15 +3,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import { VerticalSpace, StandardText, StandardButton } from '~/src/shared/components';
 
 import { EyeQuestionComponent, EyeQuestionOverlay } from './eye/Question.Eye.js';
 import { EmotionWordQuestionComponent } from './word/Question.Word.js';
 import { IntensityQuestionComponent, IntensityQuestionOverlay } from './intensity/Question.Intensity.js';
 import { FlagQuestionButton } from './FlagQuestionButton.js';
-
-import { VerticalSpace } from '~/src/shared/components/VerticalSpace.js';
-import { StandardText } from '~/src/shared/components/Texts.js';
-import { StandardButton } from '~/src/shared/components/Buttons.js';
 
 import { constants } from '~/src/styles/constants.js';
 import { log } from '~/src/services/logger.js';

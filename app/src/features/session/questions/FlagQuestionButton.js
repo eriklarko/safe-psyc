@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Image, TouchableOpacity, Alert } from 'react-native';
-import { ActivityIndicator } from '~/src/shared/components/ActivityIndicator.js';
+import { ActivityIndicator } from '~/src/shared/components';
 import { constants } from '~/src/styles/constants.js';
 import { flagQuestionBackendFacade } from '~/src/services/flag-question-backend.js';
 import { log } from '~/src/services/logger.js';

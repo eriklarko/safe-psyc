@@ -2,9 +2,7 @@
 
 import React from 'react';
 import { View, Image, TouchableOpacity, BackHandler } from 'react-native';
-import { VerticalSpace } from '~/src/shared/components/VerticalSpace.js';
-import { StandardButton } from '~/src/shared/components//Buttons.js';
-import { StandardText } from '~/src/shared/components//Texts.js';
+import { VerticalSpace, StandardButton, StandardText } from '~/src/shared/components';
 import { constants } from '~/src/styles/constants.js';
 import { log } from '~/src/services/logger.js';
 import { resetToHome } from '~/src/navigation-actions.js';

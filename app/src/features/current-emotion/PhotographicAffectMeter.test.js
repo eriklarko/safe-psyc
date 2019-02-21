@@ -2,9 +2,7 @@
 
 import React from 'react';
 import { Image, TouchableHighlight, Text } from 'react-native';
-import { ActivityIndicator } from '~/src/shared/components/ActivityIndicator.js';
-import { StandardButton, SecondaryButton } from '~/src/shared/components/Buttons.js';
-
+import { ActivityIndicator, StandardButton, SecondaryButton } from '~/src/shared/components';
 import { PhotographicAffectMeter } from './PhotographicAffectMeter.js';
 
 import { render } from '~/tests/cool-test-lib/render-utils.js';

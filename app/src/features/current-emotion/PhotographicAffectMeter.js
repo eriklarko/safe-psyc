@@ -2,15 +2,13 @@
 
 import React from 'react';
 import { View, ScrollView, Image, TouchableHighlight, TouchableOpacity, Alert } from 'react-native';
-import { StandardText } from '~/src/shared/components/Texts.js';
-import { StandardButton, SecondaryButton } from '~/src/shared/components/Buttons.js';
-import { VerticalSpace } from '~/src/shared/components/VerticalSpace.js';
-import { SquareGrid } from '~/src/shared/components/SquareGrid.js';
-import { ActivityIndicator } from '~/src/shared/components/ActivityIndicator.js';
+
+import { StandardText, StandardButton, SecondaryButton, VerticalSpace, SquareGrid, ActivityIndicator } from '~/src/shared/components';
 import { constants } from '~/src/styles/constants.js';
-import { log } from '~/src/services/logger.js';
+
 import { randomElement } from '~/src/utils/array-utils.js';
 import { help } from '~/src/utils/images.js';
+import { log } from '~/src/services/logger.js';
 
 import type { CurrentEmotionBackendFacade } from './current-emotion-backend.js';
 

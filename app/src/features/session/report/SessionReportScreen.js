@@ -2,9 +2,7 @@
 
 import React from 'react';
 import { View, ScrollView } from 'react-native';
-import { StandardText } from '~/src/shared/components/Texts.js';
-import { StandardButton } from '~/src/shared/components/Buttons.js';
-import { VerticalSpace } from '~/src/shared/components/VerticalSpace.js';
+import { StandardText, StandardButton, VerticalSpace } from '~/src/shared/components';
 import { SessionReport } from './SessionReport.js';
 
 import { paramsOr, routeToCurrentFeelingOrHome } from '~/src/navigation-actions.js';

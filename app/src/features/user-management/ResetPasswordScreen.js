@@ -2,11 +2,7 @@
 
 import React from 'react';
 import { View, Alert } from 'react-native';
-import { FancyInput } from '~/src/shared/components/Inputs.js';
-import { LargeButton, StandardButton } from '~/src/shared/components/Buttons.js';
-import { StandardText } from '~/src/shared/components/Texts.js';
-import { ActivityIndicator } from '~/src/shared/components/ActivityIndicator.js';
-import { VerticalSpace } from '~/src/shared/components/VerticalSpace.js';
+import { FancyInput, LargeButton, StandardButton, StandardText, ActivityIndicator, VerticalSpace } from '~/src/shared/components';
 import { userBackendFacade } from '~/src/services/user-backend.js';
 import { constants } from '~/src/styles/constants.js';
 import { resetTo } from '~/src/navigation-actions.js';

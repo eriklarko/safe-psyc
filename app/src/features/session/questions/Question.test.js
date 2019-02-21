@@ -3,7 +3,7 @@
 import React from 'react';
 import { Text } from 'react-native';
 
-import { StandardButton } from '~/src/shared/components/Buttons.js';
+import { StandardButton } from '~/src/shared/components';
 import { answerService } from '../answer-service.js';
 import { QuestionComponent, ResultOverlay } from './Question.js';
 import { EyeQuestionComponent } from './eye/Question.Eye.js';
