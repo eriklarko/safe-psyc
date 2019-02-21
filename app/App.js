@@ -1,20 +1,22 @@
+// @flow
+
 import React from 'react';
 import { Platform, Alert } from 'react-native';
 import { createAppContainer, createStackNavigator, NavigationActions } from 'react-navigation';
 
-import { LoadingScreen } from './src/components/LoadingScreen.js';
-import { PitchScreen } from './src/components/PitchScreen.js';
-import { HomeScreen } from './src/components/HomeScreen.js';
-import { SettingsScreen } from './src/components/SettingsScreen.js';
-import { ResetPasswordScreen } from './src/components/ResetPasswordScreen.js';
-import { SessionScreen } from './src/components/session/SessionScreen.js';
-import { SessionReportScreen } from './src/components/session/report/SessionReportScreen.js';
-import { EmotionDetailsScreen } from './src/components/EmotionDetailsScreen.js';
-import { CurrentFeelingScreen } from './src/components/CurrentFeelingScreen.js';
-import { LoginScreen } from './src/components/LoginScreen.js';
-import { EmailAuthScreen } from './src/components/EmailAuthScreen.js';
-import { DebugScreen } from './src/components/DebugScreen.js';
-import { LessonSelectorScreen } from './src/components/LessonSelectorScreen.js';
+import { LoadingScreen } from './src/shared/LoadingScreen.js';
+import { PitchScreen } from './src/features/pitch/PitchScreen.js';
+import { HomeScreen } from './src/features/home/HomeScreen.js';
+import { SettingsScreen } from './src/features/settings/SettingsScreen.js';
+import { ResetPasswordScreen } from './src/features/user-management/ResetPasswordScreen.js';
+import { SessionScreen } from './src/features/session/SessionScreen.js';
+import { SessionReportScreen } from './src/features/session/report/SessionReportScreen.js';
+import { EmotionDetailsScreen } from './src/features/emotion-details/EmotionDetailsScreen.js';
+import { CurrentFeelingScreen } from './src/features/current-emotion/CurrentFeelingScreen.js';
+import { LoginScreen } from './src/features/user-management/LoginScreen.js';
+import { EmailAuthScreen } from './src/features/user-management/EmailAuthScreen.js';
+import { DebugScreen } from './src/features/home/DebugScreen.js';
+import { LessonSelectorScreen } from './src/features/lesson-selector/LessonSelectorScreen.js';
 
 import { log } from '~/src/services/logger.js';
 import { setNavigation, setCurrentScreen, setRouteToDirectToOnLoad, navigate } from './src/navigation-actions.js';
@@ -29,6 +31,7 @@ const defaultScreenProps = {
     },
 };
 
+// $FlowFixMe
 const rootNavigator = createStackNavigator({
     Loading: { screen: LoadingScreen },
     Pitch: { screen: PitchScreen },
@@ -91,6 +94,7 @@ function getActiveRouteName(navigationState) {
 export default class App extends React.Component<{}, {}> {
 
     render() {
+        // $FlowFixMe
         return <AppNavigationContainer
             ref={ r => setNavigation(r) }
             uriPrefix={ deepLinkingPrefix }
@@ -98,7 +102,9 @@ export default class App extends React.Component<{}, {}> {
                 if (currentState.isTransitioning) return;
 
                 const currentScreen = getActiveRouteName(currentState);
-                setCurrentScreen(currentScreen);
+                if (currentScreen) {
+                    setCurrentScreen(currentScreen);
+                }
             }}
         />
     }

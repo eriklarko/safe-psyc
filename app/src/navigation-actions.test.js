@@ -2,10 +2,10 @@
 
 import moment from 'moment';
 import * as navActions from './navigation-actions.js';
-import { mockNavigation } from '~/tests/navigation-utils.js';
+import { mockNavigation } from '~/tests/mocks/navigation-mock.js';
 
-import type { CurrentEmotionBackendFacade } from '~/src/services/current-emotion-backend.js';
-import type { AccountStorage } from '~/src/services/account-storage.js';
+import type { CurrentEmotionBackendFacade } from '~/src/features/current-emotion/current-emotion-backend.js';
+import type { AccountStorage } from '~/src/features/settings/account-storage.js';
 
 describe('startRandomSession', () => {
     it('navigates to "Session"', () => {

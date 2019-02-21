@@ -22,6 +22,7 @@
 .*/node_modules/react-native-firebase/.*
 .*/node_modules/react-native/.*
 .*/node_modules/react-native-swiper/.*
+.*/node_modules/metro-config/.*
 
 [include]
 

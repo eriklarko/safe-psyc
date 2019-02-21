@@ -14,6 +14,7 @@ import renderer from 'react-test-renderer';
 //    SyntaxError: Unexpected token import
 it.skip('renders without crashing', () => {
     const App = require('./App.js');
+    // $FlowFixMe
     const rendered = renderer.create(<App />).toJSON();
     expect(rendered).toBeTruthy();
 });

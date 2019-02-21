@@ -4,16 +4,16 @@ import { InteractionManager, Alert } from 'react-native';
 import moment from 'moment';
 // $FlowFixMe
 import { NavigationActions, StackActions } from 'react-navigation';
-import { randomSessionService } from '~/src/services/random-session-service.js';
-import { deviceStorage } from '~/src/services/device-storage.js';
-import { accountStorage } from '~/src/services/account-storage.js';
-import { SettingsKeys } from '~/src/utils/settings.js';
+import { randomSessionService } from '~/src/features/session/random-session-service.js';
+import { deviceStorage } from '~/src/features/settings/device-storage.js';
+import { accountStorage } from '~/src/features/settings/account-storage.js';
+import { SettingsKeys } from '~/src/features/settings/settings.js';
 import { log } from '~/src/services/logger.js';
 
 import type { Emotion } from '~/src/models/emotion.js';
-import type { CurrentEmotionBackendFacade } from '~/src/services/current-emotion-backend.js';
-import type { AccountStorage } from '~/src/services/account-storage.js';
-import type { Report } from '~/src/components/session/report/SessionReport.js';
+import type { CurrentEmotionBackendFacade } from '~/src/features/current-emotion/current-emotion-backend.js';
+import type { AccountStorage } from '~/src/features/settings/account-storage.js';
+import type { Report } from '~/src/features/session/report/SessionReport.js';
 
 export type Navigation<P> = {
     dispatch: Object => void,

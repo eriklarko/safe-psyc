@@ -5,8 +5,8 @@ import React from 'react';
 import { startLoading } from './startup.js';
 import * as navigationActions from '~/src/navigation-actions.js';
 
-import { mockNavigation } from '~/tests/navigation-utils.js';
-import { checkNextTick } from '~/tests/utils.js';
+import { mockNavigation } from '~/tests/mocks/navigation-mock.js';
+import { checkNextTick } from '~/tests/cool-test-lib/utils.js';
 
 import type { UserBackendFacade } from '~/src/services/user-backend.js';
 

@@ -1,6 +1,6 @@
 // @flow
 
-import { rnfbmock } from './firebase-mock.js';
+import { rnfbmock } from './mocks/firebase-mock.js';
 
 jest.mock('react-native-firebase', () => {
     return new rnfbmock();
@@ -29,13 +29,13 @@ jest.mock('../src/services/logger', () => {
     };
 });
 
-require("./toHaveMatcher.js");
-require("./duplicateMatcher.js");
-require("./elementsOtherThanMatcher.js");
-require("./containsStringMatcher.js");
-require("./navigationMatcher.js");
-require("./momentMatcher.js");
+require("./matchers/toHaveMatcher.js");
+require("./matchers/duplicateMatcher.js");
+require("./matchers/elementsOtherThanMatcher.js");
+require("./matchers/containsStringMatcher.js");
+require("./matchers/navigationMatcher.js");
+require("./matchers/momentMatcher.js");
 
 import { randomEmotions } from './emotion-utils.js';
-import { answerService } from '../src/services/answer-service.js';
+import { answerService } from '../src/features/session/answer-service.js';
 answerService.setAnswerPool(randomEmotions(5));
