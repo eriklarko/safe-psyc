@@ -23,7 +23,9 @@
   },
   "jest": {
     "preset": "react-native",
-    "setupFilesAfterEnv": ["./tests/beforeAll.js"],
+    "setupFilesAfterEnv": [
+      "./tests/beforeAll.js"
+    ],
     "transform": {
       "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js"
     }
@@ -33,15 +35,15 @@
     "moment": "^2.23.0",
     "react": "16.6.3",
     "react-native": "^0.57.8",
-    "react-native-firebase": "^5.1.1",
-    "react-native-gesture-handler": "^1.0.12",
+    "react-native-firebase": "^5.2.2",
+    "react-native-gesture-handler": "^1.0.16",
     "react-native-hyperlink": "^0.0.14",
     "react-native-linear-gradient": "^2.5.3",
     "react-native-progress": "^3.4.0",
     "react-native-swiper": "^1.5.14",
-    "react-native-testfairy": "^2.16.1",
-    "react-native-textinput-effects": "^0.4.2",
-    "react-navigation": "^3.0.9",
+    "react-native-testfairy": "^2.17.0",
+    "react-native-textinput-effects": "^0.5.1",
+    "react-navigation": "^3.3.0",
     "sprintf-js": "^1.1.2"
   },
   "rnpm": {
