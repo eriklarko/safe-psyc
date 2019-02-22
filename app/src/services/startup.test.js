@@ -4,6 +4,7 @@ import React from 'react';
 
 import { startLoading } from './startup.js';
 import * as navigationActions from '~/src/navigation-actions.js';
+import { routes } from '~/src/routes.js';
 
 import { mockNavigation } from '~/tests/mocks/navigation-mock.js';
 import { checkNextTick } from '~/tests/cool-test-lib/utils.js';
@@ -73,7 +74,7 @@ it('does not redirect to home if logged in when not on the loading screen', () =
         },
     });
 
-    navigationActions.setCurrentScreen('some random screen');
+    navigationActions.setCurrentScreen(routes.Pitch); // arbitrary screen, just not the loading screen
     startLoading(navigationActions, userBackend);
 
     return checkNextTick( () => {

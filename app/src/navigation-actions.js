@@ -39,19 +39,19 @@ export function setNavigation(nav: Navigation<mixed>) {
     navigation = nav;
 }
 
-let routeToDirectToOnLoad: ?string = null;
-export function setRouteToDirectToOnLoad(name: string) {
+let routeToDirectToOnLoad: ?Route = null;
+export function setRouteToDirectToOnLoad(name: Route) {
     routeToDirectToOnLoad = name;
 }
-export function getRouteToDirectToOnLoad(): ?string {
+export function getRouteToDirectToOnLoad(): ?Route {
     return routeToDirectToOnLoad;
 }
 
-let currentScreen: ?string = null;
-export function setCurrentScreen(name: string) {
+let currentScreen: ?Route = null;
+export function setCurrentScreen(name: Route) {
     currentScreen = name;
 }
-export function getCurrentScreen(): ?string {
+export function getCurrentScreen(): ?Route {
     return currentScreen;
 }
 
@@ -198,7 +198,7 @@ export function onUserLoggedOut(storage: * = deviceStorage): Promise<void> {
         });
 }
 
-export function resetTo(routeName: string) {
+export function resetTo(routeName: Route) {
     safeNavigation().dispatch(
         StackActions.reset({
             index: 0,

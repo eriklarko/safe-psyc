@@ -65,7 +65,7 @@ export type Route = $Keys<typeof routeDetails>;
 //
 //   navigateTo(routes.CurrentFeeling);
 //
-export const routes : {[Route]: string} = Object.keys(routeDetails)
+export const routes : {[Route]: Route} = Object.keys(routeDetails)
     .reduce((acc, route) => {
         acc[route] = route;
         return acc;

@@ -27,7 +27,11 @@ Object.assign(rootNavigator.router, {
     getActionForPathAndParams(path, params) {
         if (path.startsWith("open/")) {
             const screen = path.substr("open/".length);
-            setRouteToDirectToOnLoad(screen);
+            // $FlowFixMe
+            if (routes[screen]) {
+                // $FlowFixMe: We know here that screen is a valid route, but flow doesn't
+                setRouteToDirectToOnLoad(screen);
+            }
         }
 
         return previousGetActionForPathAndParams(path, params);
