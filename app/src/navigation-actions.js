@@ -14,6 +14,7 @@ import type { Emotion } from '~/src/models/emotion.js';
 import type { CurrentEmotionBackendFacade } from '~/src/features/current-emotion/current-emotion-backend.js';
 import type { AccountStorage } from '~/src/features/settings/account-storage.js';
 import type { Report } from '~/src/features/session/report/SessionReport.js';
+import type { Route } from '~/src/routes.js';
 
 export type Navigation<P> = {
     dispatch: Object => void,
@@ -77,7 +78,7 @@ export function startRandomSession(onDataLoaded?: () => void): Promise<{}> {
     });
 }
 
-export function navigate(routeName: string, params?: Object) {
+export function navigate(routeName: Route, params?: Object) {
     safeNavigation().dispatch(
         NavigationActions.navigate({ routeName, params }),
     );
@@ -226,6 +227,6 @@ export function navigateToRegister() {
     });
 }
 
-export function UNSAFE_navigateTo(screen: string, params?: Object) {
+export function UNSAFE_navigateTo(screen: Route, params?: Object) {
     navigate(screen, params);
 }

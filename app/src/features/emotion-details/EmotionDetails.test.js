@@ -7,8 +7,8 @@ import { EmotionDetails, StrengthMeter } from './EmotionDetails.js';
 import { capitalize, formatParagraph } from '~/src/utils/text-utils.js';
 
 import { render } from '~/tests/cool-test-lib/render-utils.js';
-import { randomEmotion, randomEmotionWithImage } from '~/tests/emotion-utils.js';
 import { getAllRenderedStrings } from '~/tests/cool-test-lib/component-tree-utils.js';
+import { randomEmotion, randomEmotionWithImage } from '~/tests/emotion-utils.js';
 
 const defaultProps = {
     emotion: randomEmotion('EMOTION NAME'),

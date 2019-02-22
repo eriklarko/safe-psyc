@@ -2,11 +2,12 @@
 
 import React from 'react';
 import { View, Image, FlatList } from 'react-native';
+import moment from 'moment';
+
 import { StandardText, VerticalSpace, Link } from '~/src/shared/components';
 import { constants } from '~/src/styles/constants.js';
 import { navigateToEmotionDetails } from '~/src/navigation-actions.js';
 import { capitalize, formatParagraph } from '~/src/utils/text-utils.js';
-import moment from 'moment';
 import { log } from '~/src/services/logger.js';
 
 import type { AnswerType, IncorrectAnswer, IncorrectEyeAnswer } from '~/src/models/questions.js';

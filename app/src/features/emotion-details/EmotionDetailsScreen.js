@@ -2,11 +2,13 @@
 
 import React from 'react';
 import { View, Alert } from 'react-native';
+
 import { StandardText, ActivityIndicator } from '~/src/shared/components';
-import { EmotionDetails } from './EmotionDetails.js';
 import { answerBackendFacade } from '~/src/features/session/answer-backend.js';
 import { log } from '~/src/services/logger.js';
 import { constants } from '~/src/styles/constants.js';
+
+import { EmotionDetails } from './EmotionDetails.js';
 
 import type { Navigation } from '~/src/navigation-actions.js';
 import type { Emotion } from '~/src/models/emotion.js';
