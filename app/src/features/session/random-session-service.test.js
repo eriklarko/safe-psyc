@@ -4,11 +4,12 @@ import { AnswerService } from './answer-service.js';
 import { NumberOfQuestionsService } from './number-of-questions-service.js';
 import { EmotionService } from '~/src/services/emotion-service.js';
 
-import { randomSessionService, RandomSessionService } from './random-session-service.js';
+import { randomSessionService, RandomSessionService, startRandomSession } from './random-session-service.js';
 
 import { randomQuestion } from '~/tests/question-utils.js';
 import { randomEmotionWithCoordinates, randomEmotions, randomEmotionsWithAll } from '~/tests/emotion-utils.js';
 import { newRemoteConfigBackendMock } from '~/tests/mocks/MockRemoteConfigBackendFacade.js';
+import { mockNavigation } from '~/tests/mocks/navigation-mock.js';
 
 import type { WordQuestion } from '~/src/models/questions.js';
 import type { RemoteConfig } from './number-of-questions-service.js';
@@ -156,6 +157,31 @@ it('gives some answers to the word question', () => {
         .then( wordQuestion => {
             expect(wordQuestion.answers.length).toBeGreaterThan(0);
         });
+});
+
+describe('startRandomSession', () => {
+    it('navigates to "Session"', () => {
+        const navigation = mockNavigation();
+
+        return startRandomSession()
+            .then(() => {
+                expect(navigation).toHaveNavigatedTo('Session');
+            });
+    });
+
+    it('contains 10 questions', () => {
+        const navigation = mockNavigation();
+
+        return startRandomSession()
+            .then(() => {
+                const args = navigation.dispatch.mock.calls[0][0].params;
+                if (!args || !args.questions) {
+                    throw 'was not called with 10 questions';
+                } else {
+                    expect(args.questions.length).toBe(10);
+                }
+            });
+    });
 });
 
 function serviceWithConfig(config: $Shape<RemoteConfig>) {

@@ -6,7 +6,8 @@ import { View, Image, Alert } from 'react-native';
 import { VerticalAnswerList } from '../VerticalAnswerList.js';
 import { VerticalSpace, StandardText, Link } from '~/src/shared/components';
 import { constants } from '~/src/styles/constants.js';
-import { navigateToEmotionDetails } from '~/src/navigation-actions.js';
+import { navigate } from '~/src/navigation-actions.js';
+import { routes } from '~/src/routes.js';
 import { capitalize } from '~/src/utils/text-utils.js';
 
 import type { EyeQuestion } from '~/src/models/questions.js';
@@ -49,18 +50,18 @@ export function EyeQuestionComponent(props: Props) {
             />
         </View>
     );
+}
 
-    function toEmotionDetails(emotion) {
-        navigateToEmotionDetails(emotion);
-    }
+function toEmotionDetails(emotion) {
+    navigate(routes.EmotionDetails, { emotion: emotion });
 }
 
 const overlayImageStyle = { height: 100 };
 export function EyeQuestionOverlay(props: SpecificOverlayProps<Emotion>) {
     const { answeredCorrectly, answer } = props;
     const answerImage = answer.image;
-
-    const toEmotionDetails = () => navigateToEmotionDetails(answer);
+    const navigateToEmotionDetails = () => toEmotionDetails(answer);
+    
 
     if (answeredCorrectly) {
         return <StandardText style={{ width: '97%' }}>
@@ -71,7 +72,7 @@ export function EyeQuestionOverlay(props: SpecificOverlayProps<Emotion>) {
             <View style={{ flex: 1, width: '97%'}}>
                 <Link
                     linkText={capitalize(answer.name)}
-                    onLinkPress={toEmotionDetails}
+                    onLinkPress={navigateToEmotionDetails}
                     postfix={' is unfortunately incorrect'}
                 />
             </View>
@@ -82,7 +83,7 @@ export function EyeQuestionOverlay(props: SpecificOverlayProps<Emotion>) {
                 <StandardText>That's unfortunately incorrect.</StandardText>
                 <Link
                     linkText={capitalize(answer.name)}
-                    onLinkPress={toEmotionDetails}
+                    onLinkPress={navigateToEmotionDetails}
                     postfix={' looks like this'}
                 />
                 <VerticalSpace />

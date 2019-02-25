@@ -6,7 +6,8 @@ import moment from 'moment';
 
 import { StandardText, VerticalSpace, Link } from '~/src/shared/components';
 import { constants } from '~/src/styles/constants.js';
-import { navigateToEmotionDetails } from '~/src/navigation-actions.js';
+import { navigate } from '~/src/navigation-actions.js';
+import { routes } from '~/src/routes.js';
 import { capitalize, formatParagraph } from '~/src/utils/text-utils.js';
 import { log } from '~/src/services/logger.js';
 
@@ -185,8 +186,8 @@ function ConfusionList(props: ConfusionListProps) {
 
     function renderRow(props: { item: { emotion: Emotion } }) {
         const { emotion } = props.item;
-        const navigate = () => navigateToEmotionDetails(emotion);
-        return <Link linkText={emotion.name} onLinkPress={navigate} />;
+        const navigateToEmotionDetails = () => navigate(routes.EmotionDetails, { emotion: emotion });
+        return <Link linkText={emotion.name} onLinkPress={navigateToEmotionDetails} />;
     }
 }
 

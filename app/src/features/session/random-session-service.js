@@ -1,12 +1,16 @@
 // @flow
 
+import { InteractionManager } from 'react-native';
 import { knuthShuffle } from 'knuth-shuffle';
 
-import { answerService } from './answer-service.js';
 import { emotionService } from '~/src/services/emotion-service.js';
+import { navigate } from '~/src/navigation-actions.js';
+
+import { answerService } from './answer-service.js';
 import { numberOfQuestionsService } from './number-of-questions-service.js';
 import { ReferencePointService } from './reference-point-service.js';
 import { generateEyeQuestion, generateIntensityQuestion, generateWordQuestion } from './question-utils.js';
+import { log } from '~/src/services/logger.js';
 
 import type { Emotion } from '~/src/models/emotion.js';
 import type { Question, EyeQuestion, IntensityQuestion, WordQuestion } from '~/src/models/questions.js';
@@ -110,3 +114,21 @@ export const randomSessionService = new RandomSessionService(
     emotionService,
     numberOfQuestionsService,
 );
+
+export function startRandomSession(onDataLoaded?: () => void): Promise<{}> {
+    log.event("START_RANDOM_SESSION");
+    return new Promise(resolve => {
+        InteractionManager.runAfterInteractions(() => {
+
+            randomSessionService.getRandomQuestions()
+                .then( questions => {
+                    onDataLoaded && onDataLoaded();
+                    navigate('Session', {
+                        questions: questions,
+                    });
+
+                    resolve();
+                });
+        });
+    });
+}

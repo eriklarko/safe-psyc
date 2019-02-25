@@ -7,7 +7,7 @@
 import React from 'react';
 import { Text, StatusBar, Alert } from 'react-native';
 import { Session } from './Session.js';
-import { navigateToSessionReport } from '~/src/navigation-actions.js';
+import { navigateToSessionReport } from './report/navigation.js';
 import { answerBackendFacade } from './answer-backend.js';
 import { log } from '~/src/services/logger.js';
 

@@ -6,7 +6,8 @@ import { View, Image, TouchableOpacity } from 'react-native';
 import { ImageBackground, HeroButton, SecondaryButton, Title, StandardText, VerticalSpace, ActivityIndicator, LogoBanner } from '~/src/shared/components'; 
 import { cogwheel } from '~/src/utils/images.js';
 
-import { startRandomSession, openSettings, navigateToRegister } from '~/src/navigation-actions.js';
+import { openSettings, navigateToRegister } from '~/src/navigation-actions.js';
+import { startRandomSession } from '~/src/features/session/random-session-service.js';
 import { statusBarHeight } from '~/src/styles/status-bar-height.js';
 import { constants } from '~/src/styles/constants.js';
 import { log } from '~/src/services/logger.js';

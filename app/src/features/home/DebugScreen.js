@@ -3,11 +3,13 @@
 import React from 'react';
 import { View, ScrollView, Image, TouchableOpacity, Text  } from 'react-native';
 import { ImageBackground, StandardButton, VerticalSpace, ActivityIndicator } from '~/src/shared/components';
-import { startRandomSession, openSettings } from '~/src/navigation-actions.js';
+import { openSettings } from '~/src/navigation-actions.js';
+import { startRandomSession } from '~/src/features/session/random-session-service.js';
 import { statusBarHeight } from '~/src/styles/status-bar-height.js';
 import { constants } from '~/src/styles/constants.js';
 
-import { navigateToEmotionDetails, UNSAFE_navigateTo } from '~/src/navigation-actions.js';
+import { navigate, UNSAFE_navigateTo } from '~/src/navigation-actions.js';
+import { routes } from '~/src/routes.js';
 import { randomSessionService } from '~/src/features/session/random-session-service.js';
 import { log } from '~/src/services/logger.js';
 import { cogwheel } from '~/src/utils/images.js';
@@ -60,11 +62,11 @@ export class DebugScreen extends React.Component<Props, State> {
                         <StandardButton
                             title={'Emotion details'}
                             onPress={() =>
-                                navigateToEmotionDetails(
-                                    randomSessionService
+                                navigate(routes.EmotionDetails, {
+                                    emotion: randomSessionService
                                         .getEmotionPool()
-                                        .filter(e => e.name === 'bitter')[0]
-                                )
+                                    .filter(e => e.name === 'bitter')[0],
+                                })
                             }
                         />
                         <VerticalSpace />

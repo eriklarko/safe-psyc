@@ -4,7 +4,8 @@ import React from 'react';
 import { View } from 'react-native';
 import { StandardText, Link, StandardButton, VerticalSpace, SnapSlider } from '~/src/shared/components';
 import { constants } from '~/src/styles/constants.js';
-import { navigateToEmotionDetails } from '~/src/navigation-actions.js';
+import { navigate } from '~/src/navigation-actions.js';
+import { routes } from '~/src/routes.js';
 import { intensityToGroup } from '~/src/utils/intensity-utils.js';
 
 // TODO: REMOVE
@@ -47,7 +48,7 @@ export class IntensityQuestionComponent extends React.Component<Props, State> {
         const emotion = question.correctAnswer;
         const emotionName = emotion.name;
 
-        const onEmotionPress = () => navigateToEmotionDetails(emotion);
+        const onEmotionPress = () => navigate(routes.EmotionDetails, { emotion: emotion });
 
         return (
             <View style={containerStyle}>

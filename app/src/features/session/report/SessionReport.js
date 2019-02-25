@@ -9,7 +9,8 @@ import { WordQuestionRow } from './SessionReport.WordRow.js';
 
 import { EmotionDetails } from '~/src/features/emotion-details/EmotionDetails.js';
 import { StandardText,VerticalSpace } from '~/src/shared/components';
-import { navigateToEmotionDetails } from '~/src/navigation-actions.js';
+import { navigate } from '~/src/navigation-actions.js';
+import { routes } from '~/src/routes.js';
 import { constants } from '~/src/styles/constants.js';
 
 import type {
@@ -51,7 +52,6 @@ export function SessionReport(props: Props) {
     });
 
     return (
-        // $FlowFixMe
         <SectionList
             sections={sectionsProp}
             renderItem={data => renderRow(data.item, onPressItem)}
@@ -60,7 +60,7 @@ export function SessionReport(props: Props) {
     );
 
     function onPressItem(question) {
-        navigateToEmotionDetails(question.correctAnswer);
+        navigate(routes.EmotionDetails, { emotion: question.correctAnswer });
     }
 }
 

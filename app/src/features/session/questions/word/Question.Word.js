@@ -6,7 +6,8 @@ import { StandardText, VerticalSpace } from '~/src/shared/components';
 
 import { VerticalAnswerList } from '../VerticalAnswerList.js';
 import { constants } from '~/src/styles/constants.js';
-import { navigateToEmotionDetails } from '~/src/navigation-actions.js';
+import { navigate } from '~/src/navigation-actions.js';
+import { routes } from '~/src/routes.js';
 import { quote } from '~/src/utils/images.js';
 
 import type { WordQuestion } from '~/src/models/questions.js';
@@ -80,5 +81,5 @@ function IndentedCursiveText(props: { text: string }) {
 }
 
 function toEmotionDetails(emotion) {
-    navigateToEmotionDetails(emotion);
+    navigate(routes.EmotionDetails, { emotion: emotion });
 }

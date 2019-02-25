@@ -5,7 +5,8 @@ import { View, ScrollView } from 'react-native';
 import { StandardText, StandardButton, VerticalSpace } from '~/src/shared/components';
 import { SessionReport } from './SessionReport.js';
 
-import { paramsOr, routeToCurrentFeelingOrHome } from '~/src/navigation-actions.js';
+import { paramsOr } from '~/src/navigation-actions.js';
+import { navigateToCurrentFeelingOrHome } from '~/src/features/current-emotion/navigation.js'
 import { currentEmotionBackendFacade } from '~/src/features/current-emotion/current-emotion-backend.js';
 import { accountStorage } from '~/src/features/settings/account-storage.js';
 import { constants } from '~/src/styles/constants.js';
@@ -33,7 +34,7 @@ export class SessionReportScreen extends React.Component<Props, {}> {
     };
 
     _onDismiss() {
-        routeToCurrentFeelingOrHome(currentEmotionBackendFacade, accountStorage);
+        navigateToCurrentFeelingOrHome(currentEmotionBackendFacade, accountStorage);
     }
 
     render() {
