@@ -67,6 +67,20 @@ expect.extend({
             };
         }
 
+        if (Array.isArray(route)) {
+            const actualRoutes = args.actions.map(a => a.routeName);
+            return {
+                pass: actualRoutes.every(r => actualRoutes.indexOf(r) === route.indexOf(r)),
+
+                message: () => `${this.utils.matcherHint('.not.toBe')}\n\n` +
+
+                  'Expected to have reset to:\n' +
+                  `  ${this.utils.printExpected(this.utils.stringify(route))}\n` +
+                  'Received:\n' +
+                  `  ${this.utils.printReceived(this.utils.stringify(actualRoutes))}\n`,
+            };
+        }
+
         if (args.actions[0].routeName !== route) {
             return {
                 pass: false,

@@ -1053,7 +1053,7 @@ interface SafePsycExpectType {
   toContainElementsOtherThan(mixed): void,
   toContainString(string: string): void,
   toContainStrings(...strings: Array<string>): void,
-  toHaveResetTo(string): void,
+  toHaveResetTo(string|Array<string>): void,
   toHaveNavigatedTo(string, ?Object): void,
   toNeverHaveNavigated(): void,
   toContainDuplicates(): void,
