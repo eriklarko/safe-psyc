@@ -3,18 +3,19 @@
 import * as React from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { Text } from './Text.js';
+import { combineStyles } from './helpers.js';
 import { constants } from './constants.js';
 
-type ButtonProps = {|
+type TouchableOpacityProps = React.ElementProps<typeof TouchableOpacity>;
+type Props = TouchableOpacityProps & {
     title: string,
-    onPress: () => void,
 
     disabled?: boolean,
 
     containerStyle?: View.propTypes.style,
     textStyle?: View.propTypes.style,
-|};
-export function Button(props: ButtonProps) {
+};
+export function Button(props: Props) {
     const { title, containerStyle, textStyle, disabled, ...restProps } = props;
 
     const defaultStyles = disabled
@@ -23,7 +24,7 @@ export function Button(props: ButtonProps) {
 
     return (
         <TouchableOpacity
-            style={[defaultStyles.container, containerStyle]}
+            style={combineStyles(defaultStyles.container, containerStyle)}
             disabled={disabled}
             {...restProps}
         >

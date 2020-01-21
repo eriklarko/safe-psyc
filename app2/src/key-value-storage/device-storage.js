@@ -1,4 +1,8 @@
 // @flow
+//
+// Can be used to persist data on the device. Useful for e.g. if the user has
+// seen some onboarding or similar. Not suitable for things like settings that
+// should likely sync across devices.
 
 import { AsyncStorage } from 'react-native';
 

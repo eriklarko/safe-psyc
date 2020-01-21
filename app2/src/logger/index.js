@@ -1,4 +1,8 @@
 // @flow
+//
+// This file represents the default way to log things in this app. All logs
+// shoud be structured, but where those logs end up is up to the implementation
+// of the default logger defined here.
 
 import { StdoutLogger } from './stdout-logger.js';
 export * from './nop-logger.js';
@@ -24,9 +28,16 @@ export interface Stringable {
     toString(): string
 }
 
-// things that can be logged
+// things that can be logged. either something that can be turned into a string
+// or a map from something stringable to something stringable.
+// e.g.
+//  let foo: Loggable = "hello"       // strings are stringable
+//  foo = 1                           // numbers are also stringable
+//  foo = { 'a': 1, 2: 'b' }          // maps from stringable to stringable work great
 export type Loggable = Stringable | {[Stringable]: Stringable};
 
+// setLogger can be used to change the default logger. It was introduced to 
+// disable logging in tests to make the output less noisy.
 export function setLogger(newLogger: StructuredLogger) {
     logger = newLogger;
 }

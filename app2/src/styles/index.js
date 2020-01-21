@@ -1,6 +1,7 @@
 // @flow
 
 export * from './constants.js';
+export { combineStyles } from './helpers.js';
 
 export * from './ScreenWrapper.js';
 export * from './VerticalSpace.js';

@@ -1,8 +1,23 @@
 // @flow
+//
+// ImageQuestion represents a type of question where the user is shown an image
+// and is asked to answer which emotion is associated with the image.
+//
+// It looks something like
+// +---------------+
+// |    +-----+    |
+// |    | o o |    |
+// |    |  l  |    |
+// |    +-----+    |
+// |               |
+// |     happy     |
+// |      sad      |
+// +---------------+
 
 import * as React from 'react';
-import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Image } from 'react-native';
 import { Text, Button } from '../styles';
+import { AnswerList } from './AnswerList.js';
 import type { ImageThatNeedsToBeLoaded } from './images.js';
 
 type Props = {
@@ -19,16 +34,10 @@ export function ImageQuestion(props: Props) {
             source={props.image}/>
         <Text>{props.text}</Text>
 
-        <View style={styles.answerListWrapper}>
-            {props.answers.map(answer =>
-                <TouchableOpacity
-                    key={'answer'+ answer}
-                    accessibilityLabel={'answer ' + answer }
-                    onPress={() => props.onAnswer(answer)}>
-                    <Text>{answer}</Text>
-                </TouchableOpacity>
-            )}
-        </View>
+        <AnswerList 
+            answers={props.answers}
+            onAnswer={props.onAnswer}
+        />
     </View>
 }
 
@@ -45,8 +54,5 @@ const styles = StyleSheet.create({
 
         // always show the whole image, even if it doesn't scale properly
         resizeMode: 'contain',
-    },
-    answerListWrapper: {
-        flex: 1,
     },
 });

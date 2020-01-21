@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { Text as RNText, StyleSheet } from 'react-native';
+import { combineStyles } from './helpers.js';
 import { constants } from './constants.js';
 
 type Props = {
@@ -32,19 +33,13 @@ const defaultStyles = StyleSheet.create({
 export function Text(props: Props) {
     const { style, ...restProps } = props;
 
-    // Calculate the style property to pass to the react-native text component.
-    let concreteStyle = defaultStyles.text;
-    if (style) { // If custom styles are passed in through props.style we combine them with the defaults
-        concreteStyle = [defaultStyles.text, style];
-    }
-
-    return <RNText style={concreteStyle} {...restProps}>
+    return <RNText style={combineStyles(defaultStyles.text, style)} {...restProps}>
         {props.children}
     </RNText>
 }
 
 export function LargeText(props: Props) {
-    return <RNText style={[defaultStyles.largeText, props.style]}>
+    return <RNText style={combineStyles(defaultStyles.largeText, props.style)}>
         {props.children}
     </RNText>
 }

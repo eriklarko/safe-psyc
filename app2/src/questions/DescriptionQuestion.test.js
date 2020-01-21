@@ -3,19 +3,7 @@
 import * as React from 'react';
 import * as testingLib from '@testing-library/react-native';
 import { getAllRenderedStrings } from '../../tests/react-testing-library-helpers.js';
-import { Image } from 'react-native';
-import { Text } from '../styles';
-import { ImageQuestion } from './ImageQuestion.js';
-
-it('shows an image', () => {
-    const component = renderWithProps({
-        image: { uri: './test-image.png' },
-    });
-
-    const imageComponent = component.getByRole('image');
-    expect(imageComponent).toBeDefined();
-    expect(imageComponent.props.source).toEqual({ uri: './test-image.png' });
-});
+import { DescriptionQuestion } from './DescriptionQuestion.js';
 
 it('shows the question text', () => {
     const component = renderWithProps({
@@ -57,12 +45,11 @@ it('forwards taps on all answers', () => {
 })
 
 const defaultProps = {
-    image: { uri: './test-image.png' }, 
     text: 'foo', 
     answers: [], 
     onAnswer: jest.fn(), 
 }
 function renderWithProps(overrideProps) {
     const props = Object.assign({}, defaultProps, overrideProps);
-    return testingLib.render(<ImageQuestion {...props} />);
+    return testingLib.render(<DescriptionQuestion {...props} />);
 }
