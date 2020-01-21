@@ -3,9 +3,12 @@
 type Stringable = interface {
     toString(): string
 }
+type Loggable = Stringable | {[Stringable]: Stringable};
+
 class StdoutLogger {
 
-    log(...keyvals: Array<Stringable>) {
+    log(first: Loggable, ...keyvals: Array<Stringable>) {
+        keyvals.unshift(first);
         console.log(...keyvals)
     }
 }
