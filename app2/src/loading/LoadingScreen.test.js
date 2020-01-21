@@ -18,7 +18,7 @@ it('redirects to home when successfully loaded', () => {
 
 function getDidMountPromise(component): Promise<void> {
     /* $FlowFixMe: component.getInstance() returns a generic react component.
-     * From context I know that component is always a <Loading /> component
+     * From context I know that `component` is always a <Loading /> component
      * which has the _didMountPromise.
      */
     return component.getInstance()._didMountPromise;
