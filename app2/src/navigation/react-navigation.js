@@ -25,11 +25,15 @@ const screens = {
 //   createStackNavigator, and can be directly exported from App.js to be used
 //   as our App's root component.
 //
-// I tried making this a functional component but it doesn't work :(
+// I tried making ReactNavigationRoot a functional component but it doesn't work :(
+
 const AppNavigator = createStackNavigator(screens, {
     initialRouteName: initialRoute,
 });
+
+// $FlowFixMe
 const AppContainer = createAppContainer(AppNavigator);
+
 export class ReactNavigationRoot extends React.Component<{}, {}> {
   render() {
     return <AppContainer />;
