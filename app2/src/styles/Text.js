@@ -16,7 +16,6 @@ export function Text(props: {
     style?: TextStyle,
     children?: React.Node,
 }) {
-    // $FlowFixMe: flow doesn't like Object.assign like this for stylesheets. Makes sense maybe
     const style = Object.assign({}, defaultStyle.rnText, props.style);
     return <RNText style={style}>
         {props.children}
