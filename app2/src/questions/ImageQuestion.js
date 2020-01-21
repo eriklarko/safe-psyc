@@ -1,7 +1,7 @@
 // @flow
 
 import * as React from 'react';
-import { StyleSheet, View, Image } from 'react-native';
+import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 import { Text, Button } from '../styles';
 import type { ImageThatNeedsToBeLoaded } from './images.js';
 
@@ -14,12 +14,19 @@ type Props = {
 };
 export function ImageQuestion(props: Props) {
     return <View style={styles.wrapper}>
-        <Image source={props.image}/>
+        <Image
+            accessibilityRole='image'
+            source={props.image}/>
         <Text>{props.text}</Text>
 
         <View style={styles.answerListWrapper}>
             {props.answers.map(answer =>
-                <Text>{answer}</Text>
+                <TouchableOpacity
+                    key={'answer'+ answer}
+                    accessibilityLabel={'answer ' + answer }
+                    onPress={() => props.onAnswer(answer)}>
+                    <Text>{answer}</Text>
+                </TouchableOpacity>
             )}
         </View>
     </View>

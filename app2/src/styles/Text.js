@@ -30,7 +30,15 @@ const defaultStyles = StyleSheet.create({
 });
 
 export function Text(props: Props) {
-    return <RNText style={[defaultStyles.text, props.style]}>
+    const { style, ...restProps } = props;
+
+    // Calculate the style property to pass to the react-native text component.
+    let concreteStyle = defaultStyles.text;
+    if (style) { // If custom styles are passed in through props.style we combine them with the defaults
+        concreteStyle = [defaultStyles.text, style];
+    }
+
+    return <RNText style={concreteStyle} {...restProps}>
         {props.children}
     </RNText>
 }

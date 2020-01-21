@@ -49,6 +49,13 @@ it('adds new styles', () => {
     expect(actualStyle).toMatchObject(overrideStyle);
 });
 
+it('forwards unknown props', () => {
+    const component = renderer.create(<Text foo="bar" />);
+    const rnText = component.root.findByType(RNText);
+
+    expect(rnText.props).toEqual(expect.objectContaining({ foo: 'bar' }));
+});
+
 function getTextStyle(node: React.Element<any>): ?TextStyle {
     const component = renderer.create(node);
     const rnText = component.root.findByType(RNText);
