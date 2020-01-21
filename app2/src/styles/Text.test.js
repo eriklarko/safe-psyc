@@ -41,7 +41,8 @@ it('adds new styles', () => {
         color: 'red',
     };
 
-    // check that it doesn't have color so we can test th
+    // check that the default style doesn't set the color as this test
+    // is about adding new styles.
     expect(defaultStyle).not.toHaveProperty('color');
 
     const actualStyle = getTextStyle(<Text style={ overrideStyle } />);
