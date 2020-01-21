@@ -6,5 +6,5 @@ import { name as appName } from './app.json';
 
 import { navigator } from './src/navigation';
 
-AppRegistry.registerComponent(appName, () => navigator.getRootComponent());
+AppRegistry.registerComponent(appName, () => navigator.getRootComponent);
 
