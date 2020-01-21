@@ -1,5 +1,6 @@
 // @flow
 
+const gridSize: number = 12;
 export const constants = {
     defaultFontFamily: 'Lato',
 
@@ -13,7 +14,8 @@ export const constants = {
     disabledBackgroundColor: '#CCC',
 
     // used to divide the whole UI into a grid
-    space: function(multiplier: number) {
-        return 12 * multiplier;
+    gridSize,
+    space: function(multiplier: number = 1) {
+        return gridSize * multiplier;
     },
 }
