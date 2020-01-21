@@ -1,0 +1,23 @@
+{
+  "name": "content-finder-backend",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "start": "npm run build && node build/bundle.js"
+  },
+  "devDependencies": {
+    "flow-bin": "^0.86.0",
+    "flow-typed": "^2.5.1",
+    "rollup": "^0.67.1",
+    "rollup-plugin-flow": "^1.1.1",
+    "rollup-plugin-node-resolve": "^3.4.0"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "cheerio": "^1.0.0-rc.2",
+    "sqlite3": "^4.0.9"
+  }
+}
