@@ -1,13 +1,11 @@
 // @flow
 
 import React from 'react';
-import { View, Text } from 'react-native';
+import { ScreenWrapper, Text } from '../styles';
 
 type Props = {};
 export function Home(props: Props) {
-    return <View style={{
-        marginTop: 30,
-    }}>
+    return <ScreenWrapper>
         <Text>HELLO</Text>
-    </View>
+    </ScreenWrapper>
 }
