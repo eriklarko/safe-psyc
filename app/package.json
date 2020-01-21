@@ -9,7 +9,7 @@
     "flow-bin": "^0.93.0",
     "flow-typed": "^2.5.1",
     "jest": "^24.1.0",
-    "metro-react-native-babel-preset": "^0.48.1",
+    "metro-react-native-babel-preset": "^0.51.0",
     "react-element-to-jsx-string": "^14.0.2",
     "react-test-renderer": "^16.8.2",
     "uuid": "^3.3.2"
