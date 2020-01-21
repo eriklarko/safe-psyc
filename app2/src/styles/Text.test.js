@@ -4,7 +4,7 @@ import 'react-native';
 import * as React from 'react';
 import renderer from 'react-test-renderer';
 
-import { Text as RNText } from 'react-native'
+import { Text as RNText, StyleSheet } from 'react-native'
 import { Text } from './Text.js';
 
 import type { TextStyle } from './Text.js';
@@ -38,12 +38,12 @@ it('adds new styles', () => {
     expect(defaultStyle).not.toBeUndefined();
 
     const overrideStyle = {
-        color: 'red',
+        opacity: 0.1337,
     };
 
     // check that the default style doesn't set the color as this test
     // is about adding new styles.
-    expect(defaultStyle).not.toHaveProperty('color');
+    expect(defaultStyle).not.toHaveProperty('opacity');
 
     const actualStyle = getTextStyle(<Text style={ overrideStyle } />);
     expect(actualStyle).toMatchObject(overrideStyle);
@@ -52,6 +52,7 @@ it('adds new styles', () => {
 function getTextStyle(node: React.Element<any>): ?TextStyle {
     const component = renderer.create(node);
     const rnText = component.root.findByType(RNText);
-    
-    return rnText.props.style;
+
+    // $FlowFixMe: some internal DangerouslyImpreciseStyle warning
+    return StyleSheet.flatten(rnText.props.style);
 }
