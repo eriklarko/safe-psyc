@@ -29,12 +29,12 @@ it('forwards taps on all answers', () => {
     const component = renderWithProps(props);
 
     // find answer buttons from the accessibility label
-    const answers = component.getAllByLabelText(/answer/i);
+    const answers = component.getAllByTestId(/answer/i);
     for (const answerTouchable of answers) {
 
         // the accessibility label needs to contain the actual answer too, lets use that
         // to get the value we expect.
-        const answer = answerTouchable.props.accessibilityLabel.substr('answer '.length);
+        const answer = answerTouchable.props.testID.substr('answer-'.length);
 
         testingLib.fireEvent.press(answerTouchable);
         expect(props.onAnswer).toHaveBeenCalledTimes(1);

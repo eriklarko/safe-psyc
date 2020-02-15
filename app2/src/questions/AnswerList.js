@@ -17,7 +17,7 @@ export function AnswerList(props: Props) {
         {props.answers.map(answer =>
             <Button
                 key={'answer'+ answer}
-                accessibilityLabel={'answer ' + answer }
+                testID={'answer-' + answer }
 
                 title={answer}
                 onPress={() => props.onAnswer(answer)}

@@ -2,17 +2,26 @@
 
 import * as React from 'react';
 import * as testingLib from '@testing-library/react-native';
+import testRenderer from 'react-test-renderer';
 import { getAllRenderedStrings } from '../../tests/react-testing-library-helpers.js';
 import { Image } from 'react-native';
 import { Text } from '../styles';
 import { ImageQuestion } from './ImageQuestion.js';
 
+const defaultProps = {
+    image: { uri: './test-image.png' }, 
+    text: 'foo', 
+    answers: [], 
+    onAnswer: jest.fn(), 
+}
+
 it('shows an image', () => {
-    const component = renderWithProps({
+    const props = Object.assign({}, defaultProps, {
         image: { uri: './test-image.png' },
     });
+    const component = testRenderer.create(<ImageQuestion {...props} />).root;
 
-    const imageComponent = component.getByRole('image');
+    const imageComponent = component.findByType(Image);
     expect(imageComponent).toBeDefined();
     expect(imageComponent.props.source).toEqual({ uri: './test-image.png' });
 });
@@ -41,12 +50,12 @@ it('forwards taps on all answers', () => {
     const component = renderWithProps(props);
 
     // find answer buttons from the accessibility label
-    const answers = component.getAllByLabelText(/answer/i);
+    const answers = component.getAllByTestId(/answer/i);
     for (const answerTouchable of answers) {
 
         // the accessibility label needs to contain the actual answer too, lets use that
         // to get the value we expect.
-        const answer = answerTouchable.props.accessibilityLabel.substr('answer '.length);
+        const answer = answerTouchable.props.testID.substr('answer-'.length);
 
         testingLib.fireEvent.press(answerTouchable);
         expect(props.onAnswer).toHaveBeenCalledTimes(1);
@@ -54,14 +63,8 @@ it('forwards taps on all answers', () => {
 
         props.onAnswer.mockClear();
     }
-})
+});
 
-const defaultProps = {
-    image: { uri: './test-image.png' }, 
-    text: 'foo', 
-    answers: [], 
-    onAnswer: jest.fn(), 
-}
 function renderWithProps(overrideProps) {
     const props = Object.assign({}, defaultProps, overrideProps);
     return testingLib.render(<ImageQuestion {...props} />);

@@ -6,6 +6,8 @@ import { Text } from './Text.js';
 import { combineStyles } from './helpers.js';
 import { constants } from './constants.js';
 
+import type { AccessibilityRole } from 'react-native/Libraries/Components/View/ViewAccessibility.js';
+
 type TouchableOpacityProps = React.ElementProps<typeof TouchableOpacity>;
 type Props = TouchableOpacityProps & {
     title: string,
@@ -14,9 +16,11 @@ type Props = TouchableOpacityProps & {
 
     containerStyle?: View.propTypes.style,
     textStyle?: View.propTypes.style,
+
+    accessibilityRole?: AccessibilityRole, 
 };
 export function Button(props: Props) {
-    const { title, containerStyle, textStyle, disabled, ...restProps } = props;
+    const { title, containerStyle, textStyle, disabled, accessibilityRole, ...restProps } = props;
 
     const defaultStyles = disabled
         ? disabledStyles
@@ -26,6 +30,7 @@ export function Button(props: Props) {
         <TouchableOpacity
             style={combineStyles(defaultStyles.container, containerStyle)}
             disabled={disabled}
+            accessibilityRole={accessibilityRole || 'button'}
             {...restProps}
         >
             <Text style={[defaultStyles.text, textStyle]}>
