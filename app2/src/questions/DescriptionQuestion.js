@@ -15,9 +15,8 @@
 
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Text, Button } from '../styles';
+import { Text } from '../styles';
 import { AnswerList } from './AnswerList.js';
-import type { ImageThatNeedsToBeLoaded } from './images.js';
 
 type Props = {
     text: string,

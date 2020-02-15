@@ -5,7 +5,6 @@ import * as testingLib from '@testing-library/react-native';
 import testRenderer from 'react-test-renderer';
 import { getAllRenderedStrings } from '../../tests/react-testing-library-helpers.js';
 import { Image } from 'react-native';
-import { Text } from '../styles';
 import { ImageQuestion } from './ImageQuestion.js';
 
 const defaultProps = {
@@ -53,8 +52,6 @@ it('forwards taps on all answers', () => {
     const answers = component.getAllByTestId(/answer/i);
     for (const answerTouchable of answers) {
 
-        // the accessibility label needs to contain the actual answer too, lets use that
-        // to get the value we expect.
         const answer = answerTouchable.props.testID.substr('answer-'.length);
 
         testingLib.fireEvent.press(answerTouchable);

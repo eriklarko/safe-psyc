@@ -32,8 +32,6 @@ it('forwards taps on all answers', () => {
     const answers = component.getAllByTestId(/answer/i);
     for (const answerTouchable of answers) {
 
-        // the accessibility label needs to contain the actual answer too, lets use that
-        // to get the value we expect.
         const answer = answerTouchable.props.testID.substr('answer-'.length);
 
         testingLib.fireEvent.press(answerTouchable);

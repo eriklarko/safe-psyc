@@ -199,7 +199,7 @@ function clickIncorrectAnswer(sessionComponent: testingLib.RenderResult, session
     // find a truly incorrect answer
     let incorrectAns = null;
     for (const a of q.incorrectAnswers) {
-        if (a != q.correctAnswer) {
+        if (a !== q.correctAnswer) {
             incorrectAns = a;
         }
     }

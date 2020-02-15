@@ -1,6 +1,5 @@
 // @flow
-import { createAppContainer, StackActions, NavigationActions } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
+import { StackActions, NavigationActions } from 'react-navigation';
 
 import type { NavigationStackProp } from 'react-navigation';
 import type { Screen } from './screens.js';
