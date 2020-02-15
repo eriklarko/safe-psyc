@@ -3,11 +3,6 @@
 // A session report keeps track of how the user answered each question. How
 // many attempts it took to get the right answer and what the wrong answers
 // were, in order.
-//
-// TODO: Should this class store the answers in THE CLAUD as answers come in?
-//      If users cancel they might assume that the info gathered about them in the session will be thrown away
-//      I can get more data for the spaced repetition algo if answered are stored as they come in
-//      Error handling and retries?
 
 import moment from 'moment';
 
@@ -76,6 +71,10 @@ export class SessionReport<QType: Stringable, AnsType: Stringable> {
         });
     }
 
+    // Registers an incorrect answer to the question and returns the answers
+    // registered so far. The returned report is used by SessionScreen to
+    // automatically move to the next question when too many incorrect answers
+    // have been given.
     registerIncorrectAnswer(question: QType, answer: AnsType): QuestionReport<AnsType> {
         const questionReport = this._answers.get(question);
         if (!questionReport) {
@@ -97,5 +96,11 @@ export class SessionReport<QType: Stringable, AnsType: Stringable> {
 
     getAllResults(): Map<QType, QuestionReport<AnsType>> {
         return new Map(this._answers);
+    }
+
+    // Removes all answers registered in this report. This is useful when
+    // aborting a session and we want to forget the data collected.
+    clear() {
+        this._answers.clear();
     }
 }

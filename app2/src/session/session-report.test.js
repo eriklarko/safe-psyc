@@ -1,7 +1,7 @@
 // @flow
 
 import { SessionReport } from './session-report.js';
-import { MockedTimeGiver } from './session-report-test-helpers.js';
+import { MockTimeGiver } from './test-helpers';
 import moment from 'moment';
 
 const arbitraryTime = moment('2000-01-01 00:00:00');
@@ -102,7 +102,7 @@ it('keeps time', () => {
     const incorrectAnswerTime = moment('2000-01-01 00:01:00');
     const correctAnswerTime   = moment('2000-01-01 00:02:00');
 
-    const timer = new MockedTimeGiver();
+    const timer = new MockTimeGiver();
     const report = new SessionReport(timer.getNextTime);
 
     // define the question being asked
@@ -168,4 +168,21 @@ it('throws exception if answer is recorded before startLookingAtQuestion is call
 
     expect(() => report.registerCorrectAnswer(correctlyAnsweredQuestion)).toThrow(/correctanswer.*before startLookingAtQuestion/i);
     expect(() => report.registerIncorrectAnswer(incorrectlyAnsweredQuestion, 'foo')).toThrow(/incorrectanswer.*before startLookingAtQuestion/i);
+});
+
+it('removes recorded answers when cleared', () => {
+    const report = new SessionReport();
+
+    // define the question being asked
+    const question = 'what is the meaning of life?';
+
+    // the report requires a call to startLookingAtQuestion before answers are recorded
+    report.startLookingAtQuestion(question);
+
+    // answer something
+    report.registerIncorrectAnswer(question, '41');
+
+    report.clear();
+    expect(report.getAllResults()).toEqual(new Map());
+    expect(report.getResult(question)).toBeUndefined();
 });

@@ -1,0 +1,24 @@
+// @flow
+
+import { Session } from '../session.js';
+import { newArbitraryQuestion } from './questions.js';
+import type { Props } from '../SessionScreen.js';
+
+const defaultProps: Props = {
+    session: new Session(new Set([newArbitraryQuestion()])),
+
+    // jest not defined and I can't import jest
+    /* eslint-disable-next-line no-undef */
+    onSessionFinished: jest.fn(),
+
+    /* eslint-disable-next-line no-undef */
+    onAborted: jest.fn(),
+};
+
+export function props(overrideProps?: {[$Keys<Props>]: mixed}): Props {
+    return Object.assign(
+        {},
+        defaultProps,
+        overrideProps,
+    );
+}

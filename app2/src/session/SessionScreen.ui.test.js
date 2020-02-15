@@ -1,9 +1,14 @@
 // @flow
+//
+// Contains tests related to the UI that doesn't fit into the more specialized
+// test files.
 
 import * as React from 'react';
 import * as testingLib from '@testing-library/react-native';
+import { Alert } from 'react-native';
 import { SessionScreen } from './SessionScreen.js';
 import { Session } from './session.js';
+import { props } from './test-helpers';
 
 it('shows the first question after the first render cycle', () => {
     const question = {
@@ -15,8 +20,9 @@ it('shows the first question after the first render cycle', () => {
 
     // render the component
     const component = testingLib.render(<SessionScreen
-        session={new Session(new Set([question]))}
-        onSessionFinished={jest.fn()}
+        {...props({
+            session: new Session(new Set([question])),
+        })}
     />);
 
     // check that the question text and answers are rendered
@@ -25,15 +31,4 @@ it('shows the first question after the first render cycle', () => {
     for (const answer of question.incorrectAnswers) {
         component.getByText(answer);
     }
-});
-
-it('shows a dialog when the cancel button is pressed', () => {
-
-});
-
-// omg worst test description ever. The cancel button gives the option to
-// either cancel and go back to Home, or to go the report screen and look
-// at the unfinished session.
-it('calls onSessionFinished on cancel with intent to see report', () => {
-
 });

@@ -9,19 +9,25 @@
 // onSessionFinished when there are no more questions to be answered.
 
 import * as React from 'react';
+import { View, Alert } from 'react-native';
+import { ImageButton } from '../styles';
 import { SessionReport } from './session-report.js';
 import { ImageQuestion, DescriptionQuestion } from '../questions';
 import { knuthShuffle } from 'knuth-shuffle';
 
 import type { Session } from './session.js';
-import type { ImageThatNeedsToBeLoaded } from '../questions';
+import type { ImageThatNeedsToBeLoaded } from '../unsorted/images.js';
 
-type Props = {
+export type Props = {
     // the set of questions to be answered
     session: Session<TQuestion>,
 
     // the callback invoked when all question have been answered or skipped
     onSessionFinished: (SessionReport<TQuestion, string>) => void,
+
+    // the callback invoked when the user wants to stop the session and discard
+    // any answers given.
+    onAborted: () => void,
 
     // used only by tests to provide a report with mockable timestamps and such.
     report?: SessionReport<TQuestion, string>,
@@ -110,9 +116,21 @@ export class SessionScreen extends React.Component<Props, State> {
             this.props.session.nextQuestion();
             this._newQuestion();
         } else {
-            this.setState({ currentQuestion: 'finished' });
-            this.props.onSessionFinished(this.state.report);
+            this._finish();
         }
+    }
+
+    // Finishes the session, calling onSessionFinished with the report
+    _finish = () => {
+        this.setState({ currentQuestion: 'finished' });
+        this.props.onSessionFinished(this.state.report);
+    }
+
+    // Aborts the session, any progress should be forgotten and thrown away
+    _abort = () => {
+        this.state.report.clear();
+        this.setState({ currentQuestion: 'finished' });
+        this.props.onAborted();
     }
 
     // registers the answer in the report and moves to the next question if
@@ -133,7 +151,43 @@ export class SessionScreen extends React.Component<Props, State> {
         }
     }
 
+    _cancel = () => {
+        const message = 'Finish   - stop the session and store your results\n' +
+                        'Abort    - stop the session and discard your results\n' +
+                        'Continue - stay in the session';
+        Alert.alert(
+            'Abort session?',
+            message,
+            [{
+                text: 'Finish',
+                onPress: this._finish,
+            }, {
+                text: 'Abort',
+                onPress: this._abort,
+            }, {
+                text: 'Continue',
+                onPress: () => {}, // nop
+            }],
+            {
+                cancelable: true,
+            },
+        );
+    }
+
     render() {
+        return <View>
+            <View>
+                <ImageButton
+                    image={require('./cancel-btn.png')}
+                    onPress={this._cancel}
+                    testID='cancel-btn'
+                />
+            </View>
+            {this._renderMainContent()}
+        </View>;
+    }
+
+    _renderMainContent() {
         switch (this.state.currentQuestion) {
             case 'not-started':
                 // TODO: improve, add button to force component out of this state. with logs

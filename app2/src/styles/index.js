@@ -8,3 +8,4 @@ export * from './VerticalSpace.js';
 export * from './Text.js';
 export * from './Button.js';
 export * from './HeroButton.js';
+export * from './ImageButton.js';
