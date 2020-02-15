@@ -30,7 +30,7 @@ export function DescriptionQuestion(props: Props) {
     return <View style={styles.wrapper}>
         <Text>{props.text}</Text>
 
-        <AnswerList 
+        <AnswerList
             answers={props.answers}
             onAnswer={props.onAnswer}
         />

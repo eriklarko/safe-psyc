@@ -17,7 +17,7 @@ type Props = TouchableOpacityProps & {
     containerStyle?: View.propTypes.style,
     textStyle?: View.propTypes.style,
 
-    accessibilityRole?: AccessibilityRole, 
+    accessibilityRole?: AccessibilityRole,
 };
 export function Button(props: Props) {
     const { title, containerStyle, textStyle, disabled, accessibilityRole, ...restProps } = props;

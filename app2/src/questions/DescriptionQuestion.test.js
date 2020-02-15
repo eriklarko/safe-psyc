@@ -42,13 +42,13 @@ it('forwards taps on all answers', () => {
 
         props.onAnswer.mockClear();
     }
-})
+});
 
 const defaultProps = {
-    text: 'foo', 
-    answers: [], 
-    onAnswer: jest.fn(), 
-}
+    text: 'foo',
+    answers: [],
+    onAnswer: jest.fn(),
+};
 function renderWithProps(overrideProps) {
     const props = Object.assign({}, defaultProps, overrideProps);
     return testingLib.render(<DescriptionQuestion {...props} />);

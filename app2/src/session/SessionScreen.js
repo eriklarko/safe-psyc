@@ -96,7 +96,7 @@ export class SessionScreen extends React.Component<Props, State> {
             // to make flow happy as this.state.currentQuestion can technically
             // be a string, but we know from the setState call that it will
             // always be a real question.
-            if (typeof(this.state.currentQuestion) !== 'string') {
+            if (typeof (this.state.currentQuestion) !== 'string') {
                 this.state.report.startLookingAtQuestion(this.state.currentQuestion);
             }
         });
@@ -134,16 +134,16 @@ export class SessionScreen extends React.Component<Props, State> {
     }
 
     render() {
-        switch(this.state.currentQuestion) {
+        switch (this.state.currentQuestion) {
             case 'not-started':
                 // TODO: improve, add button to force component out of this state. with logs
-                return "Loading...";
+                return 'Loading...';
 
-            case 'finished': 
+            case 'finished':
                 // TODO: improve, add button to force component out of this state. with logs
-                return "Done! You should have been redirected to the session report...";
+                return 'Done! You should have been redirected to the session report...';
 
-            default: 
+            default:
                 return <Question
                          question={this.state.currentQuestion}
                          onAnswer={this._onAnswer}
@@ -159,15 +159,15 @@ function Question(props: {
                             onAnswer: (answer: string)=>void,
                          }) {
 
-    switch(props.question.type) {
-        case "image":
-            return <ImageQuestion 
+    switch (props.question.type) {
+        case 'image':
+            return <ImageQuestion
                         image={props.question.image}
                         text={props.question.text}
                         answers={getAnswers(props.question)}
                         onAnswer={props.onAnswer}
                    />
-        case "description":
+        case 'description':
             return <DescriptionQuestion
                         text={props.question.text}
                         answers={getAnswers(props.question)}

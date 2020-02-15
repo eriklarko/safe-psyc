@@ -36,4 +36,4 @@ it('forwards taps on all answers', () => {
 
         props.onAnswer.mockClear();
     }
-})
+});

@@ -9,11 +9,11 @@ import { Text } from '../styles';
 import { ImageQuestion } from './ImageQuestion.js';
 
 const defaultProps = {
-    image: { uri: './test-image.png' }, 
-    text: 'foo', 
-    answers: [], 
-    onAnswer: jest.fn(), 
-}
+    image: { uri: './test-image.png' },
+    text: 'foo',
+    answers: [],
+    onAnswer: jest.fn(),
+};
 
 it('shows an image', () => {
     const props = Object.assign({}, defaultProps, {

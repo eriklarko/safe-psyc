@@ -1,6 +1,6 @@
 // @flow
 
-// Represents an image that shouldn't need a loading indicator. It's mostly to 
+// Represents an image that shouldn't need a loading indicator. It's mostly to
 // get a nicer type than just `number`. they can be safely created using
 // `require('./path/to/image.png');
 export type PreloadedImage = number;

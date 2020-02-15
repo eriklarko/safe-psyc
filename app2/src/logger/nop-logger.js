@@ -1,5 +1,5 @@
 // @flow
-// 
+//
 // A logger that logs to /dev/null
 
 import type { Loggable, Stringable } from './index.js';

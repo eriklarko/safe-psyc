@@ -34,7 +34,7 @@ export function ImageQuestion(props: Props) {
             source={props.image}/>
         <Text>{props.text}</Text>
 
-        <AnswerList 
+        <AnswerList
             answers={props.answers}
             onAnswer={props.onAnswer}
         />

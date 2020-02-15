@@ -36,7 +36,7 @@ export interface Stringable {
 //  foo = { 'a': 1, 2: 'b' }          // maps from stringable to stringable work great
 export type Loggable = Stringable | {[Stringable]: Stringable};
 
-// setLogger can be used to change the default logger. It was introduced to 
+// setLogger can be used to change the default logger. It was introduced to
 // disable logging in tests to make the output less noisy.
 export function setLogger(newLogger: StructuredLogger) {
     logger = newLogger;

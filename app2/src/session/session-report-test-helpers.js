@@ -25,15 +25,15 @@ export class MockedTimeGiver {
         this._nextTime = t;
     }
 
-    // Moves the next time returned by this object forward by some amount of 
+    // Moves the next time returned by this object forward by some amount of
     // some unit. Wow, abstract much? If you want to move the next time forward
     // by 5 minutes you call
     //   const timeGiver = new MockedTimeGiver()
     //   timeGiver.setNextTime(moment('2000-01-01 00:00:00'))'
     //   timeGiver.advanceBy(5, 'minutes');
     //   // timeGiver.getNextTime() now returns 2000-01-01 00:05:00
-    // 
-    // If setNextTime hasn't been called before the first call to advanceBy 
+    //
+    // If setNextTime hasn't been called before the first call to advanceBy
     // 2000-01-01 00:00:00 is used as the starting point and the time you
     // specify as parameters to advanceBy is added to that.
     advanceBy(amount: number, unit: string) {
@@ -43,7 +43,7 @@ export class MockedTimeGiver {
     // Same as advanceBy but uses a moment duration as the parameter instead.
     // e.g. timeGiver.advanceByDuration(moment.duration(5, 'minutes'));
     advanceByDuration(d: moment$MomentDuration) {
-        if(!this._nextTime) {
+        if (!this._nextTime) {
             this.setNextTime(moment('2000-01-01 00:00:00'));
         }
 

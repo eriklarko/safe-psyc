@@ -1,6 +1,6 @@
 // @flow
 //
-// A session report keeps track of how the user answered each question. How 
+// A session report keeps track of how the user answered each question. How
 // many attempts it took to get the right answer and what the wrong answers
 // were, in order.
 //
@@ -51,7 +51,7 @@ export class SessionReport<QType: Stringable, AnsType: Stringable> {
 
     // registers the time the user started looking at the question. An expection
     // is thrown if this method is called with the same question multiple times.
-    // Question equality is defined by the sameValueZero algorithm, 
+    // Question equality is defined by the sameValueZero algorithm,
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness#Same-value-zero_equality
     startLookingAtQuestion(question: QType): void {
         if (this._answers.has(question)) {

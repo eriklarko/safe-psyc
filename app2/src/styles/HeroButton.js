@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
 export function HeroButton(props: Props) {
     const { title, disabled, ...restProps } = props;
 
-    const content = typeof title === 'string' 
+    const content = typeof title === 'string'
         ? <LargeText style={styles.textStyle}>{title.toUpperCase()}</LargeText>
         : title;
 

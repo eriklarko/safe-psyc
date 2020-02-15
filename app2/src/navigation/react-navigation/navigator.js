@@ -25,17 +25,17 @@ export class ReactNavigationNavigator {
     //////////////////// internals //////////////////////////
     _setInternalNavigator(navigator: Navigator) {
         this._internalNavigator = navigator;
-    };
+    }
 
     _getNavigatorOrThrow(): Navigator {
         if (this._internalNavigator) {
             return this._internalNavigator;
         } else {
-            throw new Error("navigation has not been initialized yet");
+            throw new Error('navigation has not been initialized yet');
         }
     }
     //////////////////// internals //////////////////////////
     /////////////////////////////////////////////////////////
 }
 
-export const navigator = new ReactNavigationNavigator()
+export const navigator = new ReactNavigationNavigator();

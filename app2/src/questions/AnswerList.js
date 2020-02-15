@@ -16,7 +16,7 @@ export function AnswerList(props: Props) {
     return <View style={combineStyles(styles.wrapper, props.style)}>
         {props.answers.map(answer =>
             <Button
-                key={'answer'+ answer}
+                key={'answer' + answer}
                 testID={'answer-' + answer }
 
                 title={answer}

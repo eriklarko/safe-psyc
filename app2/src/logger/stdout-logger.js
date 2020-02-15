@@ -6,6 +6,6 @@ export class StdoutLogger {
 
     log(first: Loggable, ...keyvals: Array<Stringable>) {
         keyvals.unshift(first);
-        console.log(...keyvals)
+        console.log(...keyvals);
     }
 }

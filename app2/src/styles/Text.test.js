@@ -4,7 +4,7 @@ import 'react-native';
 import * as React from 'react';
 import renderer from 'react-test-renderer';
 
-import { Text as RNText, StyleSheet } from 'react-native'
+import { Text as RNText, StyleSheet } from 'react-native';
 import { Text } from './Text.js';
 
 import type { TextStyle } from './Text.js';

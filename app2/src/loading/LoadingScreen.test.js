@@ -13,7 +13,7 @@ it('redirects to home when successfully loaded', () => {
     return getDidMountPromise(component)
         .then( () => {
             expect(navigator).toHaveResetTo('Home');
-        })
+        });
 });
 
 function getDidMountPromise(component): Promise<void> {

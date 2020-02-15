@@ -22,4 +22,4 @@ export const constants = {
     space: function(multiplier: number = 1) {
         return gridSize * multiplier;
     },
-}
+};

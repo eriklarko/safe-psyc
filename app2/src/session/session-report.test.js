@@ -11,25 +11,25 @@ it('registers incorrect answers', () => {
     const report = new SessionReport(() => arbitraryTime);
 
     // define the question being asked
-    const question = "what is the meaning of life?";
+    const question = 'what is the meaning of life?';
 
     // the report requires a call to startLookingAtQuestion before answers are recorded
     report.startLookingAtQuestion(question);
 
     // answer wrong twice
-    report.registerIncorrectAnswer(question, "41");
-    report.registerIncorrectAnswer(question, "43");
+    report.registerIncorrectAnswer(question, '41');
+    report.registerIncorrectAnswer(question, '43');
 
     // and finally check that both incorrect answers are stored in the report
     const actual = report.getResult(question);
     expect(actual).toEqual({
         startTime: arbitraryTime,
         answers: [{
-            answer: "41",
+            answer: '41',
             isCorrect: false,
             time: arbitraryTime,
         },{
-            answer: "43",
+            answer: '43',
             isCorrect: false,
              time: arbitraryTime,
         }],
@@ -41,32 +41,32 @@ it('returns the question report when asked to record an incorrect answer', () =>
     const report = new SessionReport(() => arbitraryTime);
 
     // define the question being asked
-    const question = "what is the meaning of life?";
+    const question = 'what is the meaning of life?';
 
     // the report requires a call to startLookingAtQuestion before answers are recorded
     report.startLookingAtQuestion(question);
 
     // answer wrong and check the report
-    const firstReport = report.registerIncorrectAnswer(question, "41");
+    const firstReport = report.registerIncorrectAnswer(question, '41');
     expect(firstReport).toEqual({
         startTime: arbitraryTime,
         answers: [{
-            answer: "41",
+            answer: '41',
             isCorrect: false,
             time: arbitraryTime,
         }],
-    })
+    });
 
     // answer wrong and check the report again
-    const secondReport = report.registerIncorrectAnswer(question, "43");
+    const secondReport = report.registerIncorrectAnswer(question, '43');
     expect(secondReport).toEqual({
         startTime: arbitraryTime,
         answers: [{
-            answer: "41",
+            answer: '41',
             isCorrect: false,
             time: arbitraryTime,
         },{
-            answer: "43",
+            answer: '43',
             isCorrect: false,
              time: arbitraryTime,
         }],
@@ -78,7 +78,7 @@ it('registers correct answers', () => {
     const report = new SessionReport(() => arbitraryTime);
 
     // define the question being asked
-    const question = "what is the meaning of life?";
+    const question = 'what is the meaning of life?';
 
     // the report requires a call to startLookingAtQuestion before answers are recorded
     report.startLookingAtQuestion(question);
@@ -94,7 +94,7 @@ it('registers correct answers', () => {
             isCorrect: true,
             time: arbitraryTime,
         }],
-    })
+    });
 });
 
 it('keeps time', () => {
@@ -106,7 +106,7 @@ it('keeps time', () => {
     const report = new SessionReport(timer.getNextTime);
 
     // define the question being asked
-    const question = "what is the meaning of life?";
+    const question = 'what is the meaning of life?';
 
     // the report requires a call to startLookingAtQuestion before answers are recorded
     timer.setNextTime(startTime);
@@ -132,13 +132,13 @@ it('keeps time', () => {
             isCorrect: true,
             time: correctAnswerTime,
         }],
-    })
+    });
 });
 
 it('throws an exception if startLookingAtQuestion is called more than once with the same question', () => {
     const report = new SessionReport();
-    const question1 = "is this the first question?";
-    const question2 = "is this the second question?";
+    const question1 = 'is this the first question?';
+    const question2 = 'is this the second question?';
 
     // make sure the two questions aren't the same
     expect(question1).not.toEqual(question2);
@@ -163,8 +163,8 @@ it('throws an exception if startLookingAtQuestion is called more than once with 
 
 it('throws exception if answer is recorded before startLookingAtQuestion is called', () => {
     const report = new SessionReport();
-    const correctlyAnsweredQuestion = "got right on the first try?";
-    const incorrectlyAnsweredQuestion = "first answer incorrect?";
+    const correctlyAnsweredQuestion = 'got right on the first try?';
+    const incorrectlyAnsweredQuestion = 'first answer incorrect?';
 
     expect(() => report.registerCorrectAnswer(correctlyAnsweredQuestion)).toThrow(/correctanswer.*before startLookingAtQuestion/i);
     expect(() => report.registerIncorrectAnswer(incorrectlyAnsweredQuestion, 'foo')).toThrow(/incorrectanswer.*before startLookingAtQuestion/i);

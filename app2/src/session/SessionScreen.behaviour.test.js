@@ -135,7 +135,7 @@ it('generates a correct report', () => {
     // answer q2
     clickAnswer(component, '44'); // incorrect
     clickAnswer(component, '42'); // correct
-    
+
     // answer q3
     clickAnswer(component, '42'); // correct
 
@@ -185,26 +185,26 @@ it('generates a correct report', () => {
 });
 
 function clickAnswer(sessionComponent: testingLib.RenderResult, answer: string) {
-    const ans = sessionComponent.getByTestId('answer-'+answer);
+    const ans = sessionComponent.getByTestId('answer-' + answer);
     testingLib.fireEvent.press(ans);
 }
 
 function clickCorrectAnswer(sessionComponent: testingLib.RenderResult, session: Session<TQuestion>) {
-    clickAnswer(sessionComponent, session.currentQuestion().correctAnswer)
+    clickAnswer(sessionComponent, session.currentQuestion().correctAnswer);
 }
 
 function clickIncorrectAnswer(sessionComponent: testingLib.RenderResult, session: Session<TQuestion>) {
-    const q = session.currentQuestion()
+    const q = session.currentQuestion();
 
     // find a truly incorrect answer
     let incorrectAns = null;
-    for(const a of q.incorrectAnswers) {
+    for (const a of q.incorrectAnswers) {
         if (a != q.correctAnswer) {
             incorrectAns = a;
         }
     }
     if (incorrectAns == null) {
-        throw new Error(`current question had no incorrect answers (correct: ${q.correctAnswer}; incorrect: ${q.incorrectAnswers.join(', ')}`)
+        throw new Error(`current question had no incorrect answers (correct: ${q.correctAnswer}; incorrect: ${q.incorrectAnswers.join(', ')}`);
     }
 
     // click the incorrect answer
