@@ -4,5 +4,6 @@ module.exports = {
   rules: {
     'prettier/prettier': 'off',
     'eol-last': 'off',
+    'semi': 'error',
   },
 };

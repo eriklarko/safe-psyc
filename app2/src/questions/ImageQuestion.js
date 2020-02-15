@@ -38,7 +38,7 @@ export function ImageQuestion(props: Props) {
             answers={props.answers}
             onAnswer={props.onAnswer}
         />
-    </View>
+    </View>;
 }
 
 const styles = StyleSheet.create({

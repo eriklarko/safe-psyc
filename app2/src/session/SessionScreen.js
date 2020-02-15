@@ -147,7 +147,7 @@ export class SessionScreen extends React.Component<Props, State> {
                 return <Question
                          question={this.state.currentQuestion}
                          onAnswer={this._onAnswer}
-                       />
+                       />;
         }
     }
 }
@@ -166,13 +166,13 @@ function Question(props: {
                         text={props.question.text}
                         answers={getAnswers(props.question)}
                         onAnswer={props.onAnswer}
-                   />
+                   />;
         case 'description':
             return <DescriptionQuestion
                         text={props.question.text}
                         answers={getAnswers(props.question)}
                         onAnswer={props.onAnswer}
-                   />
+                   />;
         default:
             // TODO: Log af, we never want this to happen in prod. Should probably contain an escape hatch to the next question or something.
             return `unknown question type ${props.question.type}`;

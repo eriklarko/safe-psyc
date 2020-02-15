@@ -14,5 +14,5 @@ type Props = {
 export function ScreenWrapper(props: Props) {
     return <View style={defaultStyle.outermostContainer}>
         {props.children}
-    </View>
+    </View>;
 }

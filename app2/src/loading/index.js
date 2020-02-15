@@ -52,6 +52,6 @@ export class Loading extends React.Component<Props, State> {
     render() {
         return <ScreenWrapper>
             <Text>Loading</Text>
-        </ScreenWrapper>
+        </ScreenWrapper>;
     }
 }

@@ -35,11 +35,11 @@ export function Text(props: Props) {
 
     return <RNText style={combineStyles(defaultStyles.text, style)} {...restProps}>
         {props.children}
-    </RNText>
+    </RNText>;
 }
 
 export function LargeText(props: Props) {
     return <RNText style={combineStyles(defaultStyles.largeText, props.style)}>
         {props.children}
-    </RNText>
+    </RNText>;
 }

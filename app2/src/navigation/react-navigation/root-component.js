@@ -28,5 +28,5 @@ export function RootComponent() {
             ref={navRef => {
                 navigator._setInternalNavigator(navRef);
             }}
-             />
+             />;
 }

@@ -12,5 +12,5 @@ export function Home(props: Props) {
             title="LEARN EMOS PLIIS"
             onPress={() => console.log('lol')}
         />
-    </ScreenWrapper>
+    </ScreenWrapper>;
 }

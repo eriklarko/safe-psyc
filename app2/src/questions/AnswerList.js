@@ -23,7 +23,7 @@ export function AnswerList(props: Props) {
                 onPress={() => props.onAnswer(answer)}
             />
         )}
-    </View>
+    </View>;
 }
 
 const styles = StyleSheet.create({
