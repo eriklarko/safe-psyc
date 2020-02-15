@@ -1,6 +1,11 @@
 // @flow
 //
 // An impl of react-navigation to be used by tests
+//
+// because I use jest.fn but jest can't be imported I need to disable the eslint
+// no-undef rule for this file. And... eslint pragmas need to be defined in
+// block comments, grrrrr..
+/* eslint-disable no-undef */
 
 import { navigator } from './navigator.js';
 import type { Navigator } from './navigator.js';

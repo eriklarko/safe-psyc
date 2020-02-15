@@ -50,7 +50,7 @@ it('adds new styles', () => {
 });
 
 it('forwards unknown props', () => {
-    const component = renderer.create(<Text foo="bar" />);
+    const component = renderer.create(<Text foo='bar' />);
     const rnText = component.root.findByType(RNText);
 
     expect(rnText.props).toEqual(expect.objectContaining({ foo: 'bar' }));
