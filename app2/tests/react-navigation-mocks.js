@@ -1,6 +1,5 @@
 
 // From https://github.com/kmagiera/react-native-gesture-handler/issues/344#issuecomment-540386912
-
 jest.mock('react-native-gesture-handler', () => {
   // eslint-disable-next-line global-require
   const View = require('react-native/Libraries/Components/View/View');
@@ -37,4 +36,3 @@ jest.mock('react-native-gesture-handler', () => {
 });
 
 jest.mock('react-native-reanimated', () => {});
-//jest.mock('react-native-tab-view', () => {});
