@@ -18,7 +18,7 @@ export function clickIncorrectAnswer(sessionComponent: testingLib.RenderResult, 
 
     // find a truly incorrect answer
     let incorrectAns = null;
-    for (const a of q.incorrectAnswers) { /* eslint-disable-line no-unused-vars */
+    for (const a of q.incorrectAnswers) {
         if (a !== q.correctAnswer) {
             incorrectAns = a;
         }
