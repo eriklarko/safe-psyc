@@ -4,6 +4,7 @@
 
 import * as React from 'react';
 import * as testingLib from '@testing-library/react-native';
+import * as mockBackHandler from 'react-native/Libraries/Utilities/__mocks__/BackHandler.js';
 import { SessionScreen } from './SessionScreen.js';
 import { SessionReport } from './session-report.js';
 import { props, withMockedAlert } from './test-helpers';
@@ -27,6 +28,45 @@ it('shows a dialog when the cancel button is pressed', () => {
         expect(mockedAlert).toHaveBeenCalledTimes(1);
     });
 });
+
+describe('android back button', () => {
+    it('brings up the cancel dialog', () => {
+        const component = testingLib.render(<SessionScreen
+            {...props({
+                backHandler: mockBackHandler,
+            })}
+        />);
+
+        // The BackHandler mock's state is global and there's no way to clear
+        // the state at the start of a test. Instead we'll use testinglib's
+        // unmount feature and remove any listeners that way.
+        try {
+            withMockedAlert((mockedAlert) => {
+                expect(mockedAlert).toHaveBeenCalledTimes(0);
+                mockBackHandler.mockPressBack();
+                expect(mockedAlert).toHaveBeenCalledTimes(1);
+            });
+
+        } finally {
+            component.unmount();
+        }
+    });
+
+    const assertThat = it; // too much for readability's sake?
+    assertThat('listener is removed when component is unmounted', () => {
+        const component = testingLib.render(<SessionScreen
+            {...props({
+                backHandler: mockBackHandler,
+            })}
+        />);
+
+        component.unmount();
+        withMockedAlert((mockedAlert) => {
+            mockBackHandler.mockPressBack();
+            expect(mockedAlert).toHaveBeenCalledTimes(0);
+        });
+    });
+})
 
 it('includes a description of the three buttons in the alert', () => {
     const component = testingLib.render(<SessionScreen

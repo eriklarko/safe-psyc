@@ -9,7 +9,7 @@
 // onSessionFinished when there are no more questions to be answered.
 
 import * as React from 'react';
-import { View, Alert } from 'react-native';
+import { View, Alert, BackHandler } from 'react-native';
 import { ImageButton } from '../styles';
 import { SessionReport } from './session-report.js';
 import { ImageQuestion, DescriptionQuestion } from '../questions';
@@ -31,6 +31,9 @@ export type Props = {
 
     // used only by tests to provide a report with mockable timestamps and such.
     report?: SessionReport<TQuestion, string>,
+
+    // used only by tests to be able to mock the react-native BackHandler
+    backHandler?: typeof BackHandler,
 }
 
 type State = {
@@ -48,6 +51,9 @@ type State = {
 
     // the report passed to the onSessionFinished callback
     report: SessionReport<TQuestion, string>,
+
+    // the object responsible for handling the Android back button
+    backHandler: typeof BackHandler,
 }
 
 // TQuestion represent all possible question types in the session
@@ -72,6 +78,7 @@ type TDescriptionQuestion = {
 }
 
 export class SessionScreen extends React.Component<Props, State> {
+    backHandlerListener = null;
 
     constructor(props: Props) {
         super(props);
@@ -79,14 +86,25 @@ export class SessionScreen extends React.Component<Props, State> {
         this.state = {
             currentQuestion: 'not-started',
             report: props.report || new SessionReport(),
+            backHandler: props.backHandler || BackHandler,
         };
     }
 
-    // componentDidMount is called after the first render and the user sees the
-    // 'not-started' screen. That screen isn't terribly useful so instead we
-    // trigger this._newQuestion() to show the first question.
     componentDidMount() {
+        // componentDidMount is called after the first render and the user sees the
+        // 'not-started' screen. That screen isn't terribly useful so instead we
+        // trigger this._newQuestion() to show the first question.
         this._newQuestion();
+
+        // add listener for the android back button. It should do the same as
+        // the cancel button.
+        this.backHandlerListener = this.state.backHandler.addEventListener('hardwareBackPress', this._cancel);
+    }
+
+    componentWillUnmount() {
+        if (this.backHandlerListener) {
+            this.backHandlerListener.remove();
+        }
     }
 
     // should be called when a new question is ready to be shown to the user
