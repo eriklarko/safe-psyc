@@ -34,26 +34,48 @@ it('throws exception if asked to advance too far', () => {
     expect(session.nextQuestion.bind(session)).toThrow(/index 3 of 3/);
 });
 
-// just rename it to that to make the descriptions below read a little better
-const that = it;
-
-that('hasNextQuestion returns true when there are more questions', () => {
+it('returns the number of questions in the session', () => {
     const questions = new Set(['a', 'b', 'c']);
     const session = new Session(questions);
 
-    expect(session.hasNextQuestion()).toBe(true); // next question is 'b'
-    session.nextQuestion();
-
-    expect(session.hasNextQuestion()).toBe(true); // next question is 'c'
+    expect(session.numberOfQuestions()).toBe(questions.size);
 });
 
-that('hasNextQuestion returns false when there are no more questions', () => {
-    const questions = new Set(['a', 'b']);
-    const session = new Session(questions);
+describe('hasNextQuestion', () => {
+    it('returns true when there are more questions', () => {
+        const questions = new Set(['a', 'b', 'c']);
+        const session = new Session(questions);
 
-    session.nextQuestion(); // current question is 'b'
+        expect(session.hasNextQuestion()).toBe(true); // next question is 'b'
+        session.nextQuestion();
 
-    // ask hasNextQuestion twice for no real reason
-    expect(session.hasNextQuestion()).toBe(false);
-    expect(session.hasNextQuestion()).toBe(false);
+        expect(session.hasNextQuestion()).toBe(true); // next question is 'c'
+    });
+
+    it('returns false when there are no more questions', () => {
+        const questions = new Set(['a', 'b']);
+        const session = new Session(questions);
+
+        session.nextQuestion(); // current question is 'b'
+
+        // ask hasNextQuestion twice for no real reason
+        expect(session.hasNextQuestion()).toBe(false);
+        expect(session.hasNextQuestion()).toBe(false);
+    });
+});
+
+describe('currentIndex', () => {
+    const questions = new Set(['a', 'b', 'c']);
+
+    it('returns zero when on the first question', () => {
+        const session = new Session(questions);
+        expect(session.currentQuestionIndex()).toBe(0);
+    });
+
+    it('returns one when on the first question', () => {
+        const session = new Session(questions);
+        session.nextQuestion(); // current question is 'b'
+
+        expect(session.currentQuestionIndex()).toBe(1);
+    });
 });

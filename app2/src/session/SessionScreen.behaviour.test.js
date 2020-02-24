@@ -4,6 +4,11 @@
 // such as moving to the next question and invoking listeners when the session
 // is completed.
 
+// after the last question is finished there's a delay before the state is
+// updated and onSessionFinished is called. To not have to wait for that delay
+// timers are mocked here.
+jest.useFakeTimers();
+
 import * as React from 'react';
 import * as testingLib from '@testing-library/react-native';
 import moment from 'moment';
@@ -37,6 +42,9 @@ it('calls onSessionFinished with the correct report when all questions are finis
 
     // answer the only question in the session
     clickCorrectAnswer(component, session);
+
+    // make sure the delay after the last question has run out
+    jest.runAllTimers();
 
     // and make sure onSessionFinished is called correctly
     expect(onSessionFinished).toHaveBeenCalledTimes(1);

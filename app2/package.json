@@ -18,6 +18,7 @@
     "react": "16.9.0",
     "react-native": "0.61.5",
     "react-native-gesture-handler": "^1.6.0",
+    "react-native-progress": "^4.0.3",
     "react-native-reanimated": "^1.7.0",
     "react-native-safe-area-context": "^0.7.3",
     "react-native-screens": "^2.0.0-beta.4",
@@ -40,7 +41,7 @@
   "jest": {
     "preset": "@testing-library/react-native",
     "transformIgnorePatterns": [
-      "node_modules/(?!(jest-)?react-native|react-navigation|react-navigation-redux-helpers|@react-navigation/.*)"
+      "node_modules/(?!(jest-)?react-native|react-navigation|react-navigation-redux-helpers|@react-native-community|@react-navigation/.*)"
     ],
     "setupFilesAfterEnv": [
       "./tests/setup.js"

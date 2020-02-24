@@ -27,6 +27,14 @@ export class Session<T> {
         this._currentQuestionIndex = 0;
     }
 
+    currentQuestionIndex(): number {
+        return this._currentQuestionIndex;
+    }
+
+    numberOfQuestions(): number {
+        return this._questions.length;
+    }
+
     currentQuestion(): T {
         return this._questions[this._currentQuestionIndex];
     }

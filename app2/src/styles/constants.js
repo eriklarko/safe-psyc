@@ -4,7 +4,7 @@ const gridSize: number = 12;
 export const constants = {
     defaultFontFamily: 'Lato',
 
-    primaryTextColor: '#666',
+    primaryTextColor: '#666666',
 
     primaryForegroundColor: '#FAFAFF',
     primaryBackgroundColor: '#fdb807',
