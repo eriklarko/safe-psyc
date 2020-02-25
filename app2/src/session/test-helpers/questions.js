@@ -1,6 +1,6 @@
 // @flow
 
-import type { TQuestion } from '../SessionScreen.js';
+import type { TQuestion } from '../models';
 
 export function newArbitraryQuestion(): TQuestion {
     return {

@@ -16,7 +16,7 @@ import { SessionScreen } from './SessionScreen.js';
 import { Session, SessionReport } from './models';
 import { props, clickCorrectAnswer, clickIncorrectAnswer } from './test-helpers';
 
-import type { TQuestion } from './SessionScreen.js';
+import type { TQuestion } from './models';
 
 it('calls onSessionFinished with the correct report when all questions are finished', () => {
     // create a session with only one question

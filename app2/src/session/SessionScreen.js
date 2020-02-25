@@ -11,13 +11,10 @@
 import * as React from 'react';
 import { View, Alert, BackHandler } from 'react-native';
 import { ImageButton } from '../styles';
-import { QuestionProgress } from './components/QuestionProgress.js';
 import { SessionReport } from './models';
-import { ImageQuestion, DescriptionQuestion } from './components/questions';
-import { knuthShuffle } from 'knuth-shuffle';
+import { Question, QuestionProgress } from './components';
 
-import type { Session } from './models';
-import type { ImageThatNeedsToBeLoaded } from '../unsorted/images.js';
+import type { Session, TQuestion } from './models';
 
 export type Props = {
     // the set of questions to be answered
@@ -47,27 +44,6 @@ type State = {
 
     // the object responsible for handling the Android back button
     backHandler: typeof BackHandler,
-}
-
-// TQuestion represent all possible question types in the session
-export type TQuestion = TImageQuestion | TDescriptionQuestion;
-
-type TImageQuestion = {
-    type: 'image',
-    image: ImageThatNeedsToBeLoaded,
-    text: string,
-    incorrectAnswers: Array<string>,
-    correctAnswer: string,
-
-    toString(): string,
-}
-type TDescriptionQuestion = {
-    type: 'description',
-    text: string,
-    incorrectAnswers: Array<string>,
-    correctAnswer: string,
-
-    toString(): string,
 }
 
 export class SessionScreen extends React.Component<Props, State> {
@@ -263,35 +239,4 @@ export class SessionScreen extends React.Component<Props, State> {
                 }
         }
     }
-}
-
-// "Routes" a generic TQuestion to its concrete question component
-// implementation.
-function Question(props: {
-                            question: TQuestion,
-                            onAnswer: (answer: string)=>void,
-                         }) {
-
-    switch (props.question.type) {
-        case 'image':
-            return <ImageQuestion
-                        image={props.question.image}
-                        text={props.question.text}
-                        answers={getAnswers(props.question)}
-                        onAnswer={props.onAnswer}
-                   />;
-        case 'description':
-            return <DescriptionQuestion
-                        text={props.question.text}
-                        answers={getAnswers(props.question)}
-                        onAnswer={props.onAnswer}
-                   />;
-        default:
-            // TODO: Log af, we never want this to happen in prod. Should probably contain an escape hatch to the next question or something.
-            return `unknown question type ${props.question.type}`;
-    }
-}
-
-function getAnswers(question: TQuestion): Array<string> {
-    return knuthShuffle([question.correctAnswer, ...question.incorrectAnswers]);
 }

@@ -9,7 +9,7 @@ import moment from 'moment';
 import { SessionScreen } from './SessionScreen.js';
 import { Session, SessionReport } from './models';
 import { props, MockTimeGiver, clickAnswer } from './test-helpers';
-import type { TQuestion } from './SessionScreen.js';
+import type { TQuestion } from './models';
 
 it('generates a correct report', () => {
     const q1 = {
