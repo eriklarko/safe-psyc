@@ -15,6 +15,9 @@ expect.extend({
         }
 
         const args = calls[0][0];
+
+        // check that the navigation action has index 0, meaning it's on the
+        // top of the navigation stack
         if (args.index !== 0) {
             return {
                 pass: false,
@@ -22,6 +25,9 @@ expect.extend({
             };
         }
 
+        // check that the navigation action on the top of the stack only puts
+        // one screen on the stack. react-navigation calls these actions too
+        // which is a little confusing
         if (args.actions.length !== 1) {
             return {
                 pass: false,

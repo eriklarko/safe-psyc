@@ -1,4 +1,8 @@
 // @flow
+//
+// This file sets up the environment the tests are run in; log to /dev/null,
+// mock out react-navigation stuff, make custom matchers available to the
+// tests, etc...
 
 export * from './react-navigation-mocks.js';
 export * from './custom-jest-matchers';
