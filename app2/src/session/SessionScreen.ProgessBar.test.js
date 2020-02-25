@@ -6,7 +6,7 @@ import * as React from 'react';
 import * as testingLib from '@testing-library/react-native';
 import { SessionScreen } from './SessionScreen.js';
 import { props, arbitraryQuestionSetOfSize, clickCorrectAnswer } from './test-helpers';
-import { Session } from './session.js';
+import { Session } from './models';
 
 const questions = arbitraryQuestionSetOfSize(3);
 

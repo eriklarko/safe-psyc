@@ -13,8 +13,7 @@ import * as React from 'react';
 import * as testingLib from '@testing-library/react-native';
 import moment from 'moment';
 import { SessionScreen } from './SessionScreen.js';
-import { Session } from './session.js';
-import { SessionReport } from './session-report.js';
+import { Session, SessionReport } from './models';
 import { props, clickCorrectAnswer, clickIncorrectAnswer } from './test-helpers';
 
 import type { TQuestion } from './SessionScreen.js';

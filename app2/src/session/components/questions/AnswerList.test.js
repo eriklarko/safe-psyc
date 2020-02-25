@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import * as testingLib from '@testing-library/react-native';
-import { getAllRenderedStrings } from '../../tests/react-testing-library-helpers.js';
+import { getAllRenderedStrings } from '../../../../tests/react-testing-library-helpers.js';
 import { AnswerList } from './AnswerList.js';
 
 it('shows the answers', () => {

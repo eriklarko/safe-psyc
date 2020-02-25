@@ -15,7 +15,7 @@
 
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Text } from '../styles';
+import { Text } from '../../../styles';
 import { AnswerList } from './AnswerList.js';
 
 type Props = {

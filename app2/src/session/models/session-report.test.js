@@ -1,7 +1,7 @@
 // @flow
 
 import { SessionReport } from './session-report.js';
-import { MockTimeGiver } from './test-helpers';
+import { MockTimeGiver } from '../test-helpers';
 import moment from 'moment';
 
 const arbitraryTime = moment('2000-01-01 00:00:00');

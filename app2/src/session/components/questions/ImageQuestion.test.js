@@ -3,7 +3,7 @@
 import * as React from 'react';
 import * as testingLib from '@testing-library/react-native';
 import testRenderer from 'react-test-renderer';
-import { getAllRenderedStrings } from '../../tests/react-testing-library-helpers.js';
+import { getAllRenderedStrings } from '../../../../tests/react-testing-library-helpers.js';
 import { Image } from 'react-native';
 import { ImageQuestion } from './ImageQuestion.js';
 

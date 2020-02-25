@@ -1,6 +1,6 @@
 // @flow
 
-import { Session } from '../session.js';
+import { Session } from '../models/session.js';
 import { newArbitraryQuestion } from './questions.js';
 import type { Props } from '../SessionScreen.js';
 

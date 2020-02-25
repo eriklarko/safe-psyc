@@ -1,7 +1,7 @@
 // @flow
 
 import * as testingLib from '@testing-library/react-native';
-import type { Session } from '../session.js';
+import type { Session } from '../models/session.js';
 import type { TQuestion } from '../SessionScreen.js';
 
 export function clickAnswer(sessionComponent: testingLib.RenderResult, answer: string) {

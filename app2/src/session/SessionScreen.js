@@ -11,12 +11,12 @@
 import * as React from 'react';
 import { View, Alert, BackHandler } from 'react-native';
 import { ImageButton } from '../styles';
-import { QuestionProgress } from './QuestionProgress.js';
-import { SessionReport } from './session-report.js';
-import { ImageQuestion, DescriptionQuestion } from '../questions';
+import { QuestionProgress } from './components/QuestionProgress.js';
+import { SessionReport } from './models';
+import { ImageQuestion, DescriptionQuestion } from './components/questions';
 import { knuthShuffle } from 'knuth-shuffle';
 
-import type { Session } from './session.js';
+import type { Session } from './models';
 import type { ImageThatNeedsToBeLoaded } from '../unsorted/images.js';
 
 export type Props = {

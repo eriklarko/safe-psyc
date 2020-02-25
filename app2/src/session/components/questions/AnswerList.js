@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Button, combineStyles } from '../styles';
+import { Button, combineStyles } from '../../../styles';
 
 type ViewProps = React.ElementProps<typeof View>;
 export type ViewStyle = $PropertyType<ViewProps, 'style'>;

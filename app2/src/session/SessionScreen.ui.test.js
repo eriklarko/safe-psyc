@@ -7,7 +7,7 @@ import * as React from 'react';
 import * as testingLib from '@testing-library/react-native';
 import { Alert } from 'react-native';
 import { SessionScreen } from './SessionScreen.js';
-import { Session } from './session.js';
+import { Session } from './models/session.js';
 import { props } from './test-helpers';
 
 it('shows the first question after the first render cycle', () => {

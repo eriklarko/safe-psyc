@@ -6,7 +6,7 @@ import * as React from 'react';
 import * as testingLib from '@testing-library/react-native';
 import * as mockBackHandler from 'react-native/Libraries/Utilities/__mocks__/BackHandler.js';
 import { SessionScreen } from './SessionScreen.js';
-import { SessionReport } from './session-report.js';
+import { SessionReport } from './models';
 import { props, withMockedAlert } from './test-helpers';
 
 it('has a cancel button', () => {
