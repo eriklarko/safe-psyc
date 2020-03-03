@@ -1,6 +1,6 @@
 // @flow
 
-import type { TQuestion } from '../models';
+import type { TQuestion, TImageQuestion } from '../models';
 
 export function newArbitraryQuestion(): TQuestion {
     return {
@@ -34,4 +34,27 @@ export function arbitraryQuestionSetOfSize(numQuestions: number): Set<TQuestion>
     }
 
     return set;
+}
+
+export function newQuestionWithImage(): TImageQuestion {
+    return {
+        type: 'image',
+        image: { uri: uniqueString('img') },
+        text: uniqueString('text'),
+        incorrectAnswers: uniqueStrings(2, 'ans'),
+        correctAnswer: uniqueString('ans'),
+    };
+}
+
+let counter = 0;
+function uniqueString(prefix: string): string {
+    return prefix + '-' + counter++;
+}
+
+function uniqueStrings(num: number, prefix: string): Array<string> {
+    const s = [];
+    for (let i = 0; i < num; i++) {
+        s.push(uniqueString(prefix));
+    }
+    return s;
 }

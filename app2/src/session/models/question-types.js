@@ -5,7 +5,7 @@ import type { ImageThatNeedsToBeLoaded } from '../../unsorted/images.js';
 // TQuestion represent all possible question types in the session
 export type TQuestion = TImageQuestion | TDescriptionQuestion;
 
-type TImageQuestion = {
+export type TImageQuestion = {
     type: 'image',
     image: ImageThatNeedsToBeLoaded,
     text: string,
@@ -13,13 +13,13 @@ type TImageQuestion = {
     correctAnswer: string,
 
     toString(): string,
-}
-type TDescriptionQuestion = {
+};
+
+export type TDescriptionQuestion = {
     type: 'description',
     text: string,
     incorrectAnswers: Array<string>,
     correctAnswer: string,
 
     toString(): string,
-}
-
+};

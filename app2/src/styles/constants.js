@@ -1,5 +1,7 @@
 // @flow
 
+import { StyleSheet } from 'react-native';
+
 const gridSize: number = 12;
 export const constants = {
     defaultFontFamily: 'Lato',
@@ -22,4 +24,10 @@ export const constants = {
     space: function(multiplier: number = 1) {
         return gridSize * multiplier;
     },
+
+    styles: StyleSheet.create({
+        flex1: {
+            flex: 1,
+        },
+    }),
 };

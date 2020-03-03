@@ -32,3 +32,7 @@ it('shows the first question after the first render cycle', () => {
         component.getByText(answer);
     }
 });
+
+it('shows the question when in the about-to-finish state', () => {
+    fail();
+})

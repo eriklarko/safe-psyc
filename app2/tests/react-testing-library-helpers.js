@@ -4,5 +4,6 @@ import type { RenderResult } from '@testing-library/react-native';
 
 export function getAllRenderedStrings(component: RenderResult): Array<string> {
     return component.queryAllByText(/.*/)
-            .map(t => t.props.children);
+            .flatMap(t => t.props.children)
+            .filter(t => typeof t === 'string');
 }

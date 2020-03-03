@@ -9,3 +9,4 @@ export * from './Text.js';
 export * from './Button.js';
 export * from './HeroButton.js';
 export * from './ImageButton.js';
+export * from './Link.js';

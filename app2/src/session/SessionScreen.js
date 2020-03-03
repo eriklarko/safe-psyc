@@ -221,6 +221,7 @@ export class SessionScreen extends React.Component<Props, State> {
                 return 'Loading...';
 
             case 'about-to-finish':
+                // TODO: should show the question in this case...
                 return 'about to finiiiiish';
 
             case 'finished':
