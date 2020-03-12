@@ -15,7 +15,7 @@ const defaultProps: Props = {
     onAborted: jest.fn(),
 };
 
-export function props(overrideProps?: {[$Keys<Props>]: mixed}): Props {
+export function props(overrideProps?: $Shape<Props>): Props {
     return Object.assign(
         {},
         defaultProps,

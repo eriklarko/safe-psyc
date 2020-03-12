@@ -3,6 +3,7 @@ import { StackActions, NavigationActions } from 'react-navigation';
 
 import type { NavigationStackProp } from 'react-navigation';
 import type { Screen } from './screens.js';
+import type { Emotion } from '../../shared/models';
 
 export type Navigator = NavigationStackProp<any>;
 export class ReactNavigationNavigator {
@@ -18,6 +19,20 @@ export class ReactNavigationNavigator {
             actions: [NavigationActions.navigate({ routeName: screen })],
         });
         this._getNavigatorOrThrow().dispatch(resetAction);
+    }
+
+    toEmotionDetails(emotion: Emotion) {
+        this.navigateTo('EmotionDetails', {
+            emotion: emotion,
+        });
+    }
+
+    navigateTo(screen: Screen, params?: Object) {
+        const navigateAction = NavigationActions.navigate({
+          routeName: screen,
+          params: params,
+        });
+        this._getNavigatorOrThrow().dispatch(navigateAction);
     }
 
     /////////////////////////////////////////////////////////

@@ -8,15 +8,10 @@ import * as testingLib from '@testing-library/react-native';
 import { Alert } from 'react-native';
 import { SessionScreen } from './SessionScreen.js';
 import { Session } from './models/session.js';
-import { props } from './test-helpers';
+import { props, newDescriptionQuestion } from './test-helpers';
 
 it('shows the first question after the first render cycle', () => {
-    const question = {
-        type: 'description',
-        text: 'what is the meaning of life?',
-        incorrectAnswers: ['43', '44'],
-        correctAnswer: '42',
-    };
+    const question = newDescriptionQuestion();
 
     // render the component
     const component = testingLib.render(<SessionScreen
@@ -27,12 +22,12 @@ it('shows the first question after the first render cycle', () => {
 
     // check that the question text and answers are rendered
     component.getByText(question.text);
-    component.getByText(question.correctAnswer);
+    component.getByText(question.correctAnswer.name);
     for (const answer of question.incorrectAnswers) {
-        component.getByText(answer);
+        component.getByText(answer.name);
     }
 });
 
 it('shows the question when in the about-to-finish state', () => {
-    fail();
+    expect(true).toBe(false);
 })

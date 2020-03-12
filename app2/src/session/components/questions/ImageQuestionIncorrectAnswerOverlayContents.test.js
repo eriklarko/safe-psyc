@@ -1,11 +1,12 @@
 // @flow
 
 import * as React from 'react';
-import * as testingLib from '@testing-library/react-native';
 import renderer from 'react-test-renderer';
-import { ImageQuestionIncorrectAnswerOverlayContents } from './ImageQuestionIncorrectAnswerOverlayContents.js';
 import { Image } from 'react-native';
+import { ImageQuestionIncorrectAnswerOverlayContents } from './ImageQuestionIncorrectAnswerOverlayContents.js';
 import { newQuestionWithImage } from '../../test-helpers';
+import { Link } from '../../../styles';
+import { installMockNavigator } from '../../../navigation';
 
 it('shows the image of the answer in the overlay if the image exists', () => {
     const askedQuestion = newQuestionWithImage();
@@ -16,7 +17,7 @@ it('shows the image of the answer in the overlay if the image exists', () => {
         answer: answer,
     }} />).root;
 
-    const images = component.findAllByType(Image).map(img => img.props.source.uri);
+    const images = component.findAllByType(Image).map(img => img.props.source);
     expect(images).toEqual(expect.arrayContaining([answer.image]));
 });
 
@@ -24,31 +25,33 @@ it("doesn't show the image of the answer in the overlay if the image doesn't exi
     const askedQuestion = newQuestionWithImage();
     const answer = askedQuestion.incorrectAnswers[0];
 
-    // unset the image to guarantee that the question has no image
-    askedQuestion.image = null;
+    // unset the image to guarantee that the answer has no image
+    delete answer.image;
 
-    expect(askedQuestion.correctAnswer.image).not.toEqual(answer.image);
-
-    const component = testingLib.render(<ImageQuestionIncorrectAnswerOverlayContents {...{
+    const component = renderer.create(<ImageQuestionIncorrectAnswerOverlayContents {...{
         question: askedQuestion,
         answer: answer,
     }} />);
 
-    expect(component).not.toHaveChild(Image);
+    // expect no Image component. findByType throws if no mathcing children
+    // could be found, or if it finds many. This should probably be a matcher
+    // like
+    //   expect(component).not.toHaveChild(Image);
+    expect(() => component.root.findByType(Image)).toThrow();
 });
 
 it('has a link to the emotion details in the overlay', () => {
     const question = newQuestionWithImage()
     const answer = question.incorrectAnswers[0];
-    const navigationMock = mockNavigation();
+    const navigationMock = installMockNavigator();
 
-    const component = testingLib.render(<ImageQuestionIncorrectAnswerOverlayContents {...{
+    const component = renderer.create(<ImageQuestionIncorrectAnswerOverlayContents {...{
         answeredCorrectly: false,
         question: question,
         answer: answer,
     }} />);
 
-    const helpLink = findChildren(component, Link).filter(c => {
+    const helpLink = component.root.findAllByType(Link).filter(c => {
         return c.props.linkText.indexOf(answer.name) >= -1;
     })[0];
     expect(helpLink).toBeDefined();

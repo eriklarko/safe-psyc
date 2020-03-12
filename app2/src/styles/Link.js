@@ -48,6 +48,6 @@ function Pill(props) {
     const { text, onPress } = props;
     return <Text style={styles.pill} onPress={onPress} >
         {text}
-    </Text>
+    </Text>;
 }
 

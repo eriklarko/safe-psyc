@@ -14,18 +14,13 @@ import * as testingLib from '@testing-library/react-native';
 import moment from 'moment';
 import { SessionScreen } from './SessionScreen.js';
 import { Session, SessionReport } from './models';
-import { props, clickCorrectAnswer, clickIncorrectAnswer } from './test-helpers';
+import { props, newArbitraryQuestion, arbitraryQuestionSetOfSize, clickCorrectAnswer, clickIncorrectAnswer } from './test-helpers';
 
 import type { TQuestion } from './models';
 
 it('calls onSessionFinished with the correct report when all questions are finished', () => {
     // create a session with only one question
-    const session = new Session(new Set([{
-        type: 'description',
-        text: 'what is the meaning of life?',
-        incorrectAnswers: ['43', '44'],
-        correctAnswer: '42',
-    }]));
+    const session = new Session(arbitraryQuestionSetOfSize(1));
 
     const report = new SessionReport();
     const onSessionFinished = jest.fn();
@@ -51,18 +46,8 @@ it('calls onSessionFinished with the correct report when all questions are finis
 });
 
 it('moves to the next question on a correct answer', () => {
-    const q1 = {
-        type: 'description',
-        text: 'what is the meaning of life?',
-        incorrectAnswers: ['43', '44'],
-        correctAnswer: '42',
-    };
-    const q2 = {
-        type: 'description',
-        text: 'what is 41+1?',
-        incorrectAnswers: ['43', '44'],
-        correctAnswer: '42',
-    };
+    const q1 = newArbitraryQuestion();
+    const q2 = newArbitraryQuestion();
 
     const session = new Session<TQuestion>(new Set([q1, q2]));
     const component = testingLib.render(<SessionScreen
@@ -76,18 +61,8 @@ it('moves to the next question on a correct answer', () => {
 });
 
 it('moves to the next question if there are three incorrect answers', () => {
-    const q1 = {
-        type: 'description',
-        text: 'what is the meaning of life?',
-        incorrectAnswers: ['43', '44'],
-        correctAnswer: '42',
-    };
-    const q2 = {
-        type: 'description',
-        text: 'what is 41+1?',
-        incorrectAnswers: ['43', '44'],
-        correctAnswer: '42',
-    };
+    const q1 = newArbitraryQuestion();
+    const q2 = newArbitraryQuestion();
 
     const session = new Session<TQuestion>(new Set([q1, q2]));
     const component = testingLib.render(<SessionScreen

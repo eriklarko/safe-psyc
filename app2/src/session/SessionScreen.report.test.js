@@ -8,29 +8,13 @@ import * as testingLib from '@testing-library/react-native';
 import moment from 'moment';
 import { SessionScreen } from './SessionScreen.js';
 import { Session, SessionReport } from './models';
-import { props, MockTimeGiver, clickAnswer } from './test-helpers';
+import { props, MockTimeGiver, newArbitraryQuestion, clickAnswer } from './test-helpers';
 import type { TQuestion } from './models';
 
 it('generates a correct report', () => {
-    const q1 = {
-        type: 'description',
-        text: 'what is the meaning of life?',
-        incorrectAnswers: ['43', '44'],
-        correctAnswer: '42',
-    };
-    const q2 = {
-        type: 'description',
-        text: 'what is 41+1?',
-        incorrectAnswers: ['43', '44'],
-        correctAnswer: '42',
-    };
-    const q3 = {
-        type: 'description',
-        text: 'what is 41 + (sin2v+cos2v)?',
-        incorrectAnswers: ['43', '44'],
-        correctAnswer: '42',
-    };
-
+    const q1 = newArbitraryQuestion();
+    const q2 = newArbitraryQuestion();
+    const q3 = newArbitraryQuestion();
     const session = new Session<TQuestion>(new Set([q1, q2, q3]));
 
     // set up the report we'll assert on later in the test.
@@ -47,16 +31,16 @@ it('generates a correct report', () => {
     />);
 
     // answer q1
-    clickAnswer(component, '44'); // incorrect
-    clickAnswer(component, '44'); // incorrect
-    clickAnswer(component, '44'); // incorrect
+    clickAnswer(component, q1.incorrectAnswers[0]);
+    clickAnswer(component, q1.incorrectAnswers[0]);
+    clickAnswer(component, q1.incorrectAnswers[0]);
 
     // answer q2
-    clickAnswer(component, '44'); // incorrect
-    clickAnswer(component, '42'); // correct
+    clickAnswer(component, q2.incorrectAnswers[0]);
+    clickAnswer(component, q2.correctAnswer);
 
     // answer q3
-    clickAnswer(component, '42'); // correct
+    clickAnswer(component, q3.correctAnswer);
 
     // reset the timer so that calls to getNextTime() returns the same sequence
     // of times as when clicking the answers.
@@ -66,15 +50,15 @@ it('generates a correct report', () => {
     expect(report.getResult(q1)).toEqual({
         startTime: timer.getNextTime(),
         answers: [{
-            answer: '44',
+            answer: q1.incorrectAnswers[0],
             isCorrect: false,
             time: timer.getNextTime(),
         },{
-            answer: '44',
+            answer: q1.incorrectAnswers[0],
             isCorrect: false,
             time: timer.getNextTime(),
         },{
-           answer: '44',
+           answer: q1.incorrectAnswers[0],
             isCorrect: false,
             time: timer.getNextTime(),
         }],
@@ -84,7 +68,7 @@ it('generates a correct report', () => {
     expect(report.getResult(q2)).toEqual({
         startTime: timer.getNextTime(),
         answers: [{
-            answer: '44',
+            answer: q2.incorrectAnswers[0],
             isCorrect: false,
             time: timer.getNextTime(),
         },{

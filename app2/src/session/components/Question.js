@@ -7,10 +7,11 @@ import * as React from 'react';
 import { knuthShuffle } from 'knuth-shuffle';
 import { ImageQuestion, DescriptionQuestion } from './questions';
 import type { TQuestion } from '../models';
+import type { Emotion } from '../../shared/models';
 
 type Props = {
     question: TQuestion,
-    onAnswer: (answer: string)=>void,
+    onAnswer: (answer: Emotion)=>void,
 }
 
 export function Question(props: Props) {
@@ -35,6 +36,10 @@ export function Question(props: Props) {
     }
 }
 
-function getAnswers(question: TQuestion): Array<string> {
-    return knuthShuffle([question.correctAnswer, ...question.incorrectAnswers]);
+function getAnswers(question: TQuestion): Array<Emotion> {
+    // The typedefs for knuthShuffle returns `any`, making flow unable to
+    // detect incorrect types in its inputs. To make this file mor type-safe
+    // the `answers` array is defined separately and set to an `Array<Emotion>`
+    const answers: Array<Emotion> = [question.correctAnswer, ...question.incorrectAnswers];
+    return knuthShuffle(answers);
 }

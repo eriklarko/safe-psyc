@@ -17,12 +17,13 @@ import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text } from '../../../styles';
 import { AnswerList } from './AnswerList.js';
+import type { Emotion } from '../../../shared/models';
 
 type Props = {
     text: string,
 
-    answers: Array<string>,
-    onAnswer: (answer: string)=>void,
+    answers: Array<Emotion>,
+    onAnswer: (answer: Emotion)=>void,
 };
 
 export function DescriptionQuestion(props: Props) {
@@ -30,10 +31,18 @@ export function DescriptionQuestion(props: Props) {
         <Text>{props.text}</Text>
 
         <AnswerList
-            answers={props.answers}
+            answers={toAnswerMap(props.answers)}
             onAnswer={props.onAnswer}
         />
     </View>;
+}
+
+function toAnswerMap(answers: Array<Emotion>): Map<Emotion, string> {
+    const m = new Map();
+    for (const answer of answers) {
+        m.set(answer, answer.name);
+    }
+    return m;
 }
 
 const styles = StyleSheet.create({

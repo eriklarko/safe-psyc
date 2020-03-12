@@ -2,9 +2,10 @@
 
 import * as testingLib from '@testing-library/react-native';
 import type { Session, TQuestion } from '../models';
+import type { Emotion } from '../../shared/models';
 
-export function clickAnswer(sessionComponent: testingLib.RenderResult, answer: string) {
-    const ans = sessionComponent.getByTestId('answer-' + answer);
+export function clickAnswer(sessionComponent: testingLib.RenderResult, answer: Emotion) {
+    const ans = sessionComponent.getByTestId('answer-' + answer.name);
     testingLib.fireEvent.press(ans);
 }
 
@@ -23,7 +24,9 @@ export function clickIncorrectAnswer(sessionComponent: testingLib.RenderResult, 
         }
     }
     if (incorrectAns == null) {
-        throw new Error(`current question had no incorrect answers (correct: ${q.correctAnswer}; incorrect: ${q.incorrectAnswers.join(', ')}`);
+        const correct = q.correctAnswer.name;
+        const incorrect = q.incorrectAnswers.map(e => e.name).join(', ');
+        throw new Error(`current question had no incorrect answers (correct: ${correct}; incorrect: ${incorrect}`);
     }
 
     // click the incorrect answer

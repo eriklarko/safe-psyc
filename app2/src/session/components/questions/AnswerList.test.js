@@ -7,7 +7,7 @@ import { AnswerList } from './AnswerList.js';
 
 it('shows the answers', () => {
     const props = {
-        answers: ['ans1', 'ans2', 'ans3'],
+        answers: toMap(['ans1', 'ans2', 'ans3']),
         onAnswer: jest.fn(),
     };
     const component = testingLib.render(<AnswerList {...props} />);
@@ -17,7 +17,7 @@ it('shows the answers', () => {
 
 it('forwards taps on all answers', () => {
     const props = {
-        answers: ['a', 'b', 'c'],
+        answers: toMap(['a', 'b', 'c']),
         onAnswer: jest.fn(),
     };
     const component = testingLib.render(<AnswerList {...props} />);
@@ -26,8 +26,7 @@ it('forwards taps on all answers', () => {
     const answers = component.getAllByTestId(/answer/i);
     for (const answerTouchable of answers) {
 
-        // the accessibility label needs to contain the actual answer too, lets use that
-        // to get the value we expect.
+        // the testID encodes the answer so we'll steal it from there
         const answer = answerTouchable.props.testID.substr('answer-'.length);
 
         testingLib.fireEvent.press(answerTouchable);
@@ -37,3 +36,11 @@ it('forwards taps on all answers', () => {
         props.onAnswer.mockClear();
     }
 });
+
+function toMap(strings: Array<string>): Map<string, string> {
+    const m = new Map();
+    for (const s of strings) {
+        m.set(s, s);
+    }
+    return m;
+}

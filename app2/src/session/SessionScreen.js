@@ -15,20 +15,21 @@ import { SessionReport } from './models';
 import { Question, QuestionProgress } from './components';
 
 import type { Session, TQuestion } from './models';
+import type { Emotion } from '../shared/models';
 
 export type Props = {
     // the set of questions to be answered
     session: Session<TQuestion>,
 
     // the callback invoked when all question have been answered or skipped
-    onSessionFinished: (SessionReport<TQuestion, string>) => void,
+    onSessionFinished: (SessionReport<TQuestion, Emotion>) => void,
 
     // the callback invoked when the user wants to stop the session and discard
     // any answers given.
     onAborted: () => void,
 
     // used only by tests to provide a report with mockable timestamps and such.
-    report?: SessionReport<TQuestion, string>,
+    report?: SessionReport<TQuestion, Emotion>,
 
     // used only by tests to be able to mock the react-native BackHandler
     backHandler?: typeof BackHandler,
@@ -40,7 +41,7 @@ type State = {
     currentQuestion: ?TQuestion,
 
     // the report passed to the onSessionFinished callback
-    report: SessionReport<TQuestion, string>,
+    report: SessionReport<TQuestion, Emotion>,
 
     // the object responsible for handling the Android back button
     backHandler: typeof BackHandler,
@@ -149,7 +150,7 @@ export class SessionScreen extends React.Component<Props, State> {
 
     // registers the answer in the report and moves to the next question if
     // applicable. It's an arror function property because of `this` :(
-    _onAnswer = (answer: string) => {
+    _onAnswer = (answer: Emotion) => {
         const question = this.props.session.currentQuestion();
         if (answer === question.correctAnswer) {
             this.state.report.registerCorrectAnswer(question);

@@ -21,8 +21,8 @@
     "react-native-progress": "^4.0.3",
     "react-native-reanimated": "^1.7.0",
     "react-native-safe-area-context": "^0.7.3",
-    "react-native-screens": "^2.0.0-beta.4",
-    "react-navigation": "^4.1.1",
+    "react-native-screens": "^2.3.0",
+    "react-navigation": "^4.2.2",
     "react-navigation-stack": "^2.1.1"
   },
   "devDependencies": {
@@ -36,7 +36,9 @@
     "flow-typed": "^2.6.2",
     "jest": "^25.1.0",
     "metro-react-native-babel-preset": "^0.58.0",
-    "react-test-renderer": "^16.12.0"
+    "pretty-format": "^25.1.0",
+    "react-test-renderer": "^16.13.0",
+    "uuid": "^7.0.2"
   },
   "jest": {
     "preset": "@testing-library/react-native",

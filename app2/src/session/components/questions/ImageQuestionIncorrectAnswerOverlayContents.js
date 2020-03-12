@@ -3,20 +3,18 @@
 import * as React from 'react';
 import { Image, StyleSheet } from 'react-native';
 import { Text, Link, VerticalSpace } from '../../../styles';
-import { capitalize } from '../../../unsorted/text-utils.js';
+import { capitalize } from '../../../shared/text';
+import { navigator } from '../../../navigation';
+import type { Emotion } from '../../../shared/models';
 
-type Emotion = {
-    image?: string,
-    name: string,
-};
 type Props = {
     answer: Emotion,
 };
 export function ImageQuestionIncorrectAnswerOverlayContents(props: Props) {
     const { answer } = props;
     const answerImage = answer.image;
-    const navigateToEmotionDetails = () => toEmotionDetails(answer);
-    
+    const navigateToEmotionDetails = () => navigator.toEmotionDetails(answer);
+
     if (!answerImage) {
         return (
             <Link
@@ -37,8 +35,8 @@ export function ImageQuestionIncorrectAnswerOverlayContents(props: Props) {
                 <VerticalSpace />
                 <Image
                     style={styles.answerImage}
-                    resizeMode="contain"
-                    source={{ uri: answerImage }}
+                    resizeMode='contain'
+                    source={ answerImage }
                 />
             </>
         );

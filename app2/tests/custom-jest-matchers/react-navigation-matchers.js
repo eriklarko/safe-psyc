@@ -3,6 +3,36 @@
 import type { Screen } from '../../src/navigation/react-navigation/screens.js';
 
 expect.extend({
+    toHaveNavigatedTo(received, route, params) {
+        const { calls } = received.dispatch.mock;
+        const numCalls = calls.length;
+
+        for (const call of calls) {
+            const { routeName: actualRouteName, params: actualParams } = call[0];
+
+            const paramsCorrect = params
+                ? this.utils.stringify(params) === this.utils.stringify(actualParams)
+                : true;
+
+            if (actualRouteName === route && paramsCorrect) {
+                return {
+                    pass: true,
+                };
+            }
+        }
+
+        const a = call => call[0].routeName + ' - ' + this.utils.stringify(call[0].params);
+        return {
+            pass: false,
+            message: () => `${this.utils.matcherHint('.not.toBe')}\n\n` +
+
+              'Expected navigation frame:\n' +
+              `  ${this.utils.printExpected(route + ' - ' + this.utils.stringify(params))}\n` +
+              'Received:\n' +
+              `  ${this.utils.printReceived(calls.map(a).join('\n'))}\n`
+        }
+    },
+
     toHaveResetTo(received, route: Screen) {
         const { calls } = received.dispatch.mock;
         const numCalls = calls.length;

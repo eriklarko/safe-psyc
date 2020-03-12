@@ -1,5 +1,5 @@
---- node_modules/react-native/flow/jest.js	2019-12-30 07:04:25.129000000 -0500
-+++ node_modules/react-native/flow/jest.js	2019-12-30 07:34:15.684475348 -0500
+--- ./node_modules/react-native/flow/jest.js	2019-12-30 07:04:25.129000000 -0500
++++ ./node_modules/react-native/flow/jest.js	2019-12-30 07:34:15.684475348 -0500
 @@ -1111,7 +1111,8 @@
      DomTestingLibraryType &
      JestJQueryMatchersType &
@@ -10,7 +10,7 @@
  
    /** Add additional Jasmine matchers to Jest's roster */
    extend(matchers: {[name: string]: JestMatcher}): void,
-@@ -1171,3 +1172,10 @@
+@@ -1171,3 +1172,12 @@
    objectContaining(value: Object): Object,
    stringMatching(value: string): string,
  };
@@ -19,5 +19,7 @@
 + *  Plugin: safe-spyc test helpers
 + */
 +type SafePsycExpectType = {
++  toHaveNavigatedTo(route: string, params?: Object): void,
 +  toHaveResetTo(route: string): void,
++  toHaveChild(child: mixed): void, // TODO: Should be child: ReactComponent or something
 +}

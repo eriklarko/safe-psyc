@@ -13,4 +13,7 @@ export const screens = {
     Home: {
         screen: Home,
     },
+    EmotionDetails: {
+        screen: null,
+    },
 };
