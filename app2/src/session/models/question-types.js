@@ -1,6 +1,7 @@
 // @flow
 
-import type { Emotion, ImageThatNeedsToBeLoaded } from '../../shared/models';
+import type { Emotion } from '../../shared/models';
+import type { ImageThatNeedsToBeLoaded } from '../../shared/images';
 
 // TQuestion represent all possible question types in the session
 export type TQuestion = TImageQuestion | TDescriptionQuestion;

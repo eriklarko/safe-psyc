@@ -6,7 +6,7 @@ import * as React from 'react';
 import { TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { combineStyles } from './helpers.js';
 
-import type { PreloadedImage } from '../shared/models';
+import type { PreloadedImage } from '../shared/images';
 import type { AccessibilityRole } from 'react-native/Libraries/Components/View/ViewAccessibility.js';
 
 type TouchableOpacityProps = React.ElementProps<typeof TouchableOpacity>;

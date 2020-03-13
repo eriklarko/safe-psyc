@@ -13,6 +13,7 @@ import { View, Alert, BackHandler } from 'react-native';
 import { ImageButton } from '../styles';
 import { SessionReport } from './models';
 import { Question, QuestionProgress } from './components';
+import { assets } from '../shared/images';
 
 import type { Session, TQuestion } from './models';
 import type { Emotion } from '../shared/models';
@@ -202,7 +203,7 @@ export class SessionScreen extends React.Component<Props, State> {
         return <View>
             <View>
                 <ImageButton
-                    image={require('./cancel-btn.png')}
+                    image={assets.mediumCross}
                     onPress={this._cancel}
                     testID='cancel-btn'
                 />

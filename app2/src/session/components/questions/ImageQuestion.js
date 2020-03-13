@@ -18,7 +18,8 @@ import * as React from 'react';
 import { StyleSheet, View, Image } from 'react-native';
 import { Text } from '../../../styles';
 import { AnswerList } from './AnswerList.js';
-import type { ImageThatNeedsToBeLoaded, Emotion } from '../../../shared/models';
+import type { ImageThatNeedsToBeLoaded } from '../../../shared/images';
+import type { Emotion } from '../../../shared/models';
 
 type Props = {
     image: ImageThatNeedsToBeLoaded,
