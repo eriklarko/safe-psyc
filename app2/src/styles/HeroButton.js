@@ -12,15 +12,16 @@ type Props = {|
     disabled?: boolean;
 |};
 
+const colorGroup = constants.colorGroup.primary;
 const styles = StyleSheet.create({
     enabled: {
-        backgroundColor: constants.primaryHighlightColor,
+        backgroundColor: colorGroup.highlight,
         padding: constants.space(3),
         borderRadius: 10,
         elevation: 2,
     },
     disabled: {
-        backgroundColor: constants.disabledBackgroundColor,
+        backgroundColor: colorGroup.disabled.background,
         padding: constants.space(3),
         borderRadius: 10,
         elevation: 2,

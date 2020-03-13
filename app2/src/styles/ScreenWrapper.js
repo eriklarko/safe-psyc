@@ -2,9 +2,11 @@
 
 import * as React from 'react';
 import { View, StyleSheet } from 'react-native';
+import { constants } from './constants.js';
 
 const defaultStyle = StyleSheet.create({
     outermostContainer: {
+        padding: constants.space(),
         flex: 1,
     },
 });

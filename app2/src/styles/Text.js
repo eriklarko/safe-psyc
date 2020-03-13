@@ -13,11 +13,12 @@ type Props = {
 type TextProps = React.ElementProps<typeof RNText>;
 export type TextStyle = $PropertyType<TextProps, 'style'>;
 
+const colorGroup = constants.colorGroup.primary;
 const defaultStyles = StyleSheet.create({
     text: {
         fontSize: 16,
         fontFamily: constants.defaultFontFamily,
-        color: constants.primaryTextColor,
+        color: colorGroup.foreground,
         lineHeight: 16 * 1.5,
 
         textTransform: 'none', // used in tests to test style overrides
@@ -25,7 +26,7 @@ const defaultStyles = StyleSheet.create({
     largeText: {
         fontSize: 26,
         fontFamily: constants.defaultFontFamily,
-        color: constants.primaryTextColor,
+        color: colorGroup.foreground,
         lineHeight: 26 * 1.5,
     },
 });

@@ -4,25 +4,33 @@ import { StyleSheet } from 'react-native';
 
 const gridSize: number = 12;
 export const constants = {
-    defaultFontFamily: 'Lato',
-
-    primaryTextColor: '#666666',
-
-    primaryForegroundColor: '#FAFAFF',
-    primaryBackgroundColor: '#fdb807',
-
-    primaryHighlightColor: '#1cc7d0',
-
-    disabledForegroundColor: '#FAFAFF',
-    disabledBackgroundColor: '#CCC',
-
-    positiveColor: '#2dde98',
-    negativeColor: '#ff4f81',
-
     // used to divide the whole UI into a grid
     gridSize,
     space: function(multiplier: number = 1) {
         return gridSize * multiplier;
+    },
+
+    defaultFontFamily: 'Lato',
+
+    colorGroup: {
+        primary: {
+            background: '#FAFAFF',
+            foreground: '#666',
+            highlight: '#1cc7d0',
+
+            disabled: {
+                background: '#CCC',
+                foreground: '#FAFAFF',
+            },
+        },
+        positive: {
+            background: '#2dde98',
+            foreground: '#FAFAFF',
+        },
+        negative: {
+            background: '#ff4f81',
+            foreground: '#FAFAFF',
+        },
     },
 
     styles: StyleSheet.create({

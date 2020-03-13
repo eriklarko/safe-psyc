@@ -40,19 +40,18 @@ export function Button(props: Props) {
     );
 }
 
-const enabledStyles = createStylesWithColors(constants.primaryForegroundColor, constants.primaryBackgroundColor);
-const disabledStyles = createStylesWithColors(constants.disabledForegroundColor, constants.disabledBackgroundColor);
-
-function createStylesWithColors(foreground, background) {
+const enabledStyles = createStylesWithColors(constants.colorGroup.primary);
+const disabledStyles = createStylesWithColors(constants.colorGroup.primary.disabled);
+function createStylesWithColors(colorGroup) {
     return StyleSheet.create({
         container: {
             borderRadius: 5000, // try to make the button always have rounded sides, regardless of the height of the btn
-            backgroundColor: background,
+            backgroundColor: colorGroup.background,
             justifyContent: 'center',
             alignItems: 'center',
         },
         text: {
-            color: foreground,
+            color: colorGroup.foreground,
             textAlign: 'center',
             padding: constants.space(1),
         },

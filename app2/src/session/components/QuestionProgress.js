@@ -16,7 +16,7 @@ export function QuestionProgress(props: Props) {
     const progress = Math.max(current, 0) / total;
     const progressProps = Object.assign({
         progress: progress,
-        color: constants.primaryBackgroundColor,
+        color: constants.colorGroup.primary.background,
         width: null,
         height: constants.space(),
         borderRadius: borderRadius,

@@ -12,8 +12,8 @@ type Props = {
     postfix?: string,
 };
 
-const vertSpace = 5;
-
+const vertSpace = constants.space(0.5);
+const colorGroup = constants.colorGroup.primary;
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
@@ -22,8 +22,8 @@ const styles = StyleSheet.create({
         paddingVertical: vertSpace,
     },
     pill: {
-        backgroundColor: constants.primaryBackgroundColor,
-        color: constants.primaryForegroundColor,
+        backgroundColor: colorGroup.background,
+        color: colorGroup.foreground,
 
         borderRadius: constants.gridSize,
 

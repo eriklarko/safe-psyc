@@ -16,7 +16,7 @@ type Props = {
 }
 
 export function CorrectAnswerOverlay(props: Props) {
-    return <Overlay backgroundColor={constants.positiveColor} onDismiss={props.onDismiss}>
+    return <Overlay colorGroup={constants.colorGroup.positive} onDismiss={props.onDismiss}>
         <Text>
             {props.answer.name + ' is correct!'}
         </Text>;
@@ -41,14 +41,14 @@ export function IncorrectAnswerOverlay(props: Props) {
         }
     }();
 
-    return <Overlay backgroundColor={constants.negativeColor} onDismiss={props.onDismiss}>
+    return <Overlay colorGroup={constants.colorGroup.negative} onDismiss={props.onDismiss}>
         {contents}
     </Overlay>;
 }
 
 type OverlayProps = {
     children: *, // TODO: real type ploxx
-    backgroundColor: string, // TODO: real type ploxx
+    colorGroup: { foreground: string, background: string }, // TODO: Not strings!
     onDismiss: ()=>void,
 };
 function Overlay(props: OverlayProps) {
