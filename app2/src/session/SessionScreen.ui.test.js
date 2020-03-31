@@ -8,7 +8,7 @@ import * as testingLib from '@testing-library/react-native';
 import { Alert } from 'react-native';
 import { SessionScreen } from './SessionScreen.js';
 import { Session } from './models/session.js';
-import { props, newDescriptionQuestion } from './test-helpers';
+import { props, newDescriptionQuestion, clickCorrectAnswer } from './test-helpers';
 
 it('shows the first question after the first render cycle', () => {
     const question = newDescriptionQuestion();
@@ -29,7 +29,27 @@ it('shows the first question after the first render cycle', () => {
 });
 
 it('shows the question when in the about-to-finish state', () => {
+    // This test is meant to test the state between when the last question is
+    // answered and when onSessionFinished is called. A timer is started when 
+    // the last question is answered, and calls onSessionFinished when it
+    // finishes To test this I need to disable the timers somehow and jests
+    // useFakeTimers does just that.
     jest.useFakeTimers();
 
-    expect(true).toBe(false);
+    // create session with one question
+    const question = newDescriptionQuestion();
+    const session = new Session(new Set([question]));
+
+    // render SessionScreen
+    const component = testingLib.render(<SessionScreen
+        {...props({
+            session: session,
+        })}
+    />);
+
+    // answer the question correctly
+    clickCorrectAnswer(component, session);
+
+    // check rendered state
+    component.getByText(question.text);
 })
