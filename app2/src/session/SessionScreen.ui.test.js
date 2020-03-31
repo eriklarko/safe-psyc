@@ -29,5 +29,7 @@ it('shows the first question after the first render cycle', () => {
 });
 
 it('shows the question when in the about-to-finish state', () => {
+    jest.useFakeTimers();
+
     expect(true).toBe(false);
 })

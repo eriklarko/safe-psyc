@@ -12,6 +12,7 @@ import { props, MockTimeGiver, newArbitraryQuestion, clickAnswer } from './test-
 import type { TQuestion } from './models';
 
 it('generates a correct report', () => {
+    // ---- ASSEMBLE
     const q1 = newArbitraryQuestion();
     const q2 = newArbitraryQuestion();
     const q3 = newArbitraryQuestion();
@@ -29,21 +30,29 @@ it('generates a correct report', () => {
             report: report,
         })}
     />);
+    // ---- DONE WITH ASSEMBLY
 
-    // answer q1
+
+    // ---- ACT ----
+    // answer q1, all wrong
     clickAnswer(component, q1.incorrectAnswers[0]);
     clickAnswer(component, q1.incorrectAnswers[0]);
     clickAnswer(component, q1.incorrectAnswers[0]);
 
-    // answer q2
+    // answer q2, first wrong - then correct
     clickAnswer(component, q2.incorrectAnswers[0]);
     clickAnswer(component, q2.correctAnswer);
 
-    // answer q3
+    // answer q3 correctly on the first try
     clickAnswer(component, q3.correctAnswer);
+    // ---- DONE WITH ACT ----
+
+
+    // ---- ASSERT ----
 
     // reset the timer so that calls to getNextTime() returns the same sequence
-    // of times as when clicking the answers.
+    // of times as when clicking the answers. This makes building the expected
+    // objects much easier.
     timer.setNextTime(moment('2020-01-01 00:00:00'));
 
     // check that we have three incorrect answers on q1

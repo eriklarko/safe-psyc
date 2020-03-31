@@ -11,6 +11,8 @@ type QuestionReport<AnsType> = {
     answers: Array<Answer<AnsType>>,
 }
 
+// AnsType is almost guaranteed to be Emotion, but because the report doesn't
+// care about the actual type I abstracted it out.
 type Answer<AnsType> = CorrectAnswer | IncorrectAnswer<AnsType>;
 
 type CorrectAnswer = {|
@@ -27,13 +29,7 @@ type IncorrectAnswer<AnsType> = {|
 // Used to mock time in tests
 type TimeGiver = () => moment$Moment;
 
-// The only requirement of questions at this time is that they can be
-// represented as strings.
-interface Stringable {
-    toString(): string
-}
-
-export class SessionReport<QType: Stringable, AnsType: Stringable> {
+export class SessionReport<QType, AnsType> {
     _answers: Map<QType, QuestionReport<AnsType>>;
     _time: TimeGiver;
 
@@ -50,7 +46,10 @@ export class SessionReport<QType: Stringable, AnsType: Stringable> {
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness#Same-value-zero_equality
     startLookingAtQuestion(question: QType): void {
         if (this._answers.has(question)) {
-            throw new Error(`called startLookingAtQuestion more than once for question ${question.toString()}`);
+            throw new ReportError(
+                'called startLookingAtQuestion more than once for a question',
+                question,
+            );
         }
 
         this._answers.set(question, {
@@ -78,7 +77,10 @@ export class SessionReport<QType: Stringable, AnsType: Stringable> {
     registerIncorrectAnswer(question: QType, answer: AnsType): QuestionReport<AnsType> {
         const questionReport = this._answers.get(question);
         if (!questionReport) {
-            throw new Error('registerIncorrectAnswer called before startLookingAtQuestion');
+            throw new ReportError(
+                'registerIncorrectAnswer called before startLookingAtQuestion',
+                question,
+            );
         }
 
         questionReport.answers.push({
@@ -102,5 +104,14 @@ export class SessionReport<QType: Stringable, AnsType: Stringable> {
     // aborting a session and we want to forget the data collected.
     clear() {
         this._answers.clear();
+    }
+}
+
+export class ReportError<QType> extends Error {
+    question: QType;
+
+    constructor(message: string, question: QType) {
+        super(message);
+        this.question = question;
     }
 }

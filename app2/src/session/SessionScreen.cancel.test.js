@@ -37,9 +37,6 @@ describe('android back button', () => {
             })}
         />);
 
-        // The BackHandler mock's state is global and there's no way to clear
-        // the state at the start of a test. Instead we'll use testinglib's
-        // unmount feature and remove any listeners that way.
         try {
             withMockedAlert((mockedAlert) => {
                 expect(mockedAlert).toHaveBeenCalledTimes(0);
@@ -48,6 +45,9 @@ describe('android back button', () => {
             });
 
         } finally {
+            // The BackHandler mock's state is global and there's no way to clear
+            // the state at the start of a test. Instead we'll use testinglib's
+            // unmount feature and remove any listeners that way.
             component.unmount();
         }
     });
@@ -89,9 +89,10 @@ it('includes a description of the three buttons in the alert', () => {
     });
 });
 
-// omg worst test description ever. The cancel button gives the option to
-// either cancel and go back to Home, or to go the report screen and look
-// at the unfinished session. This test tests the last case.
+// omg worst test description ever. The cancel button gives the option to either
+// cancel and go back to Home, or to go the report screen and look at the
+// unfinished session. This test tests the second case, where we expect to be
+// shown the session report.
 it('calls onSessionFinished on cancel with intent to see report', () => {
     const onSessionFinished = jest.fn();
     const component = testingLib.render(<SessionScreen
@@ -156,7 +157,7 @@ it('dismisses the cancel alert on continue', () => {
         // find the button we want to test in this test, finish
         const continueBtn = mockedAlert.getButtonWithText('continue');
 
-        // press the button and verify that onSessionFinished was called
+        // press the button and verify that no callbacks were invoked
         continueBtn.onPress();
         expect(onSessionFinished).toHaveBeenCalledTimes(0);
         expect(onAborted).toHaveBeenCalledTimes(0);

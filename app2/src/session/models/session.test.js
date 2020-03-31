@@ -47,8 +47,8 @@ describe('hasNextQuestion', () => {
         const session = new Session(questions);
 
         expect(session.hasNextQuestion()).toBe(true); // next question is 'b'
-        session.nextQuestion();
 
+        session.nextQuestion();
         expect(session.hasNextQuestion()).toBe(true); // next question is 'c'
     });
 

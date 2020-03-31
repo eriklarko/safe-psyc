@@ -3,6 +3,9 @@
 // This file represents the default way to log things in this app. All logs
 // shoud be structured, but where those logs end up is up to the implementation
 // of the default logger defined here.
+//
+// TODO: The loggers should store the stack trace that called them to make them
+// more actionable.
 
 import { StdoutLogger } from './stdout-logger.js';
 export * from './nop-logger.js';

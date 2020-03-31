@@ -1,6 +1,6 @@
 // @flow
 
-import { SessionReport } from './session-report.js';
+import { SessionReport, ReportError } from './session-report.js';
 import { MockTimeGiver } from '../test-helpers';
 import moment from 'moment';
 
@@ -152,9 +152,9 @@ it('throws an exception if startLookingAtQuestion is called more than once with 
         // $FlowFixMe: fail isn't defined in the jest types but is availble in the API
         fail('expected exception but none was thrown');
     } catch (e) {
-        expect(e).toBeInstanceOf(Error);
+        expect(e).toBeInstanceOf(ReportError);
         expect(e.message).toEqual(expect.stringContaining('more than once'));
-        expect(e.message).toEqual(expect.stringContaining(question1));
+        expect(e.question).toBe(question1);
     }
 
     // test that new questions don't throw just because a previous one did

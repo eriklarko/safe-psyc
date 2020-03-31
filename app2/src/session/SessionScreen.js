@@ -1,7 +1,7 @@
 // @flow
 //
-// SessionScreen is a full-screen react component that renders questions in a
-// session and notifies a listener when all questions have been answered or
+// SessionScreen is a full-screen react component that renders a set of
+// questions and notifies a listener when all questions have been answered or
 // skipped.
 //
 // It handles the reporting of correct and incorrect answers, calls
@@ -14,6 +14,7 @@ import { ImageButton } from '../styles';
 import { SessionReport } from './models';
 import { Question, QuestionProgress } from './components';
 import { assets } from '../shared/images';
+import { logger } from '../logger';
 
 import type { Session, TQuestion } from './models';
 import type { Emotion } from '../shared/models';
@@ -82,6 +83,14 @@ export class SessionScreen extends React.Component<Props, State> {
         this._clearTimer();
     }
 
+    // When the last question is answered we don't want to redirect the user to
+    // some other screen immediately, instead we wait a bit before calling
+    // onSessionFinished. This logic should probably live in the component
+    // creating this SessionScreen, but for now it's handled here.
+    //
+    // To avoid any leaks that could occur if the timer is started but not fired
+    // before the component is unmounted this method is used to clean up the
+    // references to the timer.
     _clearTimer() {
         if (this.timerHandle) {
             clearTimeout(this.timerHandle);
@@ -89,7 +98,9 @@ export class SessionScreen extends React.Component<Props, State> {
         }
     }
 
-    // should be called when a new question is ready to be shown to the user
+    // should be called when a new question is ready to be shown to the user.
+    // note that this method does not change the current question, the
+    // _nextQuestion method does that.
     _newQuestion() {
         // update the state with the session's current question
         this.setState({
@@ -105,13 +116,17 @@ export class SessionScreen extends React.Component<Props, State> {
             // be a real question.
             if (this.state.currentQuestion) {
                 this.state.report.startLookingAtQuestion(this.state.currentQuestion);
+            } else {
+                logger.log({
+                    msg: 'SessionScreen invalid state; is ongoing but has no question to show',
+                    state: this.state,
+                });
             }
         });
     }
 
     // Moves the session forward one question and re-renders the component. If
-    // there are no more questions props.onSessionFinished is invoked with the
-    // report.
+    // there are no more questions the session is finished.
     _nextQuestion() {
         if (this.props.session.hasNextQuestion()) {
             this.props.session.nextQuestion();
@@ -121,12 +136,11 @@ export class SessionScreen extends React.Component<Props, State> {
         }
     }
 
-    // Finishes the session, calling onSessionFinished with the report.
-    // It delays setting the state to finished and calling onSessionFinished
-    // until the user has had a chance to see the 100% progress bar.
+    // Eventually finishes the session.  It delays setting the state to finished
+    // and calling onSessionFinished to avoid navigating away from the
+    // SessionScreen too fast. See the comment on _clearTimer above.
     _finish = () => {
 
-        // set state to about-to-finish, rendering the 100% filled progress bar
         this.setState({ sessionState: 'about-to-finish' }, () => {
 
             // delay setting state to finished and calling onSessionFinished
@@ -137,6 +151,7 @@ export class SessionScreen extends React.Component<Props, State> {
         });
     }
 
+    // Finishes the session, calling onSessionFinished with the report.
     _finishNow = () => {
         this.setState({ sessionState: 'finished' });
         this.props.onSessionFinished(this.state.report);
@@ -150,7 +165,7 @@ export class SessionScreen extends React.Component<Props, State> {
     }
 
     // registers the answer in the report and moves to the next question if
-    // applicable. It's an arror function property because of `this` :(
+    // applicable. It's an arrow function property because of `this` :(
     _onAnswer = (answer: Emotion) => {
         const question = this.props.session.currentQuestion();
         if (answer === question.correctAnswer) {
@@ -167,6 +182,7 @@ export class SessionScreen extends React.Component<Props, State> {
         }
     }
 
+    // This method brings up the cancel dialog
     _cancel = () => {
         const message = 'Finish   - stop the session and store your results\n' +
                         'Abort    - stop the session and discard your results\n' +
@@ -194,7 +210,7 @@ export class SessionScreen extends React.Component<Props, State> {
         const { session } = this.props;
 
         // set the progress to `current question / number of questions`
-        // unless the session is finised. Set the progress to 100%
+        // unless the session is finished. Set the progress to 100%
         // if the session is finished.
         const progress = this.state.sessionState === 'about-to-finish'
             ? session.numberOfQuestions()
@@ -221,14 +237,6 @@ export class SessionScreen extends React.Component<Props, State> {
             case 'not-started':
                 // TODO: improve, add button to force component out of this state. with logs
                 return 'Loading...';
-
-            case 'about-to-finish':
-                // TODO: should show the question in this case...
-                return 'about to finiiiiish';
-
-            case 'finished':
-                // TODO: improve, add button to force component out of this state. with logs
-                return 'Done! You should have been redirected to the session report...';
 
             default:
                 if (this.state.currentQuestion) {
