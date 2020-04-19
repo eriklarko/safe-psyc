@@ -41,11 +41,11 @@ export class Loading extends React.Component<Props, State> {
     componentDidMount() {
         this._didMountPromise = this.load()
             .then(() => {
-                logger.log('msg', 'loading done, resetting to home');
+                logger.log('loading done, resetting to home');
                 navigator.resetToHome();
             })
             .catch(e => {
-                logger.log('msg', 'loading failed', 'error', e);
+                logger.log({msg: 'loading failed', error: e});
             });
     }
 
