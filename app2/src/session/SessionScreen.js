@@ -10,11 +10,12 @@
 
 import * as React from 'react';
 import { View, Alert, BackHandler } from 'react-native';
-import { ImageButton } from '../styles';
+import { ImageButton, Button, Text } from '../styles';
 import { SessionReport } from './models';
 import { Question, QuestionProgress } from './components';
 import { assets } from '../shared/images';
 import { logger } from '../logger';
+import { navigator } from '../navigation';
 
 import type { Session, TQuestion } from './models';
 import type { Emotion } from '../shared/models';
@@ -67,8 +68,8 @@ export class SessionScreen extends React.Component<Props, State> {
     componentDidMount() {
         // componentDidMount is called after the first render and the user sees the
         // 'not-started' screen. That screen isn't terribly useful so instead we
-        // trigger this._newQuestion() to show the first question.
-        this._newQuestion();
+        // trigger this._showCurrentQuestion() to show the first question.
+        this._showCurrentQuestion();
 
         // add listener for the android back button. It should do the same as
         // the cancel button.
@@ -101,7 +102,7 @@ export class SessionScreen extends React.Component<Props, State> {
     // should be called when a new question is ready to be shown to the user.
     // note that this method does not change the current question, the
     // _nextQuestion method does that.
-    _newQuestion() {
+    _showCurrentQuestion() {
         // update the state with the session's current question
         this.setState({
             sessionState: 'ongoing',
@@ -129,14 +130,17 @@ export class SessionScreen extends React.Component<Props, State> {
     // there are no more questions the session is finished.
     _nextQuestion() {
         if (this.props.session.hasNextQuestion()) {
+            // move the session forward
             this.props.session.nextQuestion();
-            this._newQuestion();
+
+            // and show the new question
+            this._showCurrentQuestion();
         } else {
             this._finish();
         }
     }
 
-    // Eventually finishes the session.  It delays setting the state to finished
+    // Eventually finishes the session. It delays setting the state to finished
     // and calling onSessionFinished to avoid navigating away from the
     // SessionScreen too fast. See the comment on _clearTimer above.
     _finish = () => {
@@ -207,17 +211,22 @@ export class SessionScreen extends React.Component<Props, State> {
     }
 
     render() {
+        return <View>
+            {this._renderTopBar()}
+            {this._renderMainContent()}
+        </View>;
+    }
+
+    _renderTopBar() {
         const { session } = this.props;
 
-        // set the progress to `current question / number of questions`
-        // unless the session is finished. Set the progress to 100%
-        // if the session is finished.
-        const progress = this.state.sessionState === 'about-to-finish'
+        // set the progress to 100% if about to finish or finished. set it to
+        // `current question / total number of questions` otherwise
+        const currentQuestionIndex = ['about-to-finish', 'finished'].includes(this.state.sessionState)
             ? session.numberOfQuestions()
             : session.currentQuestionIndex();
 
         return <View>
-            <View>
                 <ImageButton
                     image={assets.mediumCross}
                     onPress={this._cancel}
@@ -225,23 +234,42 @@ export class SessionScreen extends React.Component<Props, State> {
                 />
 
                 <QuestionProgress
-                    current={progress}
+                    current={currentQuestionIndex}
                     total={session.numberOfQuestions()} />
-            </View>
-            {this._renderMainContent()}
-        </View>;
+            </View>;
     }
 
     _renderMainContent() {
-        switch (this.state.sessionState) {
+        const { sessionState, currentQuestion } = this.state;
+        switch (sessionState) {
             case 'not-started':
-                // TODO: improve, add button to force component out of this state. with logs
-                return 'Loading...';
+                return <View>
+                    <Text>It appears we're in an invalid state. Please retry or
+                        report the issue using the buttons below
+                    </Text>
+
+                    <Button
+                        title='retry'
+                        onPress={() => this._showCurrentQuestion() } />
+
+                    <Button
+                        title='report'
+                        onPress={() => {
+                            navigator.openReportFlow({
+                                screen: {
+                                    name: 'Session',
+                                    props: this.props,
+                                    state: this.state,
+                                },
+                                header: 'Empty screen when starting new session',
+                            });
+                        }} />
+                </View>;
 
             default:
-                if (this.state.currentQuestion) {
+                if (currentQuestion) {
                     return <Question
-                             question={this.state.currentQuestion}
+                             question={currentQuestion}
                              onAnswer={this._onAnswer}
                            />;
 

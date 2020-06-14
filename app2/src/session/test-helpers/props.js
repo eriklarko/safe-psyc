@@ -7,7 +7,7 @@ import type { Props } from '../SessionScreen.js';
 const defaultProps: Props = {
     session: new Session(new Set([newArbitraryQuestion()])),
 
-    // jest not defined and I can't import jest
+    // jest not defined and I can't import jest, but it is available...
     /* eslint-disable-next-line no-undef */
     onSessionFinished: jest.fn(),
 

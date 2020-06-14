@@ -4,6 +4,7 @@ import { StackActions, NavigationActions } from 'react-navigation';
 import type { NavigationStackProp } from 'react-navigation';
 import type { Screen } from './screens.js';
 import type { Emotion } from '../../shared/models';
+import type { Props as ReportProps } from '../../report';
 
 export type Navigator = NavigationStackProp<any>;
 export class ReactNavigationNavigator {
@@ -25,6 +26,10 @@ export class ReactNavigationNavigator {
         this.navigateTo('EmotionDetails', {
             emotion: emotion,
         });
+    }
+
+    openReportFlow(params: ReportProps) {
+        this.navigateTo('Report', params);
     }
 
     navigateTo(screen: Screen, params?: Object) {

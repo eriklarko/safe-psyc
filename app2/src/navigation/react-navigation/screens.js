@@ -2,6 +2,8 @@
 
 import { Home } from '../../home';
 import { Loading } from '../../loading';
+import { Session } from '../../session';
+import { Report } from '../../report';
 import { AnimationTest } from '../../styles/animation-test';
 
 export type Screen = $Keys<typeof screens>;
@@ -19,5 +21,11 @@ export const screens = {
     },
     EmotionDetails: {
         screen: Home,
+    },
+    Session: {
+        screen: Session,
+    },
+    Report: {
+        screen: Report,
     },
 };
