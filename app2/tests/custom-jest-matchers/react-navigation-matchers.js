@@ -11,7 +11,7 @@ expect.extend({
             const { routeName: actualRouteName, params: actualParams } = call[0];
 
             const paramsCorrect = params
-                ? this.utils.stringify(params) === this.utils.stringify(actualParams)
+                ? toEqual(params, actualParams)
                 : true;
 
             if (actualRouteName === route && paramsCorrect) {
@@ -21,7 +21,7 @@ expect.extend({
             }
         }
 
-        const a = call => call[0].routeName + ' - ' + this.utils.stringify(call[0].params);
+        const a = call => call[0].routeName + ' - ' + JSON.stringify(call[0].params, null, 2);
         return {
             pass: false,
             message: () => `${this.utils.matcherHint('.not.toBe')}\n\n` +
@@ -92,3 +92,8 @@ expect.extend({
         };
     },
 });
+
+function toEqual(expected, actual): boolean {
+    expect(actual).toEqual(expected);
+    return true;
+}
