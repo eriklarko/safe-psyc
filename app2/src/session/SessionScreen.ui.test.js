@@ -102,6 +102,7 @@ describe('stuck in the not-started state', () => {
         }
         
         // make sure the report button exists in the not-started state
+        //const reportBtn = component.getByText("report")
         const reportBtn = component.findByProps({title: "report"})
 
         // and that pressing it navigates to the report flow

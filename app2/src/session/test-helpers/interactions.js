@@ -4,16 +4,16 @@ import * as testingLib from '@testing-library/react-native';
 import type { Session, TQuestion } from '../models';
 import type { Emotion } from '../../shared/models';
 
-export function clickAnswer(sessionComponent: testingLib.RenderResult, answer: Emotion) {
+export function clickAnswer(sessionComponent: *, answer: Emotion) {
     const ans = sessionComponent.getByTestId('answer-' + answer.name);
     testingLib.fireEvent.press(ans);
 }
 
-export function clickCorrectAnswer(sessionComponent: testingLib.RenderResult, session: Session<TQuestion>) {
+export function clickCorrectAnswer(sessionComponent: *, session: Session<TQuestion>) {
     clickAnswer(sessionComponent, session.currentQuestion().correctAnswer);
 }
 
-export function clickIncorrectAnswer(sessionComponent: testingLib.RenderResult, session: Session<TQuestion>) {
+export function clickIncorrectAnswer(sessionComponent: *, session: Session<TQuestion>) {
     const q = session.currentQuestion();
 
     // find a truly incorrect answer

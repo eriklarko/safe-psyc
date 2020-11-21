@@ -13,3 +13,6 @@ export * from './custom-jest-matchers';
 //     setLoggingBackend(new StdoutLogger());
 import { setLoggingBackend, NopLoggingBackend } from '../src/logger';
 setLoggingBackend(new NopLoggingBackend());
+
+// Remove "Animated: `useNativeDriver` is not supported" warning
+jest.mock('react-native/Libraries/Animated/src/NativeAnimatedHelper');

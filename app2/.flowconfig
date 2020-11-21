@@ -15,6 +15,10 @@ node_modules/warning/.*
 ; Flow doesn't support platforms
 .*/Libraries/Utilities/LoadingView.js
 
+; @testing-library/react-native needs support for method or property calls in
+; optional chains to work properly, and flow doesn't support that yet :(
+.*/node_modules/@testing-library/react-native/.*
+
 [untyped]
 .*/node_modules/@react-native-community/cli/.*/.*
 

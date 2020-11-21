@@ -1,6 +1,6 @@
 // @flow
 
-import uuid from 'uuid';
+import { v4 as uuid } from 'uuid';
 
 type Conf = {
     prefix: string | Array<string>,
@@ -20,7 +20,7 @@ function generatePrefix(conf?: Conf): string {
         }
     }
 
-    return uuid.v4();
+    return uuid();
 }
 
 const counters = {};
