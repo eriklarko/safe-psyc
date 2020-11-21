@@ -5,6 +5,7 @@
 
 import * as React from 'react';
 import * as testingLib from '@testing-library/react-native';
+import renderer from 'react-test-renderer';
 import { Alert } from 'react-native';
 import { SessionScreen } from './SessionScreen.js';
 import { Session } from './models/session.js';
@@ -90,20 +91,28 @@ describe('stuck in the not-started state', () => {
 
     it('navigates to the report flow', () => {
         const navigationMock = installMockNavigator();
-        const component = testingLib.render(<StubbedSessionScreen
+        const component = renderer.create(<StubbedSessionScreen
             {...props()}
-        />);
+        />).root;
+
+        const instance = component.instance;
+        if (!instance) { // make flow accept the instance.props|state calls below :(
+            expect(instance).toBeDefined();
+            return
+        }
         
         // make sure the report button exists in the not-started state
-        const reportBtn = component.getByText("report")
+        const reportBtn = component.findByProps({title: "report"})
 
         // and that pressing it navigates to the report flow
         testingLib.fireEvent.press(reportBtn);
         expect(navigationMock).toHaveNavigatedTo('Report', {
-            screen: 'Session',
-            props: null,
-            state: null,
-            header: 'fooo',
+            screen: {
+                name: 'Session',
+                props: instance.props,
+                state: instance.state,
+            },
+            header: 'Empty screen when starting new session',
         });
     })
 })
