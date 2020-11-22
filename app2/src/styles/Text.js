@@ -5,13 +5,13 @@ import { Text as RNText, StyleSheet } from 'react-native';
 import { combineStyles } from './helpers.js';
 import { constants } from './constants.js';
 
-type Props = {
+type TextProps = $PropertyType<typeof RNText, 'props'>;
+export type TextStyle = $PropertyType<TextProps, 'style'>;
+
+type Props = TextProps & {
     style?: TextStyle,
     children?: React.Node,
 }
-
-type TextProps = React.ElementProps<typeof RNText>;
-export type TextStyle = $PropertyType<TextProps, 'style'>;
 
 const colorGroup = constants.colorGroup.primary;
 const defaultStyles = StyleSheet.create({

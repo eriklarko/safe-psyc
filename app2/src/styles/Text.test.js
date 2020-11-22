@@ -41,7 +41,7 @@ it('adds new styles', () => {
         opacity: 0.1337,
     };
 
-    // check that the default style doesn't set the color as this test
+    // check that the default style doesn't set the opacity as this test
     // is about adding new styles.
     expect(defaultStyle).not.toHaveProperty('opacity');
 

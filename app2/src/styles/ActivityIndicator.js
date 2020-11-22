@@ -4,7 +4,8 @@ import React from 'react';
 import { ActivityIndicator as RNActivityIndicator } from 'react-native';
 import { constants } from './constants.js';
 
-type Props = {
+type ActivityIndicatorProps = $PropertyType<typeof ActivityIndicator, 'props'>;
+type Props = ActivityIndicatorProps & {
     size: 'small' | 'large',
     color: string,
 };

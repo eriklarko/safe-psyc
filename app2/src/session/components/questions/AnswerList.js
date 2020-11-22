@@ -12,8 +12,13 @@ import * as React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Button, combineStyles } from '../../../styles';
 
-type ViewProps = React.ElementProps<typeof View>;
-export type ViewStyle = $PropertyType<ViewProps, 'style'>;
+// Getting flow this error:
+//   Cannot instantiate $PropertyType because property props is missing in
+//   React.AbstractComponentStatics
+// But the exact same code works fine in Button.js so lets ignore it :(
+// $FlowFixMe: see above
+type ViewProps = $PropertyType<typeof View, 'props'>
+type ViewStyle = $PropertyType<ViewProps, 'style'>;
 
 type Props<T> = {
     // The answer in a map from an arbitrary type to the string shown to the

@@ -8,14 +8,16 @@ import { constants } from './constants.js';
 
 import type { AccessibilityRole } from 'react-native/Libraries/Components/View/ViewAccessibility.js';
 
-type TouchableOpacityProps = React.ElementProps<typeof TouchableOpacity>;
+type ViewProps = $PropertyType<typeof View, 'props'>
+type ViewStyle = $PropertyType<ViewProps, 'style'>
+type TouchableOpacityProps = $PropertyType<typeof TouchableOpacity, 'props'>;
 type Props = TouchableOpacityProps & {
     title: string,
 
     disabled?: boolean,
 
-    containerStyle?: View.propTypes.style,
-    textStyle?: View.propTypes.style,
+    containerStyle?: ViewStyle,
+    textStyle?: ViewStyle,
 
     accessibilityRole?: AccessibilityRole,
 };

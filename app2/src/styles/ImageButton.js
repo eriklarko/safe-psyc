@@ -9,8 +9,8 @@ import { combineStyles } from './helpers.js';
 import type { PreloadedImage } from '../shared/images';
 import type { AccessibilityRole } from 'react-native/Libraries/Components/View/ViewAccessibility.js';
 
-type TouchableOpacityProps = React.ElementProps<typeof TouchableOpacity>;
-type ImageProps = React.ElementProps<typeof Image>;
+type TouchableOpacityProps = $PropertyType<typeof TouchableOpacity, 'props'>;
+type ImageProps = $PropertyType<typeof Image, 'props'>;
 type ImageStyle = $PropertyType<ImageProps, 'style'>;
 type Props = TouchableOpacityProps & {
     onPress: () => void,
