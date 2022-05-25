@@ -68,7 +68,7 @@ it('returns the question report when asked to record an incorrect answer', () =>
         },{
             answer: '43',
             isCorrect: false,
-             time: arbitraryTime,
+            time: arbitraryTime,
         }],
     });
 });
@@ -120,7 +120,7 @@ it('keeps time', () => {
     timer.setNextTime(correctAnswerTime);
     report.registerCorrectAnswer(question);
 
-    // and finally check that both incorrect answers are stored in the report
+    // and finally check that both answers are stored in the report
     const actual = report.getResult(question);
     expect(actual).toEqual({
         startTime: startTime,

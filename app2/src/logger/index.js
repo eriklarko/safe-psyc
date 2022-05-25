@@ -1,7 +1,7 @@
 // @flow
 //
 // This file represents the default way to log things in this app. All logs
-// are structured, and where those logs end up configurable using the
+// are structured, and where those logs end up is configurable using the
 // LoggingBackend interface defined in this file.
 //
 // Usage example:

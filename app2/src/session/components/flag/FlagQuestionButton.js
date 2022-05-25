@@ -99,6 +99,7 @@ export class FlagQuestionButton extends React.Component<Props, State> {
                     alert(
                         'Eh..',
                         'Unable remove the flagging, but this has been logged and the flag will be ignored :)',
+                        // so the result is the same for the user regardless. just do it silently then
                     );
                 });
         });

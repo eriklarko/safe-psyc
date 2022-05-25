@@ -53,6 +53,7 @@ it('shows the question when in the about-to-finish state', () => {
     clickCorrectAnswer(component, session);
 
     // check rendered state
+    // TODO: Assert in about-to-finish state
     component.getByText(question.text);
 })
 
@@ -97,7 +98,7 @@ describe('stuck in the not-started state', () => {
 
         const instance = component.instance;
         if (!instance) { // make flow accept the instance.props|state calls below :(
-            expect(instance).toBeDefined();
+            expect(instance).toBeDefined(); // this will always fail, but will print pretty output when it does so
             return
         }
         

@@ -38,7 +38,7 @@ export function Question(props: Props) {
 
 function getAnswers(question: TQuestion): Array<Emotion> {
     // The typedefs for knuthShuffle returns `any`, making flow unable to
-    // detect incorrect types in its inputs. To make this file mor type-safe
+    // detect incorrect types in its inputs. To make this file more type-safe
     // the `answers` array is defined separately and set to an `Array<Emotion>`
     const answers: Array<Emotion> = [question.correctAnswer, ...question.incorrectAnswers];
     return knuthShuffle(answers);

@@ -12,7 +12,7 @@ import * as React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Button, combineStyles } from '../../../styles';
 
-// Getting flow this error:
+// Getting this flow error:
 //   Cannot instantiate $PropertyType because property props is missing in
 //   React.AbstractComponentStatics
 // But the exact same code works fine in Button.js so lets ignore it :(

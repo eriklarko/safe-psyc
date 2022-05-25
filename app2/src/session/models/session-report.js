@@ -40,7 +40,7 @@ export class SessionReport<QType, AnsType> {
         this._answers = new Map();
     }
 
-    // registers the time the user started looking at the question. An expection
+    // registers the time the user started looking at the question. An exception
     // is thrown if this method is called with the same question multiple times.
     // Question equality is defined by the sameValueZero algorithm,
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness#Same-value-zero_equality

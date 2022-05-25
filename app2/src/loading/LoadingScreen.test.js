@@ -7,6 +7,11 @@ import { installMockNavigator } from '../navigation';
 
 it('redirects to home when successfully loaded', () => {
     const navigator = installMockNavigator();
+
+    // render the loading screen, skipping any actual loading. Passing in the
+    // _testReplaceLoadFunc prop makes the component call that function instead
+    // of the real loading func. Using Promise.resolve makes the fake loading
+    // instant
     const component = renderer.create(<Loading
         _testReplaceLoadFunc={Promise.resolve} />);
 

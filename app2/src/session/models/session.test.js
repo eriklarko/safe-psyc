@@ -58,7 +58,7 @@ describe('hasNextQuestion', () => {
 
         session.nextQuestion(); // current question is 'b'
 
-        // ask hasNextQuestion twice for no real reason
+        // check hasNextQuestion twice for no real reason
         expect(session.hasNextQuestion()).toBe(false);
         expect(session.hasNextQuestion()).toBe(false);
     });

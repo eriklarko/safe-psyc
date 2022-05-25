@@ -1,7 +1,7 @@
 // @flow
 //
 // This is the component navigated to when starting a session.
-// Not sure yet if this component will fetch the questions in the ession or if
+// Not sure yet if this component will fetch the questions in the session or if
 // those will passed in as props. We'll see. For now it's all stubbed out just
 // so that I can test it on a device.
 
