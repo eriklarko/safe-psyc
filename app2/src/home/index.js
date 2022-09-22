@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { ScreenWrapper, Text, HeroButton, VerticalSpace } from '../styles';
+import { navigator } from '../navigation';
 
 type Props = {};
 export function Home(props: Props) {
@@ -10,7 +11,7 @@ export function Home(props: Props) {
         <VerticalSpace />
         <HeroButton
             title='LEARN EMOS PLIIS'
-            onPress={() => console.log('lol')}
+            onPress={() => navigator.navigateTo('Session')}
         />
     </ScreenWrapper>;
 }

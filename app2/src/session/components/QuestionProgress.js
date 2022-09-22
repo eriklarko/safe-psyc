@@ -1,25 +1,25 @@
 // @flow
 
 import React from 'react';
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import * as Progress from 'react-native-progress';
-import { constants } from '../../styles';
+import { Text, constants } from '../../styles';
 
 type Props = {
     current: number,
     total: number,
 };
-const borderRadius = constants.space() / 2;
 export function QuestionProgress(props: Props) {
     const { current, total, ...restProps } = props;
 
     const progress = Math.max(current, 0) / total;
     const progressProps = Object.assign({
         progress: progress,
-        color: constants.colorGroup.primary.background,
+        color: constants.colorGroup.primary.foreground,
         width: null,
-        height: constants.space(),
-        borderRadius: borderRadius,
+        height: constants.space()/2,
+        borderWidth: progress === 0 ? 1 : 0, // show outline using border if progress is 0
+        borderRadius: 1000,
         animated: true,
         useNativeDriver: true,
 
@@ -32,9 +32,8 @@ export function QuestionProgress(props: Props) {
     );
 }
 
-const styles = {
+const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
     },
-};
+});
