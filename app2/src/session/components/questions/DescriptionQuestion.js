@@ -15,23 +15,25 @@
 
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Text } from '../../../styles';
+import { Text, constants } from '../../../styles';
+import { getShuffledAnswers } from './shuffledAnswers.js'
 import { AnswerList } from './AnswerList.js';
 import type { Emotion } from '../../../shared/models';
+import type { TQuestion } from '../../models';
 
 type Props = {
-    text: string,
-
-    answers: Array<Emotion>,
+    question: TQuestion,
     onAnswer: (answer: Emotion)=>void,
 };
 
 export function DescriptionQuestion(props: Props) {
-    return <View style={styles.wrapper}>
-        <Text>{props.text}</Text>
+    const text = props.question.text
+    const answers = getShuffledAnswers(props.question)
 
+    return <View style={styles.wrapper}>
+        <Text style={styles.questionText}>{text}</Text>
         <AnswerList
-            answers={toAnswerMap(props.answers)}
+            answers={toAnswerMap(answers)}
             onAnswer={props.onAnswer}
         />
     </View>;
@@ -48,5 +50,10 @@ function toAnswerMap(answers: Array<Emotion>): Map<Emotion, string> {
 const styles = StyleSheet.create({
     wrapper: {
         flex: 1,
+        paddingHorizontal: constants.space(4),
+    },
+    questionText: {
+        marginVertical: constants.space(2),
+        fontSize: 23,
     },
 });

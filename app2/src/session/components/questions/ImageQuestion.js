@@ -17,26 +17,29 @@
 import * as React from 'react';
 import { StyleSheet, View, Image } from 'react-native';
 import { Text } from '../../../styles';
+import { getShuffledAnswers } from './shuffledAnswers.js'
 import { AnswerList } from './AnswerList.js';
+import type { TQuestion } from '../../models';
 import type { ImageThatNeedsToBeLoaded } from '../../../shared/images';
 import type { Emotion } from '../../../shared/models';
 
 type Props = {
-    image: ImageThatNeedsToBeLoaded,
-    text: string,
-
-    answers: Array<Emotion>,
+    question: TQuestion,
     onAnswer: (answer: Emotion)=>void,
 };
 export function ImageQuestion(props: Props) {
+    const image = props.question.image
+    const text = props.question.text
+    const answers = getShuffledAnswers(props.question)
+
     return <View style={styles.wrapper}>
-        <Text>{props.text}</Text>
+        <Text>{text}</Text>
         <Image
             accessibilityRole='image'
-            source={props.image}/>
+            source={image}/>
 
         <AnswerList
-            answers={toAnswerMap(props.answers)}
+            answers={toAnswerMap(answers)}
             onAnswer={props.onAnswer}
         />
     </View>;

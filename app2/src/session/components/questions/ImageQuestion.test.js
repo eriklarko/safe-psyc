@@ -6,18 +6,19 @@ import testRenderer from 'react-test-renderer';
 import { getAllRenderedStrings } from '../../../../tests/react-testing-library-helpers.js';
 import { Image } from 'react-native';
 import { ImageQuestion } from './ImageQuestion.js';
-import { newEmotionsWithNames } from '../../../shared/models/test-helpers';
+import { newQuestionWithImage } from '../../test-helpers';
+import { newEmotionWithName, newEmotionsWithNames } from '../../../shared/models/test-helpers';
 
 const defaultProps = {
-    image: { uri: './test-image.png' },
-    text: 'foo',
-    answers: [],
+    question: newQuestionWithImage(),
     onAnswer: jest.fn(),
 };
 
 it('shows an image', () => {
+    const question = newQuestionWithImage();
+    question.image = { uri: './test-image.png' }
     const props = Object.assign({}, defaultProps, {
-        image: { uri: './test-image.png' },
+        question
     });
     const component = testRenderer.create(<ImageQuestion {...props} />).root;
 
@@ -27,24 +28,24 @@ it('shows an image', () => {
 });
 
 it('shows the question text', () => {
-    const component = renderWithProps({
-        text: 'some question text',
-    });
+    const question = newQuestionWithImage();
+    question.text ='some question text'
 
+    const component = renderWithProps({ question });
     expect(component.getByText('some question text')).toBeDefined();
 });
 
 it('shows the answers', () => {
-    const component = renderWithProps({
-        answers: newEmotionsWithNames('ans1', 'ans2', 'ans3'),
-    });
+    const question = newQuestionWithImage();
+    question.correctAnswer = newEmotionWithName('ans1')
+    question.incorrectAnswers = newEmotionsWithNames('ans2', 'ans3')
 
+    const component = renderWithProps({ question });
     expect(getAllRenderedStrings(component)).toEqual(expect.arrayContaining(['ans1', 'ans2', 'ans3']));
 });
 
 it('forwards taps on all answers', () => {
     const props = {
-        answers: newEmotionsWithNames('a', 'b', 'c'),
         onAnswer: jest.fn(),
     };
     const component = renderWithProps(props);
