@@ -34,7 +34,7 @@ export function CorrectAnswerOverlay(props: Props) {
 export function IncorrectAnswerOverlay(props: Props) {
     const contents = function() {
         switch (props.question.type) {
-            case 'image':
+            case 'image': // I don't love this.. I want this to be owned by the ImageQuestion component
                 return <ImageQuestionIncorrectAnswerOverlayContents
                     answer={props.answer}
                 />;

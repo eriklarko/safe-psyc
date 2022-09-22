@@ -10,7 +10,7 @@
 
 import * as React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Button, combineStyles } from '../../../styles';
+import { Button, VerticalSpace, combineStyles, constants } from '../../../styles';
 
 // Getting this flow error:
 //   Cannot instantiate $PropertyType because property props is missing in
@@ -29,11 +29,28 @@ type Props<T> = {
     answers: Map<T, string>,
     onAnswer: (T)=>void,
 
-    style?: ViewStyle,
+    wrapperStyle?: ViewStyle,
+    buttonContainerStyle?: ViewStyle,
+    buttonTextStyle?: ViewStyle,
 }
 export function AnswerList<T>(props: Props<T>) {
-    return <View style={combineStyles(styles.wrapper, props.style)}>
-        { mapAnswersToButtons(props) }
+    const buttons = mapAnswersToButtons(props)
+
+    // I want space between each button, and specifying a margin on each button
+    // leads to extra space either above the first button or below the last
+    // button. To avoid that and make this component play nicer with other
+    // components I opted for inserting a <Spacer /> component between the
+    // buttons instead.
+    const children = []
+    for (let i = 0; i < buttons.length; i++) {
+        children.push(buttons[i])
+
+        if (i < buttons.length - 1){
+            children.push(<VerticalSpace key={'spacer-' + i} multiplier={2} />)
+        }
+    }
+    return <View style={combineStyles(styles.wrapper, props.wrapperStyle)}>
+        { children }
     </View>;
 }
 
@@ -48,6 +65,8 @@ function mapAnswersToButtons<T>(props: Props<T>) {
 
                 title={answer}
                 onPress={() => props.onAnswer(key)}
+                containerStyle={combineStyles(styles.buttonContainer, props.buttonContainerStyle)}
+                textStyle={combineStyles(styles.buttonText, props.buttonTextStyle)}
             />
         );
     }
@@ -58,5 +77,11 @@ function mapAnswersToButtons<T>(props: Props<T>) {
 const styles = StyleSheet.create({
     wrapper: {
         flex: 1,
+        flexDirection: 'column',
+    },
+    buttonContainer: {
+        padding: constants.space(1),
+    },
+    buttonText: {
     },
 });

@@ -9,8 +9,8 @@
 // onSessionFinished when there are no more questions to be answered.
 
 import * as React from 'react';
-import { View, Alert, BackHandler } from 'react-native';
-import { ImageButton, Button, Text } from '../styles';
+import { View, StyleSheet, Alert, BackHandler } from 'react-native';
+import { ImageButton, Button, Text, constants } from '../styles';
 import { SessionReport } from './models';
 import { Question, QuestionProgress } from './components';
 import { assets } from '../shared/images';
@@ -211,7 +211,7 @@ export class SessionScreen extends React.Component<Props, State> {
     }
 
     render() {
-        return <View>
+        return <View style={styles.container}>
             {this._renderTopBar()}
             {this._renderMainContent()}
         </View>;
@@ -226,9 +226,10 @@ export class SessionScreen extends React.Component<Props, State> {
             ? session.numberOfQuestions()
             : session.currentQuestionIndex();
 
-        return <View>
+        return <View style={styles.topBar}>
                 <ImageButton
                     image={assets.mediumCross}
+                    style={styles.cancelButton}
                     onPress={this._cancel}
                     testID='cancel-btn'
                 />
@@ -279,3 +280,20 @@ export class SessionScreen extends React.Component<Props, State> {
         }
     }
 }
+
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    topBar: {
+        flexDirection: 'row',
+        margin: constants.space(),
+        alignItems: 'center',
+    },
+    cancelButton: {
+        marginEnd: constants.space(),
+        width: constants.space(),
+        height: constants.space(),
+    },
+});
